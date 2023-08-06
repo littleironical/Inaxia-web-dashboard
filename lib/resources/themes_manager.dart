@@ -24,6 +24,17 @@ ThemeData get appThemeData {
         ),
         foregroundColor: ColorsManager.black,
       ),
-    )
+    ),
+
+    sliderTheme: const SliderThemeData(
+      trackHeight: AppSizeManager.s8,
+      thumbColor: ColorsManager.primary,
+      activeTickMarkColor: ColorsManager.primary,
+      inactiveTickMarkColor: ColorsManager.primaryAccent,
+      activeTrackColor: ColorsManager.primary,
+      inactiveTrackColor: ColorsManager.primaryAccent,
+      overlayColor: ColorsManager.transparent,
+      thumbShape: RoundSliderThumbShape(elevation: AppSizeManager.s0),
+    ),
   );
 }

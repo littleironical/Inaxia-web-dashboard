@@ -22,13 +22,56 @@ class _HomeViewState extends State<HomeView> {
     AssetsManager.oversizedTshirt,
   ];
 
+  // FOR T-SHIRT TYPE & PRICE
   int _selectedTshirtTypeIndex = 0;
   late double _tshirtPrice;
-  late List _selectedTshirtSizesAvaialble;
-  late List _selectedTshirtColorsAvailable;
+
+  // FOR T-SHIRT SIZED
+  late List _tshirtSizesAvaialble;
   String? _selectedTshirtSize;
   int? _selectedTshirtSizeIndex;
 
+  // FOR T-SHIRT COLORS
+  late List _tshirtColorsAvailable;
+
+  // PRINITNG TECHNIQUES
+  final List _printingTechniquesAvailable = [
+    StringsManager.printingTechniqueDTF,
+  ];
+  String? _selectedPrintingTechnique;
+  int? _selectedPrintingTechniquesIndex;
+
+  // PRINTING AREA
+  final List _printingAreaAvailable = [
+    StringsManager.printingAreasA3,
+    StringsManager.printingAreasA4,
+    StringsManager.printingAreasA5,
+    StringsManager.printingAreasA6,
+    StringsManager.printingAreasA7,
+  ];
+  String? _selectedPrintingArea;
+  int? _selectedPrintingAreaIndex;
+
+  // T-SHIRT QUANTITY
+  final List _tshirtQuantityList = [
+    StringsManager.tshirtQuantity1,
+    StringsManager.tshirtQuantity50,
+    StringsManager.tshirtQuantity100,
+    StringsManager.tshirtQuantity150,
+    StringsManager.tshirtQuantity200,
+    StringsManager.tshirtQuantity250,
+    StringsManager.tshirtQuantity300,
+    StringsManager.tshirtQuantity350,
+    StringsManager.tshirtQuantity400,
+    StringsManager.tshirtQuantity450,
+    StringsManager.tshirtQuantity500,
+  ];
+  int _tshirtQuantityValue = AppValueManager.v1;
+
+  // DISCOUNT
+  int _discountValue = 0;
+
+  // INITIALIZING ALL DATA
   @override
   void initState() {
     _initializeAllTshirtTypes();
@@ -75,9 +118,6 @@ class _HomeViewState extends State<HomeView> {
           StringsManager.tshirtSizes2XL,
           StringsManager.tshirtSizes3XL,
           StringsManager.tshirtSizes4XL,
-          StringsManager.tshirtSizes5XL,
-          StringsManager.tshirtSizes6XL,
-          StringsManager.tshirtSizes7XL,
         ],
         [
           ColorsManager.beigeTshirt,
@@ -124,24 +164,20 @@ class _HomeViewState extends State<HomeView> {
     for (var element in _allTshirtTypes) {
       if (element.isSelected == true) {
         _tshirtPrice = element.tshirtPrice;
-        _selectedTshirtSizesAvaialble = element.tshirtSizesAvailable;
-        _selectedTshirtColorsAvailable = element.tshirtColorsAvailable;
+        _tshirtSizesAvaialble = element.tshirtSizesAvailable;
+        _tshirtColorsAvailable = element.tshirtColorsAvailable;
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorsManager.white,
-      appBar: _appBar(),
-      body: _body(),
-    );
-  }
-
-  _appBar() {
-    return AppBar(
-      title: const Text(StringsManager.appTitle),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _body(),
+      ],
     );
   }
 
@@ -149,7 +185,6 @@ class _HomeViewState extends State<HomeView> {
     return Center(
       child: SizedBox(
         width: AppSizeManager.s1265,
-        // padding: const EdgeInsets.symmetric(horizontal: AppPaddingManager.p400),
         child: Row(
           children: [
             Expanded(
@@ -157,8 +192,8 @@ class _HomeViewState extends State<HomeView> {
               child: Padding(
                 padding: const EdgeInsets.all(AppPaddingManager.p20),
                 child: ClipRRect(
-                  borderRadius:
-                      const BorderRadius.all(Radius.circular(AppSizeManager.s20)),
+                  borderRadius: const BorderRadius.all(
+                      Radius.circular(AppSizeManager.s10)),
                   child: Image.asset(_productImage[_selectedTshirtTypeIndex]),
                 ),
               ),
@@ -168,29 +203,47 @@ class _HomeViewState extends State<HomeView> {
               child: Padding(
                 padding: const EdgeInsets.all(AppPaddingManager.p20),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // T-SHIRT TYPE
-                    _optionTitle(StringsManager.tshirtTypeTitle),
-                    _heightSpacing(AppSizeManager.s20),
+                    _optionTitle(StringsManager.tshirtTypeTitle, true),
+                    _heightSpacing(AppSizeManager.s10),
                     _tshirtType(),
-                    _heightSpacing(AppSizeManager.s40),
-    
+                    _heightSpacing(AppSizeManager.s30),
+
                     // T-SHIRT SIZES AVAILABLE
-                    _optionTitle(StringsManager.tshirtSizesTitle),
-                    _heightSpacing(AppSizeManager.s20),
-                    _tshirtSizesAvailable(),
-                    _heightSpacing(AppSizeManager.s40),
-    
+                    _optionTitle(StringsManager.tshirtSizesTitle, true),
+                    _heightSpacing(AppSizeManager.s10),
+                    _tshirtSizes(),
+                    _heightSpacing(AppSizeManager.s30),
+
                     // T-SHIRT COLORS AVAILABLE
-                    _optionTitle(StringsManager.tshirtColorsTitle),
-                    _heightSpacing(AppSizeManager.s20),
-                    _tshirtColorsAvailable(),
-                    _heightSpacing(AppSizeManager.s40),
-    
+                    _optionTitle(StringsManager.tshirtColorsTitle, true),
+                    _heightSpacing(AppSizeManager.s10),
+                    _tshirtColors(),
+                    _heightSpacing(AppSizeManager.s30),
+
+                    // PRINTING TECHNIQUES
+                    _optionTitle(StringsManager.printingTechniquesTitle, true),
+                    _heightSpacing(AppSizeManager.s10),
+                    _printingTechniques(),
+                    _heightSpacing(AppSizeManager.s30),
+
+                    // PRINTING AREA
+                    _optionTitle(StringsManager.printingAreasTitle, true),
+                    _heightSpacing(AppSizeManager.s10),
+                    _printingAreas(),
+                    _heightSpacing(AppSizeManager.s30),
+
+                    // T-SHIRT QUANTITY
+                    _optionTitle(StringsManager.tshirtQuantityTitle, true),
+                    _heightSpacing(AppSizeManager.s10),
+                    _tshirtQuantity(),
+                    _heightSpacing(AppSizeManager.s30),
+
                     // FINAL PRICE
-                    _optionTitle(StringsManager.pricingTitle),
+                    _optionTitle(StringsManager.pricingTitle, false),
                     _heightSpacing(AppSizeManager.s10),
                     _finalPricing(),
                     _heightSpacing(AppSizeManager.s20),
@@ -204,8 +257,11 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  _optionTitle(String title) {
-    return Text(title);
+  _optionTitle(String title, bool isBold) {
+    return Text(
+      title,
+      style: (isBold) ? const TextStyle(fontWeight: FontWeight.bold) : null,
+    );
   }
 
   _heightSpacing(double size) {
@@ -215,7 +271,7 @@ class _HomeViewState extends State<HomeView> {
   _tshirtType() {
     return Wrap(
       direction: Axis.horizontal,
-      runSpacing: AppPaddingManager.p20,
+      runSpacing: AppPaddingManager.p10,
       children: List.generate(
         _allTshirtTypes.length,
         (index) => Padding(
@@ -228,14 +284,27 @@ class _HomeViewState extends State<HomeView> {
               _allTshirtTypes[index].isSelected = true;
 
               setState(() {
+                // T-SHIRT TYPES
                 _selectedTshirtTypeIndex = index;
                 _tshirtPrice = _allTshirtTypes[index].tshirtPrice;
-                _selectedTshirtSizesAvaialble =
+
+                // T-SHIRT SIZES
+                _tshirtSizesAvaialble =
                     _allTshirtTypes[index].tshirtSizesAvailable;
-                _selectedTshirtColorsAvailable =
-                    _allTshirtTypes[index].tshirtColorsAvailable;
                 _selectedTshirtSize = null;
                 _selectedTshirtSizeIndex = null;
+
+                // T-SHIRT SIZES
+                _tshirtColorsAvailable =
+                    _allTshirtTypes[index].tshirtColorsAvailable;
+
+                // PRINTING TECHNIQUES
+                _selectedPrintingTechnique = null;
+                _selectedPrintingTechniquesIndex = null;
+
+                // PRINTING TECHNIQUES
+                _selectedPrintingArea = null;
+                _selectedPrintingAreaIndex = null;
               });
 
               // print(MediaQuery.of(context).size.width);
@@ -255,18 +324,18 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  _tshirtSizesAvailable() {
+  _tshirtSizes() {
     return Wrap(
       direction: Axis.horizontal,
-      runSpacing: AppPaddingManager.p20,
+      runSpacing: AppPaddingManager.p10,
       children: List.generate(
-        _selectedTshirtSizesAvaialble.length,
+        _tshirtSizesAvaialble.length,
         (index) => Padding(
           padding: const EdgeInsets.only(right: AppPaddingManager.p20),
           child: ElevatedButton(
             onPressed: () {
               setState(() {
-                _selectedTshirtSize = _selectedTshirtSizesAvaialble[index];
+                _selectedTshirtSize = _tshirtSizesAvaialble[index];
                 _selectedTshirtSizeIndex = index;
               });
             },
@@ -280,7 +349,7 @@ class _HomeViewState extends State<HomeView> {
                 horizontal: AppPaddingManager.p5,
                 vertical: AppPaddingManager.p10,
               ),
-              child: Text(_selectedTshirtSizesAvaialble[index]),
+              child: Text(_tshirtSizesAvaialble[index]),
             ),
           ),
         ),
@@ -288,31 +357,31 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  _tshirtColorsAvailable() {
+  _tshirtColors() {
     return Wrap(
       direction: Axis.horizontal,
-      runSpacing: AppPaddingManager.p20,
+      runSpacing: AppPaddingManager.p10,
       children: List.generate(
-        _selectedTshirtColorsAvailable.length,
+        _tshirtColorsAvailable.length,
         (index) => Padding(
           padding: const EdgeInsets.only(right: AppPaddingManager.p20),
           child: Tooltip(
-            message: _getColorName(_selectedTshirtColorsAvailable[index]),
+            message: _getColorName(_tshirtColorsAvailable[index]),
             child: Container(
-              width: AppSizeManager.s40,
-              height: AppSizeManager.s40,
+              width: AppSizeManager.s30,
+              height: AppSizeManager.s30,
               decoration: BoxDecoration(
-                color: _selectedTshirtColorsAvailable[index],
+                color: _tshirtColorsAvailable[index],
                 shape: BoxShape.rectangle,
                 borderRadius:
                     const BorderRadius.all(Radius.circular(AppSizeManager.s4)),
-                border: (_selectedTshirtColorsAvailable[index] ==
-                        ColorsManager.whiteTshirt)
-                    ? Border.all(
-                        color: ColorsManager.black,
-                        width: AppSizeManager.s0_5,
-                      )
-                    : null,
+                border:
+                    (_tshirtColorsAvailable[index] == ColorsManager.whiteTshirt)
+                        ? Border.all(
+                            color: ColorsManager.black,
+                            width: AppSizeManager.s0_5,
+                          )
+                        : null,
               ),
             ),
           ),
@@ -347,32 +416,241 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
-  _finalPricing() {
-    double finalTshirtPrice = _tshirtPrice;
-    double sizePrice = 0;
-
-    if (_selectedTshirtSize == StringsManager.tshirtSizes2XL) {
-      sizePrice = 20;
-    } else if (_selectedTshirtSize == StringsManager.tshirtSizes3XL) {
-      sizePrice = 40;
-    } else if (_selectedTshirtSize == StringsManager.tshirtSizes4XL) {
-      sizePrice = 60;
-    } else if (_selectedTshirtSize == StringsManager.tshirtSizes5XL) {
-      sizePrice = 80;
-    } else if (_selectedTshirtSize == StringsManager.tshirtSizes6XL) {
-      sizePrice = 100;
-    } else if (_selectedTshirtSize == StringsManager.tshirtSizes7XL) {
-      sizePrice = 120;
-    }
-
-    finalTshirtPrice = _tshirtPrice + sizePrice;
-
-    return Text(
-      '${StringsManager.pricingCurrency} $finalTshirtPrice',
-      style: boldTextStyleManager(
-        color: ColorsManager.black,
-        fontSize: FontSizeManager.f22,
+  _printingTechniques() {
+    return Wrap(
+      direction: Axis.horizontal,
+      runSpacing: AppPaddingManager.p10,
+      children: List.generate(
+        _printingTechniquesAvailable.length,
+        (index) => Padding(
+          padding: const EdgeInsets.only(right: AppPaddingManager.p20),
+          child: ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _selectedPrintingTechnique =
+                    _printingTechniquesAvailable[index];
+                _selectedPrintingTechniquesIndex = index;
+              });
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: (_selectedPrintingTechniquesIndex == index)
+                  ? ColorsManager.primary
+                  : ColorsManager.white,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppPaddingManager.p5,
+                vertical: AppPaddingManager.p10,
+              ),
+              child: Text(_printingTechniquesAvailable[index]),
+            ),
+          ),
+        ),
       ),
     );
+  }
+
+  _printingAreas() {
+    return Wrap(
+      direction: Axis.horizontal,
+      runSpacing: AppPaddingManager.p10,
+      children: List.generate(
+        _printingAreaAvailable.length,
+        (index) => Padding(
+          padding: const EdgeInsets.only(right: AppPaddingManager.p20),
+          child: Tooltip(
+            message: (_selectedPrintingTechniquesIndex == null)
+                ? StringsManager.selectPrintingTechnique
+                : StringsManager.emptyString,
+            child: ElevatedButton(
+              onPressed: (_selectedPrintingTechniquesIndex == null)
+                  ? null
+                  : () {
+                      setState(() {
+                        _selectedPrintingArea = _printingAreaAvailable[index];
+                        _selectedPrintingAreaIndex = index;
+                      });
+                    },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: (_selectedPrintingAreaIndex == index)
+                    ? ColorsManager.primary
+                    : ColorsManager.white,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppPaddingManager.p5,
+                  vertical: AppPaddingManager.p10,
+                ),
+                child: Text(_printingAreaAvailable[index]),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _tshirtQuantity() {
+    return Column(
+      children: [
+        Container(
+          height: AppSizeManager.s30,
+          padding: const EdgeInsets.symmetric(horizontal: AppPaddingManager.p5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(
+              _tshirtQuantityList.length,
+              (index) => SizedBox(
+                height: AppSizeManager.s30,
+                width: AppSizeManager.s40,
+                child: Column(
+                  children: [
+                    Text(_tshirtQuantityList[index]),
+                    const SizedBox(height: AppSizeManager.s4),
+                    Container(
+                      height: AppSizeManager.s10,
+                      width: AppSizeManager.s1,
+                      color: ColorsManager.black,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Slider(
+          min: AppSizeManager.s1,
+          max: AppSizeManager.s500,
+          value: _tshirtQuantityValue.toDouble(),
+          divisions: AppValueManager.v10,
+          onChanged: (value) {
+            setState(() {
+              _tshirtQuantityValue = value.toInt();
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  _finalPricing() {
+    double finalTshirtPrice = _tshirtPrice;
+    double discountedPrice;
+    double sizePrice = 0;
+    sizePrice = _setSizePrice();
+    double printingPrice = 0;
+    printingPrice = _setPrintingPrice();
+
+    _discountValue = _setDiscountValue();
+    finalTshirtPrice = (_tshirtPrice + sizePrice + printingPrice) *
+        (_tshirtQuantityValue.toInt());
+    discountedPrice =
+        finalTshirtPrice - (finalTshirtPrice * _discountValue / 100);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              '${StringsManager.pricingCurrency} $discountedPrice',
+              style: boldTextStyleManager(
+                color: ColorsManager.black,
+                fontSize: FontSizeManager.f22,
+              ),
+            ),
+            const SizedBox(width: AppSizeManager.s10),
+            (_discountValue == 0)
+                ? const SizedBox()
+                : Text(
+                    '$finalTshirtPrice ',
+                    style: const TextStyle(
+                      decoration: TextDecoration.lineThrough,
+                      color: ColorsManager.black,
+                      fontSize: FontSizeManager.f20,
+                    ),
+                  ),
+            Text(
+              '( - $_discountValue% )',
+              style: mediumTextStyleManager(
+                color: ColorsManager.black,
+                fontSize: FontSizeManager.f20,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSizeManager.s10),
+        Text(
+            'T-shirt (${StringsManager.pricingCurrency}${_tshirtPrice + sizePrice}) + Printing (${StringsManager.pricingCurrency}$printingPrice)  -->  Quantitiy (${_tshirtQuantityValue.toInt()})'),
+      ],
+    );
+  }
+
+  _setSizePrice() {
+    if (_selectedTshirtSize == StringsManager.tshirtSizes2XL) {
+      return 20;
+    } else if (_selectedTshirtSize == StringsManager.tshirtSizes3XL) {
+      return 40;
+    } else if (_selectedTshirtSize == StringsManager.tshirtSizes4XL) {
+      return 60;
+    } else if (_selectedTshirtSize == StringsManager.tshirtSizes5XL) {
+      return 80;
+    } else if (_selectedTshirtSize == StringsManager.tshirtSizes6XL) {
+      return 100;
+    } else if (_selectedTshirtSize == StringsManager.tshirtSizes7XL) {
+      return 120;
+    } else {
+      return 0;
+    }
+  }
+
+  _setPrintingPrice() {
+    if (_selectedPrintingTechnique == StringsManager.printingTechniqueDTF) {
+      if (_selectedPrintingArea == StringsManager.printingAreasA3) {
+        return 288;
+      } else if (_selectedPrintingArea == StringsManager.printingAreasA4) {
+        return 144;
+      } else if (_selectedPrintingArea == StringsManager.printingAreasA5) {
+        return 72;
+      } else if (_selectedPrintingArea == StringsManager.printingAreasA6) {
+        return 36;
+      } else if (_selectedPrintingArea == StringsManager.printingAreasA7) {
+        return 12;
+      } else {
+        return 0;
+      }
+    } else {
+      return 0;
+    }
+  }
+
+  _setDiscountValue() {
+    if (_tshirtQuantityValue == 1) {
+      return 0;
+    } else if (_tshirtQuantityValue == 50) {
+      return 5;
+    } else if (_tshirtQuantityValue == 100) {
+      return 7;
+    } else if (_tshirtQuantityValue == 150) {
+      return 9;
+    } else if (_tshirtQuantityValue == 200) {
+      return 11;
+    } else if (_tshirtQuantityValue == 250) {
+      return 13;
+    } else if (_tshirtQuantityValue == 300) {
+      return 15;
+    } else if (_tshirtQuantityValue == 350) {
+      return 17;
+    } else if (_tshirtQuantityValue == 400) {
+      return 19;
+    } else if (_tshirtQuantityValue == 450) {
+      return 21;
+    } else if (_tshirtQuantityValue == 500) {
+      return 23;
+    } else {
+      return 0;
+    }
   }
 }

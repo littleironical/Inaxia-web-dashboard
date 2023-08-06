@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class ColorsManager {
   static const Color primary = Colors.cyan;
+  static const Color primaryAccent = Color.fromARGB(255, 170, 245, 255);
   static const Color white = Colors.white;
   static const Color black = Colors.black;
+  static const Color transparent = Colors.transparent;
 
   // T-SHIRT COLORS
   static const Color beigeTshirt = Color(0xFFEBCD8B);

@@ -66,6 +66,9 @@ flutter:
     - assets/screenshots/web-screenshot.png
     - assets/screenshots/web-screenshot1.png
     - assets/screenshots/web-screenshot2.png
+    - assets/screenshots/web-screenshot3.png
+    - assets/screenshots/web-screenshot4.png
+    - assets/screenshots/web-screenshot5.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

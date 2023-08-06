@@ -1,5 +1,6 @@
 class StringsManager {
   static const String appTitle = 'INAXIA Official';
+  static const String emptyString = '';
 
   // T-SHIRT TYPE
   static const String tshirtTypeTitle = 'Choose T-shirt Type: ';
@@ -34,6 +35,33 @@ class StringsManager {
   static const String redColor = 'Red';
   static const String orangeColor = 'Orange';
   static const String skyBlueColor = 'Sky Blue';
+
+  // PRINTING TYPES
+  static const String printingTechniquesTitle = 'Printing Techniques: ';
+  static const String printingTechniqueDTF = 'DTF (Direct-to-Figment)';
+
+  // PRINTING AREAS
+  static const String printingAreasTitle = 'Printing Areas: (in INCHES)';
+  static const String printingAreasA3 = 'A3 (16x12)';
+  static const String printingAreasA4 = 'A4 (12x8)';
+  static const String printingAreasA5 = 'A5 (8x6)';
+  static const String printingAreasA6 = 'A6 (6x4)';
+  static const String printingAreasA7 = 'A7 (4x2)';
+  static const String selectPrintingTechnique = '*Select Printing Technique*';
+
+  // T-SHIRT QUANTITY
+  static const String tshirtQuantityTitle = 'T-shirt Quantity: ';
+  static const String tshirtQuantity1 = '1';
+  static const String tshirtQuantity50 = '50';
+  static const String tshirtQuantity100 = '100';
+  static const String tshirtQuantity150 = '150';
+  static const String tshirtQuantity200 = '200';
+  static const String tshirtQuantity250 = '250';
+  static const String tshirtQuantity300 = '300';
+  static const String tshirtQuantity350 = '350';
+  static const String tshirtQuantity400 = '400';
+  static const String tshirtQuantity450 = '450';
+  static const String tshirtQuantity500 = '500';
 
   // PRICING
   static const String pricingTitle = 'Final Price: ';

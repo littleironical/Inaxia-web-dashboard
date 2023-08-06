@@ -2,8 +2,15 @@
 
 A Catalogue created for [INAXIA](https://inaxiafashion.com) Offline Business to showcase their Products and Pricing dynamically.
 
-## Screenshots
+## Screenshots (Latest Version)
+
+![INAXIA Web Dashboard](assets/screenshots/web-screenshot3.png)
+![INAXIA Web Dashboard](assets/screenshots/web-screenshot4.png)
+![INAXIA Web Dashboard](assets/screenshots/web-screenshot5.png)
+
+## Old Versions
 
 ![INAXIA Web Dashboard](assets/screenshots/web-screenshot.png)
 ![INAXIA Web Dashboard](assets/screenshots/web-screenshot1.png)
 ![INAXIA Web Dashboard](assets/screenshots/web-screenshot2.png)
+
