@@ -4,11 +4,17 @@ A Catalogue created for [INAXIA](https://inaxiafashion.com) Offline Business to 
 
 ## Screenshots (Latest Version)
 
+![INAXIA Web Dashboard](assets/screenshots/web-screenshot6.png)
+![INAXIA Web Dashboard](assets/screenshots/web-screenshot7.png)
+![INAXIA Web Dashboard](assets/screenshots/web-screenshot8.png)
+
+## Previous Version
+
 ![INAXIA Web Dashboard](assets/screenshots/web-screenshot3.png)
 ![INAXIA Web Dashboard](assets/screenshots/web-screenshot4.png)
 ![INAXIA Web Dashboard](assets/screenshots/web-screenshot5.png)
 
-## Old Versions
+## First Version
 
 ![INAXIA Web Dashboard](assets/screenshots/web-screenshot.png)
 ![INAXIA Web Dashboard](assets/screenshots/web-screenshot1.png)

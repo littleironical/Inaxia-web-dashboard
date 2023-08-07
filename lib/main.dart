@@ -7,6 +7,7 @@ import 'package:inaxia_official_dashboard_web/resources/themes_manager.dart';
 void main() {
   runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: appThemeData,
       home: Scaffold(
         backgroundColor: ColorsManager.white,
