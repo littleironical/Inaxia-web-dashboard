@@ -14,6 +14,7 @@ void main() {
           title: const Text(StringsManager.appTitle),
         ),
         body: const SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: HomeView(),
         ),
       ),
