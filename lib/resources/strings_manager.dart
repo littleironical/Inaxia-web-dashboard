@@ -1,5 +1,5 @@
 class StringsManager {
-  static const String appTitle = 'INAXIA Official';
+  static const String appTitle = 'INAXIA Price Checker';
   static const String emptyString = '';
 
   // T-SHIRT TYPE
