@@ -52,15 +52,11 @@ class StringsManager {
   // T-SHIRT QUANTITY
   static const String tshirtQuantityTitle = 'T-shirt Quantity: ';
   static const String tshirtQuantity1 = '1';
+  static const String tshirtQuantity25 = '25';
   static const String tshirtQuantity50 = '50';
   static const String tshirtQuantity100 = '100';
-  static const String tshirtQuantity150 = '150';
   static const String tshirtQuantity200 = '200';
-  static const String tshirtQuantity250 = '250';
   static const String tshirtQuantity300 = '300';
-  static const String tshirtQuantity350 = '350';
-  static const String tshirtQuantity400 = '400';
-  static const String tshirtQuantity450 = '450';
   static const String tshirtQuantity500 = '500';
 
   // PRICING

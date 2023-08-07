@@ -36,5 +36,9 @@ ThemeData get appThemeData {
       overlayColor: ColorsManager.transparent,
       thumbShape: RoundSliderThumbShape(elevation: AppSizeManager.s0),
     ),
+
+    // scrollbarTheme: const ScrollbarThemeData(
+    //   thickness: 1,
+    // )
   );
 }

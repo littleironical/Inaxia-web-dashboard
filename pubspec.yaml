@@ -60,9 +60,24 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/oversized-tshirt.jpg
-    - assets/images/regular-tshirt.jpg
-    - assets/images/polo-tshirt.jpg
+    - assets/product_images/oversized-tshirts/oversized-tshirt.jpg
+    - assets/product_images/oversized-tshirts/oversized-tshirt-1.jpg
+    - assets/product_images/oversized-tshirts/oversized-tshirt-2.jpg
+    - assets/product_images/oversized-tshirts/oversized-tshirt-3.jpg
+    - assets/product_images/oversized-tshirts/oversized-tshirt-4.jpg
+    - assets/product_images/oversized-tshirts/oversized-tshirt-5.jpg
+    - assets/product_images/regular-tshirts/regular-tshirt.jpg
+    - assets/product_images/regular-tshirts/regular-tshirt-1.jpg
+    - assets/product_images/regular-tshirts/regular-tshirt-2.jpg
+    - assets/product_images/regular-tshirts/regular-tshirt-3.jpg
+    - assets/product_images/regular-tshirts/regular-tshirt-4.jpg
+    - assets/product_images/regular-tshirts/regular-tshirt-5.jpg
+    - assets/product_images/polo-tshirts/polo-tshirt.jpg
+    - assets/product_images/polo-tshirts/polo-tshirt-1.jpg
+    - assets/product_images/polo-tshirts/polo-tshirt-2.jpg
+    - assets/product_images/polo-tshirts/polo-tshirt-3.jpg
+    - assets/product_images/polo-tshirts/polo-tshirt-4.jpg
+    - assets/product_images/polo-tshirts/polo-tshirt-5.jpg
     - assets/screenshots/web-screenshot.png
     - assets/screenshots/web-screenshot1.png
     - assets/screenshots/web-screenshot2.png

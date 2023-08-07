@@ -4,6 +4,7 @@ class AllTshirtTypesModel {
   final double tshirtPrice;
   final List tshirtSizesAvailable;
   final List tshirtColorsAvailable;
+  final List tshirtImages;
 
   AllTshirtTypesModel(
     this.isSelected,
@@ -11,5 +12,6 @@ class AllTshirtTypesModel {
     this.tshirtPrice,
     this.tshirtSizesAvailable,
     this.tshirtColorsAvailable,
+    this.tshirtImages
   );
 }
