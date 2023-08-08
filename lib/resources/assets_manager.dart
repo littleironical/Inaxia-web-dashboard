@@ -1,4 +1,4 @@
-const String _imagePath = 'assets/product_images';
+const String _imagePath = 'https://raw.githubusercontent.com/littleironical/Inaxia-web-dashboard/master/assets/product_images/';
 
 class AssetsManager {
   static const String whatsappLogo = 'assets/logo/whatsapp-logo.jpg';

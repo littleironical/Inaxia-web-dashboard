@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:inaxia_official_dashboard_web/model/models.dart';
 import 'package:inaxia_official_dashboard_web/resources/assets_manager.dart';
@@ -246,7 +245,7 @@ class _HomeViewState extends State<HomeView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _productImageScrolls(),
-          const SizedBox(width: AppSizeManager.s10),
+          const SizedBox(width: AppPaddingManager.p10),
           _productImageBanner(),
         ],
       ),
@@ -257,7 +256,7 @@ class _HomeViewState extends State<HomeView> {
   _mediumScreenBody() {
     return Center(
       child: SizedBox(
-        width: AppSizeManager.s700,
+        width: AppWidgetWidthManager.sw700,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -280,13 +279,13 @@ class _HomeViewState extends State<HomeView> {
     return Padding(
       padding: const EdgeInsets.all(AppPaddingManager.p20),
       child: SizedBox(
-        height: AppSizeManager.s700,
+        height: AppWidgetHeightManager.sh700,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _productImageBanner(),
-            const SizedBox(height: AppSizeManager.s10),
+            const SizedBox(height: AppPaddingManager.p10),
             _productImageScrolls(),
           ],
         ),
@@ -299,7 +298,7 @@ class _HomeViewState extends State<HomeView> {
     return Center(
       child: SizedBox(
         width: double.infinity,
-        height: AppSizeManager.s1700,
+        height: AppWidgetHeightManager.sh1700,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -315,13 +314,13 @@ class _HomeViewState extends State<HomeView> {
   // CONTROLLING ALL IMAGES [IMAGE BANNER + SCROLL IMAGES]
   _smallScreenProductsImages() {
     return SizedBox(
-      height: AppSizeManager.s560,
+      height: AppWidgetHeightManager.sh560,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _productImageBanner(),
-          const SizedBox(height: AppSizeManager.s10),
+          const SizedBox(height: AppPaddingManager.p10),
           _productImageScrolls(),
         ],
       ),
@@ -331,33 +330,61 @@ class _HomeViewState extends State<HomeView> {
   _productImageBanner() {
     return SizedBox(
       height: (_screenWidth >= AppBreakpointManager.b1100)
-          ? AppSizeManager.s600
+          ? AppWidgetHeightManager.sh600
           : (_screenWidth >= AppBreakpointManager.b550)
-              ? AppSizeManager.s500
-              : AppSizeManager.s450,
+              ? AppWidgetHeightManager.sh500
+              : AppWidgetHeightManager.sh450,
       width: (_screenWidth >= AppBreakpointManager.b1100)
-          ? AppSizeManager.s400
+          ? AppWidgetWidthManager.sw400
           : (_screenWidth >= AppBreakpointManager.b550)
-              ? AppSizeManager.s400
+              ? AppWidgetWidthManager.sw400
               : double.maxFinite,
       child: Container(
         color: _selectedTshirtColor,
+        // color: ColorsManager.lightBlack,
         child: InkWell(
-          onTap: () => showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text(StringsManager.imageInteractiveView),
-              content: InteractiveViewer(
-                child: Image.asset(
-                  _selectedTshirtImages[_selectedTshirtImagesIndex],
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-          child: Image.asset(
+          onTap: _interactiveImageView,
+          child: Image.network(
             _selectedTshirtImages[_selectedTshirtImagesIndex],
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) {
+                return child;
+              }
+              return Expanded(
+                child: Container(
+                  color: ColorsManager.lightBlack,
+                ),
+              );
+            },
             fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+
+  _interactiveImageView() {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text(StringsManager.imageInteractiveView),
+        content: Container(
+          color: _selectedTshirtColor,
+          child: InteractiveViewer(
+            child: Image.network(
+              _selectedTshirtImages[_selectedTshirtImagesIndex],
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                }
+                return Expanded(
+                  child: Container(
+                    color: ColorsManager.lightBlack,
+                  ),
+                );
+              },
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       ),
@@ -367,10 +394,10 @@ class _HomeViewState extends State<HomeView> {
   _productImageScrolls() {
     return SizedBox(
       height: (_screenWidth >= AppBreakpointManager.b1100)
-          ? AppSizeManager.s600
-          : AppSizeManager.s100,
+          ? AppWidgetHeightManager.sh600
+          : AppWidgetHeightManager.sh100,
       width: (_screenWidth >= AppBreakpointManager.b1100)
-          ? AppSizeManager.s100
+          ? AppWidgetWidthManager.sw100
           : double.maxFinite,
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
@@ -383,11 +410,11 @@ class _HomeViewState extends State<HomeView> {
           itemCount: _selectedTshirtImages.length,
           separatorBuilder: (context, index) => SizedBox(
             height: (_screenWidth >= AppBreakpointManager.b1100)
-                ? AppSizeManager.s10
-                : AppSizeManager.s0,
+                ? AppWidgetHeightManager.sh10
+                : AppWidgetHeightManager.sh0,
             width: (_screenWidth >= AppBreakpointManager.b1100)
-                ? AppSizeManager.s0
-                : AppSizeManager.s10,
+                ? AppWidgetWidthManager.sw0
+                : AppWidgetWidthManager.sw10,
           ),
           itemBuilder: (context, index) => Padding(
             padding: EdgeInsets.symmetric(
@@ -397,11 +424,11 @@ class _HomeViewState extends State<HomeView> {
             ),
             child: Container(
               height: (_screenWidth >= AppBreakpointManager.b550)
-                  ? AppSizeManager.s120
-                  : AppSizeManager.s80,
+                  ? AppWidgetHeightManager.sh120
+                  : AppWidgetHeightManager.sh80,
               width: (_screenWidth >= AppBreakpointManager.b550)
-                  ? AppSizeManager.s60
-                  : AppSizeManager.s80,
+                  ? AppWidgetWidthManager.sw60
+                  : AppWidgetWidthManager.sw80,
               color: _selectedTshirtColor,
               child: GestureDetector(
                 onTap: () {
@@ -411,8 +438,18 @@ class _HomeViewState extends State<HomeView> {
                 },
                 child: MouseRegion(
                   cursor: SystemMouseCursors.click,
-                  child: Image.asset(
+                  child: Image.network(
                     _selectedTshirtImages[index],
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return Expanded(
+                        child: Container(
+                          color: ColorsManager.lightBlack,
+                        ),
+                      );
+                    },
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -434,50 +471,50 @@ class _HomeViewState extends State<HomeView> {
         children: [
           // T-SHIRT TYPE
           _optionTitle(StringsManager.tshirtTypeTitle, true),
-          _heightSpacing(AppSizeManager.s10),
+          _heightSpacing(AppPaddingManager.p10),
           _tshirtType(),
-          _heightSpacing(AppSizeManager.s20),
+          _heightSpacing(AppPaddingManager.p20),
 
           // T-SHIRT SIZES AVAILABLE
           _optionTitle(StringsManager.tshirtSizesTitle, true),
-          _heightSpacing(AppSizeManager.s10),
+          _heightSpacing(AppPaddingManager.p10),
           _tshirtSizes(),
-          _heightSpacing(AppSizeManager.s20),
+          _heightSpacing(AppPaddingManager.p20),
 
           // T-SHIRT COLORS AVAILABLE
           _optionTitle(StringsManager.tshirtColorsTitle, true),
-          _heightSpacing(AppSizeManager.s10),
+          _heightSpacing(AppPaddingManager.p10),
           _tshirtColors(),
-          _heightSpacing(AppSizeManager.s20),
+          _heightSpacing(AppPaddingManager.p20),
 
           // PRINTING TECHNIQUES
           _optionTitle(StringsManager.printingTechniquesTitle, true),
-          _heightSpacing(AppSizeManager.s10),
+          _heightSpacing(AppPaddingManager.p10),
           _printingTechniques(),
-          _heightSpacing(AppSizeManager.s20),
+          _heightSpacing(AppPaddingManager.p20),
 
           // PRINTING AREA
           _optionTitle(StringsManager.printingAreasTitle, true),
-          _heightSpacing(AppSizeManager.s10),
+          _heightSpacing(AppPaddingManager.p10),
           _printingAreas(),
-          _heightSpacing(AppSizeManager.s20),
+          _heightSpacing(AppPaddingManager.p20),
 
           // T-SHIRT QUANTITY
           _optionTitle(StringsManager.tshirtQuantityTitle, true),
-          _heightSpacing(AppSizeManager.s10),
+          _heightSpacing(AppPaddingManager.p10),
           _tshirtQuantity(),
-          _heightSpacing(AppSizeManager.s20),
+          _heightSpacing(AppPaddingManager.p20),
 
           // FINAL PRICE
           _optionTitle(StringsManager.pricingTitle, false),
-          _heightSpacing(AppSizeManager.s10),
+          _heightSpacing(AppPaddingManager.p10),
           _finalPricing(),
-          _heightSpacing(AppSizeManager.s20),
+          _heightSpacing(AppPaddingManager.p20),
 
           // SEND DETAILS ON WHATSAPP
-          _heightSpacing(AppSizeManager.s10),
+          _heightSpacing(AppPaddingManager.p10),
           _sendDetailsOnWhatsApp(),
-          _heightSpacing(AppSizeManager.s20),
+          _heightSpacing(AppPaddingManager.p20),
         ],
       ),
     );
@@ -612,14 +649,14 @@ class _HomeViewState extends State<HomeView> {
               child: Tooltip(
                 message: _getColorName(_tshirtColorsAvailable[index]),
                 child: Container(
-                  width: AppSizeManager.s30,
-                  height: AppSizeManager.s30,
+                  width: AppWidgetWidthManager.sw30,
+                  height: AppWidgetHeightManager.sh30,
                   decoration: BoxDecoration(
                     color: (_selectedTshirtColorsIndex == index)
                         ? ColorsManager.primary
                         : ColorsManager.transparent,
                     borderRadius: const BorderRadius.all(
-                        Radius.circular(AppSizeManager.s4)),
+                        Radius.circular(AppRadiusManager.r4)),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(AppPaddingManager.p3),
@@ -628,12 +665,12 @@ class _HomeViewState extends State<HomeView> {
                         color: _tshirtColorsAvailable[index],
                         shape: BoxShape.rectangle,
                         borderRadius: const BorderRadius.all(
-                            Radius.circular(AppSizeManager.s30)),
+                            Radius.circular(AppRadiusManager.r30)),
                         border: (_tshirtColorsAvailable[index] ==
                                 ColorsManager.whiteTshirt)
                             ? Border.all(
                                 color: ColorsManager.black,
-                                width: AppSizeManager.s0_5,
+                                width: AppWidgetWidthManager.sw0_5,
                               )
                             : null,
                       ),
@@ -689,6 +726,8 @@ class _HomeViewState extends State<HomeView> {
                 _selectedPrintingTechnique =
                     _printingTechniquesAvailable[index];
                 _selectedPrintingTechniquesIndex = index;
+                _selectedPrintingArea = null;
+                _selectedPrintingAreaIndex = null;
               });
             },
             style: ElevatedButton.styleFrom(
@@ -753,11 +792,11 @@ class _HomeViewState extends State<HomeView> {
     return SizedBox(
       width: (_screenWidth >= AppBreakpointManager.b1100)
           ? double.maxFinite
-          : AppSizeManager.s400,
+          : AppWidgetWidthManager.sw400,
       child: Column(
         children: [
           Container(
-            height: AppSizeManager.s30,
+            height: AppWidgetHeightManager.sh30,
             padding:
                 const EdgeInsets.symmetric(horizontal: AppPaddingManager.p10),
             child: Row(
@@ -765,15 +804,15 @@ class _HomeViewState extends State<HomeView> {
               children: List.generate(
                 _tshirtQuantityList.length,
                 (index) => SizedBox(
-                  height: AppSizeManager.s30,
-                  width: AppSizeManager.s24,
+                  height: AppWidgetHeightManager.sh30,
+                  width: AppWidgetWidthManager.sw27,
                   child: Column(
                     children: [
                       Text(_tshirtQuantityList[index]),
-                      const SizedBox(height: AppSizeManager.s4),
+                      const SizedBox(height: AppWidgetHeightManager.sh4),
                       Container(
-                        height: AppSizeManager.s10,
-                        width: AppSizeManager.s1,
+                        height: AppWidgetHeightManager.sh10,
+                        width: AppWidgetWidthManager.sw1,
                         color: ColorsManager.black,
                       ),
                     ],
@@ -783,8 +822,8 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
           Slider(
-            min: AppSizeManager.s1,
-            max: AppSizeManager.s500,
+            min: AppValueManager.v1.toDouble(),
+            max: AppValueManager.v500.toDouble(),
             value: _tshirtQuantitySliderValue.toDouble(),
             divisions: _tshirtQuantityList.length - 1,
             onChanged: (value) {
@@ -800,33 +839,33 @@ class _HomeViewState extends State<HomeView> {
   }
 
   _setTshirtQuantity(int value) {
-    if (value == 1) {
-      _tshirtQuantityValue = 1;
-    } else if (value == 84) {
-      _tshirtQuantityValue = 25;
-    } else if (value == 167) {
-      _tshirtQuantityValue = 50;
-    } else if (value == 250) {
-      _tshirtQuantityValue = 100;
-    } else if (value == 333) {
-      _tshirtQuantityValue = 200;
-    } else if (value == 416) {
-      _tshirtQuantityValue = 300;
-    } else if (value == 500) {
-      _tshirtQuantityValue = 500;
+    if (value == AppValueManager.v1) {
+      _tshirtQuantityValue = AppValueManager.v1;
+    } else if (value == AppValueManager.v84) {
+      _tshirtQuantityValue = AppValueManager.v25;
+    } else if (value == AppValueManager.v167) {
+      _tshirtQuantityValue = AppValueManager.v50;
+    } else if (value == AppValueManager.v250) {
+      _tshirtQuantityValue = AppValueManager.v100;
+    } else if (value == AppValueManager.v333) {
+      _tshirtQuantityValue = AppValueManager.v200;
+    } else if (value == AppValueManager.v416) {
+      _tshirtQuantityValue = AppValueManager.v300;
+    } else if (value == AppValueManager.v500) {
+      _tshirtQuantityValue = AppValueManager.v500;
     }
   }
 
   // TOTAL PRICING CALCULATION
   _finalPricing() {
-    int sizePrice = 0;
+    int sizePrice = AppValueManager.v0;
     sizePrice = _setSizePrice();
     _printingPrice = _setPrintingPrice();
 
     _discountValue = _setDiscountValue();
     _totalCost = (_tshirtPrice + sizePrice + _printingPrice) *
         (_tshirtQuantityValue.toInt());
-    _finalDiscountedPrice = _totalCost - (_totalCost * _discountValue / 100);
+    _finalDiscountedPrice = _totalCost - (_totalCost * _discountValue / AppValueManager.v100);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -842,8 +881,8 @@ class _HomeViewState extends State<HomeView> {
                 fontSize: FontSizeManager.f22,
               ),
             ),
-            const SizedBox(width: AppSizeManager.s10),
-            (_discountValue == 0)
+            const SizedBox(width: AppWidgetWidthManager.sw10),
+            (_discountValue == AppValueManager.v0)
                 ? const SizedBox()
                 : Text(
                     '$_totalCost ',
@@ -862,7 +901,7 @@ class _HomeViewState extends State<HomeView> {
             ),
           ],
         ),
-        const SizedBox(height: AppSizeManager.s10),
+        const SizedBox(height: AppWidgetHeightManager.sh10),
         Text(
             'T-shirt (${StringsManager.pricingCurrency}${_tshirtPrice + sizePrice}) + Printing (${StringsManager.pricingCurrency}$_printingPrice)  ->  Quantitiy (${_tshirtQuantityValue.toInt()})'),
       ],
@@ -871,59 +910,59 @@ class _HomeViewState extends State<HomeView> {
 
   _setSizePrice() {
     if (_selectedTshirtSize == StringsManager.tshirtSizes2XL) {
-      return 20;
+      return AppValueManager.v20;
     } else if (_selectedTshirtSize == StringsManager.tshirtSizes3XL) {
-      return 40;
+      return AppValueManager.v40;
     } else if (_selectedTshirtSize == StringsManager.tshirtSizes4XL) {
-      return 60;
+      return AppValueManager.v60;
     } else if (_selectedTshirtSize == StringsManager.tshirtSizes5XL) {
-      return 80;
+      return AppValueManager.v80;
     } else if (_selectedTshirtSize == StringsManager.tshirtSizes6XL) {
-      return 100;
+      return AppValueManager.v100;
     } else if (_selectedTshirtSize == StringsManager.tshirtSizes7XL) {
-      return 120;
+      return AppValueManager.v120;
     } else {
-      return 0;
+      return AppValueManager.v0;
     }
   }
 
   _setPrintingPrice() {
     if (_selectedPrintingTechnique == StringsManager.printingTechniqueDTF) {
       if (_selectedPrintingArea == StringsManager.printingAreasA3) {
-        return 288;
+        return AppValueManager.v288;
       } else if (_selectedPrintingArea == StringsManager.printingAreasA4) {
-        return 144;
+        return AppValueManager.v144;
       } else if (_selectedPrintingArea == StringsManager.printingAreasA5) {
-        return 72;
+        return AppValueManager.v72;
       } else if (_selectedPrintingArea == StringsManager.printingAreasA6) {
-        return 36;
+        return AppValueManager.v36;
       } else if (_selectedPrintingArea == StringsManager.printingAreasA7) {
-        return 12;
+        return AppValueManager.v12;
       } else {
-        return 0;
+        return AppValueManager.v0;
       }
     } else {
-      return 0;
+      return AppValueManager.v0;
     }
   }
 
   _setDiscountValue() {
     if (_tshirtQuantityValue == 1) {
-      return 0;
+      return AppValueManager.v0;
     } else if (_tshirtQuantityValue == 25) {
-      return 0;
+      return AppValueManager.v0;
     } else if (_tshirtQuantityValue == 50) {
-      return 5;
+      return AppValueManager.v5;
     } else if (_tshirtQuantityValue == 100) {
-      return 7;
+      return AppValueManager.v7;
     } else if (_tshirtQuantityValue == 200) {
-      return 9;
+      return AppValueManager.v9;
     } else if (_tshirtQuantityValue == 300) {
-      return 11;
+      return AppValueManager.v11;
     } else if (_tshirtQuantityValue == 500) {
-      return 13;
+      return AppValueManager.v13;
     } else {
-      return 0;
+      return AppValueManager.v0;
     }
   }
 
@@ -931,21 +970,21 @@ class _HomeViewState extends State<HomeView> {
     return InkWell(
       onTap: _sendWhatsappMessage,
       child: Container(
-        height: AppSizeManager.s50,
+        height: AppWidgetHeightManager.sh50,
         width: double.maxFinite,
         decoration: const BoxDecoration(
             color: ColorsManager.whatsappGreen,
             borderRadius:
-                BorderRadius.all(Radius.circular(AppSizeManager.s10))),
+                BorderRadius.all(Radius.circular(AppRadiusManager.r10))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: AppSizeManager.s30,
+              height: AppWidgetHeightManager.sh30,
               child: Image.asset(AssetsManager.whatsappLogo),
             ),
-            const SizedBox(width: AppSizeManager.s10),
+            const SizedBox(width: AppWidgetWidthManager.sw10),
             Text(
               StringsManager.whatsappButtonText,
               style: mediumTextStyleManager(

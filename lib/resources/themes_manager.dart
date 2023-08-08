@@ -5,7 +5,7 @@ import 'package:inaxia_official_dashboard_web/resources/values_manager.dart';
 ThemeData get appThemeData {
   return ThemeData(
     splashColor: ColorsManager.transparent,
-    
+
     appBarTheme: const AppBarTheme(
       backgroundColor: ColorsManager.primary,
       centerTitle: true,
@@ -22,21 +22,23 @@ ThemeData get appThemeData {
       style: OutlinedButton.styleFrom(
         side: const BorderSide(
           color: ColorsManager.black, 
-          width: AppSizeManager.s1,
+          width: AppWidgetWidthManager.sw1,
         ),
         foregroundColor: ColorsManager.black,
       ),
     ),
 
     sliderTheme: const SliderThemeData(
-      trackHeight: AppSizeManager.s8,
+      trackHeight: AppWidgetHeightManager.sh8,
       thumbColor: ColorsManager.primary,
       activeTickMarkColor: ColorsManager.primary,
       inactiveTickMarkColor: ColorsManager.primaryAccent,
       activeTrackColor: ColorsManager.primary,
       inactiveTrackColor: ColorsManager.primaryAccent,
       overlayColor: ColorsManager.transparent,
-      thumbShape: RoundSliderThumbShape(elevation: AppSizeManager.s0),
+      thumbShape: RoundSliderThumbShape(
+        elevation: AppWidgetHeightManager.sh0,
+      ),
     ),
 
     // scrollbarTheme: const ScrollbarThemeData(

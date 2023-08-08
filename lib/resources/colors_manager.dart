@@ -5,6 +5,7 @@ class ColorsManager {
   static const Color primaryAccent = Color(0xFFAAF5FF);
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
+  static const Color lightBlack = Color.fromARGB(40, 0, 0, 0);
   static const Color transparent = Color(0x00000000);
   static const Color whatsappGreen = Color(0xFF25D366);
 

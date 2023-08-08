@@ -1,7 +1,7 @@
 class StringsManager {
   static const String appTitle = 'INAXIA Price Checker';
   static const String emptyString = '';
-  static const String whatsappButtonText = 'Send Details on WhatsApp';
+  static const String whatsappButtonText = 'Share on WhatsApp';
   static const String imageInteractiveView = 'Interactive View';
 
   // T-SHIRT TYPE

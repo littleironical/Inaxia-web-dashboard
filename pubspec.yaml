@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.3+4 # VERSION - INTERACTIVE IMAGE VIEW
+version: 1.0.4+5 # VERSION - SHIMMERS + NETWORK IMAGES + BUG FIXES
 
 environment:
   sdk: '>=3.0.5 <4.0.0'
@@ -32,12 +32,11 @@ dependencies:
     sdk: flutter
 
   url_launcher: ^6.1.12
-  carousel_slider: ^4.2.1
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  # cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -64,33 +63,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/logo/whatsapp-logo.jpg
-    - assets/product_images/oversized-tshirts/oversized-tshirt.jpg
-    - assets/product_images/oversized-tshirts/oversized-tshirt-1.jpg
-    - assets/product_images/oversized-tshirts/oversized-tshirt-2.jpg
-    - assets/product_images/oversized-tshirts/oversized-tshirt-3.jpg
-    - assets/product_images/oversized-tshirts/oversized-tshirt-4.jpg
-    - assets/product_images/oversized-tshirts/oversized-tshirt-5.jpg
-    - assets/product_images/regular-tshirts/regular-tshirt.jpg
-    - assets/product_images/regular-tshirts/regular-tshirt-1.jpg
-    - assets/product_images/regular-tshirts/regular-tshirt-2.jpg
-    - assets/product_images/regular-tshirts/regular-tshirt-3.jpg
-    - assets/product_images/regular-tshirts/regular-tshirt-4.jpg
-    - assets/product_images/regular-tshirts/regular-tshirt-5.jpg
-    - assets/product_images/polo-tshirts/polo-tshirt.jpg
-    - assets/product_images/polo-tshirts/polo-tshirt-1.jpg
-    - assets/product_images/polo-tshirts/polo-tshirt-2.jpg
-    - assets/product_images/polo-tshirts/polo-tshirt-3.jpg
-    - assets/product_images/polo-tshirts/polo-tshirt-4.jpg
-    - assets/product_images/polo-tshirts/polo-tshirt-5.jpg
-    - assets/screenshots/web-screenshot.png
-    - assets/screenshots/web-screenshot1.png
-    - assets/screenshots/web-screenshot2.png
-    - assets/screenshots/web-screenshot3.png
-    - assets/screenshots/web-screenshot4.png
-    - assets/screenshots/web-screenshot5.png
-    - assets/screenshots/web-screenshot6.png
-    - assets/screenshots/web-screenshot7.png
-    - assets/screenshots/web-screenshot8.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
