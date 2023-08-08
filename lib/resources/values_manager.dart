@@ -42,7 +42,7 @@ class AppSizeManager {
   static const double s560 = 560;
   static const double s600 = 600;
   static const double s700 = 700;
-  static const double s1500 = 1500;
+  static const double s1700 = 1700;
 }
 
 class AppValueManager {

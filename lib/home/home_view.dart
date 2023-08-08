@@ -69,7 +69,7 @@ class _HomeViewState extends State<HomeView> {
 
   // FINAL PRICING 
   late double _tshirtPrice;
-  late double _printingPrice;
+  late int _printingPrice;
   late double _totalCost;
   int _discountValue = 0;
   late double _finalDiscountedPrice;
@@ -107,12 +107,11 @@ class _HomeViewState extends State<HomeView> {
           ColorsManager.greenTshirt,
         ],
         [
-          // AssetsManager.poloTshirt,
-          AssetsManager.poloTshirt1,
           AssetsManager.poloTshirt2,
           AssetsManager.poloTshirt3,
           AssetsManager.poloTshirt4,
           AssetsManager.poloTshirt5,
+          AssetsManager.poloTshirt1,
         ],
       ),
     );
@@ -144,7 +143,6 @@ class _HomeViewState extends State<HomeView> {
           ColorsManager.skyBlueTshirt,
         ],
         [
-          // AssetsManager.regularTshirt,
           AssetsManager.regularTshirt1,
           AssetsManager.regularTshirt2,
           AssetsManager.regularTshirt3,
@@ -176,7 +174,6 @@ class _HomeViewState extends State<HomeView> {
           ColorsManager.navyTshirt,
         ],
         [
-          // AssetsManager.oversizedTshirt,
           AssetsManager.oversizedTshirt1,
           AssetsManager.oversizedTshirt2,
           AssetsManager.oversizedTshirt3,
@@ -301,7 +298,7 @@ class _HomeViewState extends State<HomeView> {
     return Center(
       child: SizedBox(
         width: double.infinity,
-        height: AppSizeManager.s1500,
+        height: AppSizeManager.s1700,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
