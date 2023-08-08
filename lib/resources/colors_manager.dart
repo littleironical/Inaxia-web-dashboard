@@ -6,6 +6,7 @@ class ColorsManager {
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
   static const Color transparent = Color(0x00000000);
+  static const Color whatsappGreen = Color(0xFF25D366);
 
   // T-SHIRT COLORS
   static const Color beigeTshirt = Color(0xFFEBCD8B);

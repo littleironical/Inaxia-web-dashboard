@@ -6,6 +6,7 @@ import 'package:inaxia_official_dashboard_web/resources/fonts_manager.dart';
 import 'package:inaxia_official_dashboard_web/resources/strings_manager.dart';
 import 'package:inaxia_official_dashboard_web/resources/styles_manager.dart';
 import 'package:inaxia_official_dashboard_web/resources/values_manager.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -20,7 +21,6 @@ class _HomeViewState extends State<HomeView> {
 
   // FOR T-SHIRT TYPE & PRICE
   int _selectedTshirtTypeIndex = 0;
-  late double _tshirtPrice;
 
   // FOR T-SHIRT IMAGES
   late List _selectedTshirtImages;
@@ -67,8 +67,12 @@ class _HomeViewState extends State<HomeView> {
   int _tshirtQuantityValue = AppValueManager.v1;
   int _tshirtQuantitySliderValue = AppValueManager.v1;
 
-  // DISCOUNT
+  // FINAL PRICING 
+  late double _tshirtPrice;
+  late double _printingPrice;
+  late double _totalCost;
   int _discountValue = 0;
+  late double _finalDiscountedPrice;
 
   // INITIALIZING ALL DATA
   @override
@@ -330,10 +334,14 @@ class _HomeViewState extends State<HomeView> {
     return SizedBox(
       height: (_screenWidth >= AppBreakpointManager.b1100)
           ? AppSizeManager.s600
-          : (_screenWidth >= AppBreakpointManager.b550) ? AppSizeManager.s500 : AppSizeManager.s450,
+          : (_screenWidth >= AppBreakpointManager.b550)
+              ? AppSizeManager.s500
+              : AppSizeManager.s450,
       width: (_screenWidth >= AppBreakpointManager.b1100)
           ? AppSizeManager.s400
-          : (_screenWidth >= AppBreakpointManager.b550) ? AppSizeManager.s400 : double.maxFinite,
+          : (_screenWidth >= AppBreakpointManager.b550)
+              ? AppSizeManager.s400
+              : double.maxFinite,
       child: Container(
         color: _selectedTshirtColor,
         child: Image.asset(
@@ -376,8 +384,12 @@ class _HomeViewState extends State<HomeView> {
                   : AppPaddingManager.p0,
             ),
             child: Container(
-              height: (_screenWidth >= AppBreakpointManager.b550) ? AppSizeManager.s120 : AppSizeManager.s80,
-              width: (_screenWidth >= AppBreakpointManager.b550) ? AppSizeManager.s60 : AppSizeManager.s80,
+              height: (_screenWidth >= AppBreakpointManager.b550)
+                  ? AppSizeManager.s120
+                  : AppSizeManager.s80,
+              width: (_screenWidth >= AppBreakpointManager.b550)
+                  ? AppSizeManager.s60
+                  : AppSizeManager.s80,
               color: _selectedTshirtColor,
               child: GestureDetector(
                 onTap: () {
@@ -400,6 +412,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  // DYNAMIC OPTIONS
   _productOptions() {
     return Padding(
       padding: const EdgeInsets.all(AppPaddingManager.p20),
@@ -449,11 +462,10 @@ class _HomeViewState extends State<HomeView> {
           _finalPricing(),
           _heightSpacing(AppSizeManager.s20),
 
-          // TODO SEND QUERY ON WHATSAPP
-          // _optionTitle(StringsManager.pricingTitle, false),
-          // _heightSpacing(AppSizeManager.s10),
-          // _finalPricing(),
-          // _heightSpacing(AppSizeManager.s20),
+          // SEND DETAILS ON WHATSAPP
+          _heightSpacing(AppSizeManager.s10),
+          _sendDetailsOnWhatsApp(),
+          _heightSpacing(AppSizeManager.s20),
         ],
       ),
     );
@@ -624,6 +636,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  // FROM COLOR TO STRING
   _getColorName(Color color) {
     if (color == ColorsManager.beigeTshirt) {
       return StringsManager.beigeColor;
@@ -792,19 +805,17 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
+  // TOTAL PRICING CALCULATION
   _finalPricing() {
-    double finalTshirtPrice = _tshirtPrice;
-    double discountedPrice;
     int sizePrice = 0;
     sizePrice = _setSizePrice();
-    int printingPrice = 0;
-    printingPrice = _setPrintingPrice();
+    _printingPrice = _setPrintingPrice();
 
     _discountValue = _setDiscountValue();
-    finalTshirtPrice = (_tshirtPrice + sizePrice + printingPrice) *
+    _totalCost = (_tshirtPrice + sizePrice + _printingPrice) *
         (_tshirtQuantityValue.toInt());
-    discountedPrice =
-        finalTshirtPrice - (finalTshirtPrice * _discountValue / 100);
+    _finalDiscountedPrice =
+        _totalCost - (_totalCost * _discountValue / 100);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -814,7 +825,7 @@ class _HomeViewState extends State<HomeView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              '${StringsManager.pricingCurrency} $discountedPrice',
+              '${StringsManager.pricingCurrency} $_finalDiscountedPrice',
               style: boldTextStyleManager(
                 color: ColorsManager.black,
                 fontSize: FontSizeManager.f22,
@@ -824,7 +835,7 @@ class _HomeViewState extends State<HomeView> {
             (_discountValue == 0)
                 ? const SizedBox()
                 : Text(
-                    '$finalTshirtPrice ',
+                    '$_totalCost ',
                     style: const TextStyle(
                       decoration: TextDecoration.lineThrough,
                       color: ColorsManager.black,
@@ -842,7 +853,7 @@ class _HomeViewState extends State<HomeView> {
         ),
         const SizedBox(height: AppSizeManager.s10),
         Text(
-            'T-shirt (${StringsManager.pricingCurrency}${_tshirtPrice + sizePrice}) + Printing (${StringsManager.pricingCurrency}$printingPrice)  ->  Quantitiy (${_tshirtQuantityValue.toInt()})'),
+            'T-shirt (${StringsManager.pricingCurrency}${_tshirtPrice + sizePrice}) + Printing (${StringsManager.pricingCurrency}$_printingPrice)  ->  Quantitiy (${_tshirtQuantityValue.toInt()})'),
       ],
     );
   }
@@ -902,6 +913,51 @@ class _HomeViewState extends State<HomeView> {
       return 13;
     } else {
       return 0;
+    }
+  }
+
+  _sendDetailsOnWhatsApp() {
+    return InkWell(
+      onTap: _sendWhatsappMessage,
+      child: Container(
+        height: AppSizeManager.s50,
+        width: double.maxFinite,
+        decoration: const BoxDecoration(
+            color: ColorsManager.whatsappGreen,
+            borderRadius:
+                BorderRadius.all(Radius.circular(AppSizeManager.s10))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: AppSizeManager.s30,
+              child: Image.asset(AssetsManager.whatsappLogo),
+            ),
+            const SizedBox(width: AppSizeManager.s10),
+            Text(
+              StringsManager.whatsappButtonText,
+              style: boldTextStyleManager(
+                color: ColorsManager.white,
+                fontSize: FontSizeManager.f18,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future _sendWhatsappMessage() async {
+    // const String whatsappNumber = '919540460273'; // NISHANT'S NUMBER
+    const String whatsappNumber = '919319289478'; // INAXIA OFFICIAL WHATSAPP NUMBER
+    String message = 'Hi, I\'m looking for... \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_selectedPrintingArea \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPrice \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_totalCost \nDiscount: $_discountValue% \nFinal Price: ₹$_finalDiscountedPrice';
+    final url = Uri.parse("https://wa.me/$whatsappNumber?text=$message");
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
     }
   }
 }

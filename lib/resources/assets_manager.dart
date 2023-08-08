@@ -1,6 +1,7 @@
 const String _imagePath = 'assets/product_images';
 
 class AssetsManager {
+  static const String whatsappLogo = 'assets/logo/whatsapp-logo.jpg';
   static const String poloTshirt = '$_imagePath/polo-tshirts/polo-tshirt.jpg';
   static const String poloTshirt1 = '$_imagePath/polo-tshirts/polo-tshirt-1.jpg';
   static const String poloTshirt2 = '$_imagePath/polo-tshirts/polo-tshirt-2.jpg';
