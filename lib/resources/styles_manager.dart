@@ -13,7 +13,7 @@ TextStyle _textStyle(
   );
 }
 
-// BOLD STYLE
+// BOLD TEXT STYLE
 TextStyle boldTextStyleManager({
   required Color color,
   double fontSize = FontSizeManager.f14,

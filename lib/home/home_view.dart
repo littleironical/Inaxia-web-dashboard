@@ -948,7 +948,7 @@ class _HomeViewState extends State<HomeView> {
             const SizedBox(width: AppSizeManager.s10),
             Text(
               StringsManager.whatsappButtonText,
-              style: boldTextStyleManager(
+              style: mediumTextStyleManager(
                 color: ColorsManager.white,
                 fontSize: FontSizeManager.f18,
               ),
