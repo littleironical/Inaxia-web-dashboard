@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:inaxia_official_dashboard_web/model/models.dart';
 import 'package:inaxia_official_dashboard_web/resources/assets_manager.dart';
@@ -67,7 +68,7 @@ class _HomeViewState extends State<HomeView> {
   int _tshirtQuantityValue = AppValueManager.v1;
   int _tshirtQuantitySliderValue = AppValueManager.v1;
 
-  // FINAL PRICING 
+  // FINAL PRICING
   late double _tshirtPrice;
   late int _printingPrice;
   late double _totalCost;
@@ -341,9 +342,23 @@ class _HomeViewState extends State<HomeView> {
               : double.maxFinite,
       child: Container(
         color: _selectedTshirtColor,
-        child: Image.asset(
-          _selectedTshirtImages[_selectedTshirtImagesIndex],
-          fit: BoxFit.cover,
+        child: InkWell(
+          onTap: () => showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text(StringsManager.imageInteractiveView),
+              content: InteractiveViewer(
+                child: Image.asset(
+                  _selectedTshirtImages[_selectedTshirtImagesIndex],
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          child: Image.asset(
+            _selectedTshirtImages[_selectedTshirtImagesIndex],
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
@@ -811,8 +826,7 @@ class _HomeViewState extends State<HomeView> {
     _discountValue = _setDiscountValue();
     _totalCost = (_tshirtPrice + sizePrice + _printingPrice) *
         (_tshirtQuantityValue.toInt());
-    _finalDiscountedPrice =
-        _totalCost - (_totalCost * _discountValue / 100);
+    _finalDiscountedPrice = _totalCost - (_totalCost * _discountValue / 100);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -947,8 +961,10 @@ class _HomeViewState extends State<HomeView> {
 
   Future _sendWhatsappMessage() async {
     // const String whatsappNumber = '919540460273'; // NISHANT'S NUMBER
-    const String whatsappNumber = '919319289478'; // INAXIA OFFICIAL WHATSAPP NUMBER
-    String message = 'Hi, I\'m looking for... \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_selectedPrintingArea \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPrice \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_totalCost \nDiscount: $_discountValue% \nFinal Price: ₹$_finalDiscountedPrice';
+    const String whatsappNumber =
+        '919319289478'; // INAXIA OFFICIAL WHATSAPP NUMBER
+    String message =
+        'Hi, I\'m looking for... \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_selectedPrintingArea \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPrice \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_totalCost \nDiscount: $_discountValue% \nFinal Price: ₹$_finalDiscountedPrice';
     final url = Uri.parse("https://wa.me/$whatsappNumber?text=$message");
     if (!await launchUrl(
       url,

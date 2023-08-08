@@ -4,6 +4,8 @@ import 'package:inaxia_official_dashboard_web/resources/values_manager.dart';
 
 ThemeData get appThemeData {
   return ThemeData(
+    splashColor: ColorsManager.transparent,
+    
     appBarTheme: const AppBarTheme(
       backgroundColor: ColorsManager.primary,
       centerTitle: true,
