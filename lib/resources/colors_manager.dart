@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ColorsManager {
-  static const Color primary = Color(0xFF00BCD4);
-  static const Color primaryAccent = Color(0xFFAAF5FF);
+  static const Color primary = Color(0xFF1F2022);
+  static const Color primaryAccent = Color(0x961F2022);
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
   static const Color lightBlack = Color.fromARGB(40, 0, 0, 0);

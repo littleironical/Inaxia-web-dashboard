@@ -36,3 +36,15 @@ TextStyle mediumTextStyleManager({
     color,
   );
 }
+
+// REGULAR STYLE
+TextStyle regularTextStyleManager({
+  required Color color,
+  double fontSize = FontSizeManager.f14,
+}) {
+  return _textStyle(
+    FontWeightManager.regular,
+    fontSize,
+    color,
+  );
+}

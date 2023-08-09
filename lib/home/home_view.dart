@@ -3,6 +3,7 @@ import 'package:inaxia_official_dashboard_web/model/models.dart';
 import 'package:inaxia_official_dashboard_web/resources/assets_manager.dart';
 import 'package:inaxia_official_dashboard_web/resources/colors_manager.dart';
 import 'package:inaxia_official_dashboard_web/resources/fonts_manager.dart';
+import 'package:inaxia_official_dashboard_web/resources/icons_manager.dart';
 import 'package:inaxia_official_dashboard_web/resources/strings_manager.dart';
 import 'package:inaxia_official_dashboard_web/resources/styles_manager.dart';
 import 'package:inaxia_official_dashboard_web/resources/values_manager.dart';
@@ -314,7 +315,7 @@ class _HomeViewState extends State<HomeView> {
   // CONTROLLING ALL IMAGES [IMAGE BANNER + SCROLL IMAGES]
   _smallScreenProductsImages() {
     return SizedBox(
-      height: AppWidgetHeightManager.sh560,
+      height: AppWidgetHeightManager.sh700,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -328,12 +329,14 @@ class _HomeViewState extends State<HomeView> {
   }
 
   _productImageBanner() {
+    String? swipeDirection;
+
     return SizedBox(
       height: (_screenWidth >= AppBreakpointManager.b1100)
           ? AppWidgetHeightManager.sh600
           : (_screenWidth >= AppBreakpointManager.b550)
               ? AppWidgetHeightManager.sh500
-              : AppWidgetHeightManager.sh450,
+              : AppWidgetHeightManager.sh590,
       width: (_screenWidth >= AppBreakpointManager.b1100)
           ? AppWidgetWidthManager.sw400
           : (_screenWidth >= AppBreakpointManager.b550)
@@ -341,22 +344,60 @@ class _HomeViewState extends State<HomeView> {
               : double.maxFinite,
       child: Container(
         color: _selectedTshirtColor,
-        // color: ColorsManager.lightBlack,
-        child: InkWell(
+        child: GestureDetector(
           onTap: _interactiveImageView,
+          onPanUpdate: (details) {
+            swipeDirection = details.delta.dx < 0 ? 'left' : 'right';
+          },
+          onPanEnd: (details) {
+            if (swipeDirection == null) {
+              return;
+            }
+
+            // SWIPED LEFT - NEXT IMAGE TO BE SEEN
+            if (swipeDirection == 'left') {
+              if (_selectedTshirtImagesIndex ==
+                  (_allTshirtTypes[_selectedTshirtTypeIndex]
+                          .tshirtImages
+                          .length -
+                      1)) {
+                return;
+              } else {
+                setState(() {
+                  _selectedTshirtImagesIndex++;
+                });
+              }
+            }
+
+            // SWIPED RIGHT - PREVIUOS IMAGE TO BE SEEN
+            else if (swipeDirection == 'right') {
+              if (_selectedTshirtImagesIndex == 0) {
+                return;
+              } else {
+                setState(() {
+                  _selectedTshirtImagesIndex--;
+                });
+              }
+            }
+          },
           child: Image.network(
             _selectedTshirtImages[_selectedTshirtImagesIndex],
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) {
                 return child;
               }
-              return Expanded(
-                child: Container(
-                  color: ColorsManager.lightBlack,
-                ),
+              return Container(
+                color: ColorsManager.lightBlack,
+              );
+            },
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                color: ColorsManager.lightBlack,
+                child: const Icon(IconsManager.error),
               );
             },
             fit: BoxFit.cover,
+            alignment: Alignment.topCenter,
           ),
         ),
       ),
@@ -377,13 +418,18 @@ class _HomeViewState extends State<HomeView> {
                 if (loadingProgress == null) {
                   return child;
                 }
-                return Expanded(
-                  child: Container(
-                    color: ColorsManager.lightBlack,
-                  ),
+                return Container(
+                  color: ColorsManager.lightBlack,
+                );
+              },
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  color: ColorsManager.lightBlack,
+                  child: const Icon(IconsManager.error),
                 );
               },
               fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
             ),
           ),
         ),
@@ -438,19 +484,34 @@ class _HomeViewState extends State<HomeView> {
                 },
                 child: MouseRegion(
                   cursor: SystemMouseCursors.click,
-                  child: Image.network(
-                    _selectedTshirtImages[index],
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
-                      return Expanded(
-                        child: Container(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: (_selectedTshirtImagesIndex == index)
+                          ? Border.all(
+                              color: ColorsManager.primary,
+                              width: AppWidgetWidthManager.sw2,
+                            )
+                          : null,
+                    ),
+                    child: Image.network(
+                      _selectedTshirtImages[index],
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Container(
                           color: ColorsManager.lightBlack,
-                        ),
-                      );
-                    },
-                    fit: BoxFit.cover,
+                        );
+                      },
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: ColorsManager.lightBlack,
+                          child: const Icon(IconsManager.error),
+                        );
+                      },
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                    ),
                   ),
                 ),
               ),
@@ -482,7 +543,7 @@ class _HomeViewState extends State<HomeView> {
           _heightSpacing(AppPaddingManager.p20),
 
           // T-SHIRT COLORS AVAILABLE
-          _optionTitle(StringsManager.tshirtColorsTitle, true),
+          _tshirtColorsTitle(),
           _heightSpacing(AppPaddingManager.p10),
           _tshirtColors(),
           _heightSpacing(AppPaddingManager.p20),
@@ -587,8 +648,14 @@ class _HomeViewState extends State<HomeView> {
                   : ColorsManager.white,
             ),
             child: Padding(
-              padding: const EdgeInsets.all(AppPaddingManager.p10),
-              child: Text(_allTshirtTypes[index].tshirtType),
+              padding:
+                  const EdgeInsets.symmetric(vertical: AppPaddingManager.p15),
+              child: Text(
+                _allTshirtTypes[index].tshirtType,
+                style: (_allTshirtTypes[index].isSelected == true)
+                    ? regularTextStyleManager(color: ColorsManager.white)
+                    : null,
+              ),
             ),
           ),
         ),
@@ -617,15 +684,31 @@ class _HomeViewState extends State<HomeView> {
                   : ColorsManager.white,
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppPaddingManager.p5,
-                vertical: AppPaddingManager.p10,
+              padding:
+                  const EdgeInsets.symmetric(vertical: AppPaddingManager.p15),
+              child: Text(
+                _tshirtSizesAvaialble[index],
+                style: (_selectedTshirtSizeIndex == index)
+                    ? regularTextStyleManager(color: ColorsManager.white)
+                    : null,
               ),
-              child: Text(_tshirtSizesAvaialble[index]),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  _tshirtColorsTitle() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _optionTitle(StringsManager.tshirtColorsTitle, true),
+        const SizedBox(width: AppWidgetWidthManager.sw1),
+        Text(
+            '(${_getColorName(_tshirtColorsAvailable[_selectedTshirtColorsIndex])})'),
+      ],
     );
   }
 
@@ -636,7 +719,7 @@ class _HomeViewState extends State<HomeView> {
       children: List.generate(
         _tshirtColorsAvailable.length,
         (index) => Padding(
-          padding: const EdgeInsets.only(right: AppPaddingManager.p20),
+          padding: const EdgeInsets.only(right: AppPaddingManager.p10),
           child: MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
@@ -649,8 +732,8 @@ class _HomeViewState extends State<HomeView> {
               child: Tooltip(
                 message: _getColorName(_tshirtColorsAvailable[index]),
                 child: Container(
-                  width: AppWidgetWidthManager.sw30,
-                  height: AppWidgetHeightManager.sh30,
+                  width: AppWidgetWidthManager.sw40,
+                  height: AppWidgetHeightManager.sh40,
                   decoration: BoxDecoration(
                     color: (_selectedTshirtColorsIndex == index)
                         ? ColorsManager.primary
@@ -669,7 +752,7 @@ class _HomeViewState extends State<HomeView> {
                         border: (_tshirtColorsAvailable[index] ==
                                 ColorsManager.whiteTshirt)
                             ? Border.all(
-                                color: ColorsManager.black,
+                                color: ColorsManager.primary,
                                 width: AppWidgetWidthManager.sw0_5,
                               )
                             : null,
@@ -736,11 +819,14 @@ class _HomeViewState extends State<HomeView> {
                   : ColorsManager.white,
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppPaddingManager.p5,
-                vertical: AppPaddingManager.p10,
+              padding:
+                  const EdgeInsets.symmetric(vertical: AppPaddingManager.p15),
+              child: Text(
+                _printingTechniquesAvailable[index],
+                style: (_selectedPrintingTechniquesIndex == index)
+                    ? regularTextStyleManager(color: ColorsManager.white)
+                    : null,
               ),
-              child: Text(_printingTechniquesAvailable[index]),
             ),
           ),
         ),
@@ -775,11 +861,14 @@ class _HomeViewState extends State<HomeView> {
                     : ColorsManager.white,
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppPaddingManager.p5,
-                  vertical: AppPaddingManager.p10,
+                padding:
+                    const EdgeInsets.symmetric(vertical: AppPaddingManager.p15),
+                child: Text(
+                  _printingAreaAvailable[index],
+                  style: (_selectedPrintingAreaIndex == index)
+                      ? regularTextStyleManager(color: ColorsManager.white)
+                      : null,
                 ),
-                child: Text(_printingAreaAvailable[index]),
               ),
             ),
           ),
@@ -813,7 +902,7 @@ class _HomeViewState extends State<HomeView> {
                       Container(
                         height: AppWidgetHeightManager.sh10,
                         width: AppWidgetWidthManager.sw1,
-                        color: ColorsManager.black,
+                        color: ColorsManager.primary,
                       ),
                     ],
                   ),
@@ -865,7 +954,8 @@ class _HomeViewState extends State<HomeView> {
     _discountValue = _setDiscountValue();
     _totalCost = (_tshirtPrice + sizePrice + _printingPrice) *
         (_tshirtQuantityValue.toInt());
-    _finalDiscountedPrice = _totalCost - (_totalCost * _discountValue / AppValueManager.v100);
+    _finalDiscountedPrice =
+        _totalCost - (_totalCost * _discountValue / AppValueManager.v100);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -878,7 +968,7 @@ class _HomeViewState extends State<HomeView> {
               '${StringsManager.pricingCurrency} $_finalDiscountedPrice',
               style: boldTextStyleManager(
                 color: ColorsManager.black,
-                fontSize: FontSizeManager.f22,
+                fontSize: FontSizeManager.f24,
               ),
             ),
             const SizedBox(width: AppWidgetWidthManager.sw10),

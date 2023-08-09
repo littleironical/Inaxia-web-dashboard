@@ -32,7 +32,7 @@ ThemeData get appThemeData {
       trackHeight: AppWidgetHeightManager.sh8,
       thumbColor: ColorsManager.primary,
       activeTickMarkColor: ColorsManager.primary,
-      inactiveTickMarkColor: ColorsManager.primaryAccent,
+      inactiveTickMarkColor: ColorsManager.transparent,
       activeTrackColor: ColorsManager.primary,
       inactiveTrackColor: ColorsManager.primaryAccent,
       overlayColor: ColorsManager.transparent,
