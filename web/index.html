@@ -18,7 +18,7 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="INAXIA Price Checker" content="An Online Catalogue of INAXIA">
+  <meta name="INAXIA Catalogue" content="An Online Catalogue of INAXIA">
   <!-- <meta name="theme-color" content="#1F2022"> -->
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#1F2022">
   <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#1F2022">
@@ -26,13 +26,13 @@
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="inaxia_official_dashboard_web">
+  <meta name="apple-mobile-web-app-title" content="inaxia_catalogue">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>inaxia_official_dashboard_web</title>
+  <title>INAXIA Catalogue</title>
   <link rel="manifest" href="manifest.json">
 
   <script>
@@ -43,7 +43,8 @@
   <script src="flutter.js" defer></script>
 </head>
 <body>
-  <script>
+  <!-- INITIAL CONFIGURATION -->
+  <!-- <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
@@ -57,6 +58,26 @@
         }
       });
     });
+  </script> -->
+  <script>
+    let useHtml = true;
+
+    window.addEventListener('load', function(ev) {
+      // Download main.dart.js
+    _flutter.loader.loadEntrypoint({
+      serviceWorker: {
+        serviceWorkerVersion: serviceWorkerVersion,
+      },
+      onEntrypointLoaded: function(engineInitializer) {
+        let config = {
+          renderer: useHtml ? "html" : "canvaskit",
+        };
+        engineInitializer.initializeEngine(config).then(function(appRunner) {
+          appRunner.runApp();
+        });
+      }
+    });
+  });
   </script>
 </body>
 </html>

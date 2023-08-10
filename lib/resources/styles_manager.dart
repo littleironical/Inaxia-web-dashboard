@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inaxia_official_dashboard_web/resources/fonts_manager.dart';
+import 'package:inaxia_catalogue/resources/fonts_manager.dart';
 
 TextStyle _textStyle(
   FontWeight fontWeight,

@@ -28,12 +28,14 @@ class AppWidgetHeightManager {
   static const double sh8 = 8;
   static const double sh10 = 10;
   static const double sh30 = 30;
+  static const double sh35 = 35;
   static const double sh40 = 40;
   static const double sh50 = 50;
   static const double sh60 = 60;
   static const double sh80 = 80;
   static const double sh100 = 100;
   static const double sh120 = 120;
+  static const double sh400 = 400;
   static const double sh450 = 450;
   static const double sh500 = 500;
   static const double sh590 = 590;

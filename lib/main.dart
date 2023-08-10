@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:inaxia_official_dashboard_web/home/home_view.dart';
-import 'package:inaxia_official_dashboard_web/resources/colors_manager.dart';
-import 'package:inaxia_official_dashboard_web/resources/strings_manager.dart';
-import 'package:inaxia_official_dashboard_web/resources/themes_manager.dart';
+import 'package:inaxia_catalogue/home/home_view.dart';
+import 'package:inaxia_catalogue/resources/colors_manager.dart';
+import 'package:inaxia_catalogue/resources/strings_manager.dart';
+import 'package:inaxia_catalogue/resources/themes_manager.dart';
 
 void main() {
   runApp(

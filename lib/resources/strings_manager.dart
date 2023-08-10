@@ -1,5 +1,5 @@
 class StringsManager {
-  static const String appTitle = 'INAXIA Price Checker';
+  static const String appTitle = 'INAXIA Catalogue';
   static const String emptyString = '';
   static const String whatsappButtonText = 'Share on WhatsApp';
   static const String imageInteractiveView = 'Interactive View';

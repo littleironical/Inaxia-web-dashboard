@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inaxia_official_dashboard_web/resources/colors_manager.dart';
-import 'package:inaxia_official_dashboard_web/resources/values_manager.dart';
+import 'package:inaxia_catalogue/resources/colors_manager.dart';
+import 'package:inaxia_catalogue/resources/values_manager.dart';
 
 ThemeData get appThemeData {
   return ThemeData(

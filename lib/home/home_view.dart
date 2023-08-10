@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:inaxia_official_dashboard_web/model/models.dart';
-import 'package:inaxia_official_dashboard_web/resources/assets_manager.dart';
-import 'package:inaxia_official_dashboard_web/resources/colors_manager.dart';
-import 'package:inaxia_official_dashboard_web/resources/fonts_manager.dart';
-import 'package:inaxia_official_dashboard_web/resources/icons_manager.dart';
-import 'package:inaxia_official_dashboard_web/resources/strings_manager.dart';
-import 'package:inaxia_official_dashboard_web/resources/styles_manager.dart';
-import 'package:inaxia_official_dashboard_web/resources/values_manager.dart';
+import 'package:inaxia_catalogue/model/models.dart';
+import 'package:inaxia_catalogue/resources/assets_manager.dart';
+import 'package:inaxia_catalogue/resources/colors_manager.dart';
+import 'package:inaxia_catalogue/resources/fonts_manager.dart';
+import 'package:inaxia_catalogue/resources/icons_manager.dart';
+import 'package:inaxia_catalogue/resources/strings_manager.dart';
+import 'package:inaxia_catalogue/resources/styles_manager.dart';
+import 'package:inaxia_catalogue/resources/values_manager.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeView extends StatefulWidget {
@@ -90,7 +90,7 @@ class _HomeViewState extends State<HomeView> {
     _allTshirtTypes.add(
       AllTshirtTypesModel(
         true,
-        'Polo',
+        StringsManager.tshirtTypePolo,
         270,
         [
           StringsManager.tshirtSizesS,
@@ -111,18 +111,18 @@ class _HomeViewState extends State<HomeView> {
           ColorsManager.greenTshirt,
         ],
         [
+          AssetsManager.poloTshirt1,
           AssetsManager.poloTshirt2,
           AssetsManager.poloTshirt3,
           AssetsManager.poloTshirt4,
           AssetsManager.poloTshirt5,
-          AssetsManager.poloTshirt1,
         ],
       ),
     );
     _allTshirtTypes.add(
       AllTshirtTypesModel(
         false,
-        'Regular',
+        StringsManager.tshirtTypeRegular,
         160,
         [
           StringsManager.tshirtSizesS,
@@ -158,7 +158,7 @@ class _HomeViewState extends State<HomeView> {
     _allTshirtTypes.add(
       AllTshirtTypesModel(
         false,
-        'Oversized',
+        StringsManager.tshirtTypeOversized,
         190,
         [
           StringsManager.tshirtSizesXS,
@@ -225,6 +225,8 @@ class _HomeViewState extends State<HomeView> {
       child: SizedBox(
         width: AppBreakpointManager.b1265,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               flex: AppValueManager.v1,
@@ -396,19 +398,17 @@ class _HomeViewState extends State<HomeView> {
                 );
               },
               errorBuilder: (context, error, stackTrace) {
-                return Column(
-                  children: [
-                    Container(
-                      color: ColorsManager.lightBlack,
-                      child: const Column(
-                        children: [
-                          Icon(IconsManager.error),
-                          SizedBox(height: AppWidgetHeightManager.sh10),
-                          Text(StringsManager.networkError),
-                        ],
-                      ),
-                    ),
-                  ],
+                return Container(
+                  color: ColorsManager.lightBlack,
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(IconsManager.error),
+                      SizedBox(height: AppWidgetHeightManager.sh10),
+                      Text(StringsManager.networkError),
+                    ],
+                  ),
                 );
               },
               fit: BoxFit.cover,
@@ -442,6 +442,8 @@ class _HomeViewState extends State<HomeView> {
                 return Container(
                   color: ColorsManager.lightBlack,
                   child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Icon(IconsManager.error),
                       SizedBox(height: AppWidgetHeightManager.sh10),
@@ -528,13 +530,7 @@ class _HomeViewState extends State<HomeView> {
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
                           color: ColorsManager.lightBlack,
-                          child: const Column(
-                            children: [
-                              Icon(IconsManager.error),
-                              SizedBox(height: AppWidgetHeightManager.sh10),
-                              Text(StringsManager.networkError),
-                            ],
-                          ),
+                          child: const Icon(IconsManager.error),
                         );
                       },
                       fit: BoxFit.cover,
@@ -900,14 +896,16 @@ class _HomeViewState extends State<HomeView> {
             Tooltip(
               triggerMode: TooltipTriggerMode.tap,
               message: (_selectedPrintingTechniquesIndex == null)
-                    ? StringsManager.selectPrintingTechnique
-                    : StringsManager.emptyString,
+                  ? StringsManager.selectPrintingTechnique
+                  : StringsManager.emptyString,
               child: DropdownButton(
                 value: _printingAreaHeight,
-                menuMaxHeight: AppWidgetHeightManager.sh500,
+                menuMaxHeight: AppWidgetHeightManager.sh400,
                 elevation: AppValueManager.v10,
-                padding: const EdgeInsets.symmetric(horizontal: AppPaddingManager.p10),
-                borderRadius: const BorderRadius.all(Radius.circular(AppRadiusManager.r10)),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: AppPaddingManager.p10),
+                borderRadius: const BorderRadius.all(
+                    Radius.circular(AppRadiusManager.r10)),
                 icon: const Icon(IconsManager.arrowDown),
                 items: List.generate(
                   AppValueManager.v23,
@@ -918,11 +916,13 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ),
                 ),
-                onChanged: (_selectedPrintingTechniquesIndex == null) ? null : (value) {
-                  setState(() {
-                    _printingAreaHeight = int.parse(value.toString());
-                  });
-                },
+                onChanged: (_selectedPrintingTechniquesIndex == null)
+                    ? null
+                    : (value) {
+                        setState(() {
+                          _printingAreaHeight = int.parse(value.toString());
+                        });
+                      },
               ),
             ),
           ],
@@ -936,14 +936,16 @@ class _HomeViewState extends State<HomeView> {
             Tooltip(
               triggerMode: TooltipTriggerMode.tap,
               message: (_selectedPrintingTechniquesIndex == null)
-                    ? StringsManager.selectPrintingTechnique
-                    : StringsManager.emptyString,
+                  ? StringsManager.selectPrintingTechnique
+                  : StringsManager.emptyString,
               child: DropdownButton(
                 value: _printingAreaWidth,
-                menuMaxHeight: AppWidgetHeightManager.sh500,
+                menuMaxHeight: AppWidgetHeightManager.sh400,
                 elevation: AppValueManager.v10,
-                padding: const EdgeInsets.symmetric(horizontal: AppPaddingManager.p10),
-                borderRadius: const BorderRadius.all(Radius.circular(AppRadiusManager.r10)),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: AppPaddingManager.p10),
+                borderRadius: const BorderRadius.all(
+                    Radius.circular(AppRadiusManager.r10)),
                 icon: const Icon(IconsManager.arrowDown),
                 items: List.generate(
                   AppValueManager.v23,
@@ -954,11 +956,13 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ),
                 ),
-                onChanged: (_selectedPrintingTechniquesIndex == null) ? null : (value) {
-                  setState(() {
-                    _printingAreaWidth = int.parse(value.toString());
-                  });
-                },
+                onChanged: (_selectedPrintingTechniquesIndex == null)
+                    ? null
+                    : (value) {
+                        setState(() {
+                          _printingAreaWidth = int.parse(value.toString());
+                        });
+                      },
               ),
             ),
           ],
@@ -1019,7 +1023,7 @@ class _HomeViewState extends State<HomeView> {
       child: Column(
         children: [
           Container(
-            height: AppWidgetHeightManager.sh30,
+            height: AppWidgetHeightManager.sh35,
             padding:
                 const EdgeInsets.symmetric(horizontal: AppPaddingManager.p10),
             child: Row(
@@ -1027,7 +1031,7 @@ class _HomeViewState extends State<HomeView> {
               children: List.generate(
                 _tshirtQuantityList.length,
                 (index) => SizedBox(
-                  height: AppWidgetHeightManager.sh30,
+                  height: AppWidgetHeightManager.sh35,
                   width: AppWidgetWidthManager.sw27,
                   child: Column(
                     children: [
