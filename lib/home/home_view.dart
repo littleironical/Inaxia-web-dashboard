@@ -54,6 +54,9 @@ class _HomeViewState extends State<HomeView> {
   ];
   String? _selectedPrintingArea;
   int? _selectedPrintingAreaIndex;
+  int _printingAreaHeight = 0;
+  int _printingAreaWidth = 0;
+  bool _isCustomPrintingArea = false;
 
   // T-SHIRT QUANTITY
   final List _tshirtQuantityList = [
@@ -299,7 +302,7 @@ class _HomeViewState extends State<HomeView> {
     return Center(
       child: SizedBox(
         width: double.infinity,
-        height: AppWidgetHeightManager.sh1700,
+        height: AppWidgetHeightManager.sh1800,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -344,60 +347,73 @@ class _HomeViewState extends State<HomeView> {
               : double.maxFinite,
       child: Container(
         color: _selectedTshirtColor,
-        child: GestureDetector(
-          onTap: _interactiveImageView,
-          onPanUpdate: (details) {
-            swipeDirection = details.delta.dx < 0 ? 'left' : 'right';
-          },
-          onPanEnd: (details) {
-            if (swipeDirection == null) {
-              return;
-            }
-
-            // SWIPED LEFT - NEXT IMAGE TO BE SEEN
-            if (swipeDirection == 'left') {
-              if (_selectedTshirtImagesIndex ==
-                  (_allTshirtTypes[_selectedTshirtTypeIndex]
-                          .tshirtImages
-                          .length -
-                      1)) {
-                return;
-              } else {
-                setState(() {
-                  _selectedTshirtImagesIndex++;
-                });
-              }
-            }
-
-            // SWIPED RIGHT - PREVIUOS IMAGE TO BE SEEN
-            else if (swipeDirection == 'right') {
-              if (_selectedTshirtImagesIndex == 0) {
-                return;
-              } else {
-                setState(() {
-                  _selectedTshirtImagesIndex--;
-                });
-              }
-            }
-          },
-          child: Image.network(
-            _selectedTshirtImages[_selectedTshirtImagesIndex],
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) {
-                return child;
-              }
-              return Container(
-                color: ColorsManager.lightBlack,
-              );
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: _interactiveImageView,
+            onPanUpdate: (details) {
+              swipeDirection = details.delta.dx < 0 ? 'left' : 'right';
             },
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                color: ColorsManager.lightBlack,
-                child: const Icon(IconsManager.error),
-              );
+            onPanEnd: (details) {
+              if (swipeDirection == null) {
+                return;
+              }
+
+              // SWIPED LEFT - NEXT IMAGE TO BE SEEN
+              if (swipeDirection == 'left') {
+                if (_selectedTshirtImagesIndex ==
+                    (_allTshirtTypes[_selectedTshirtTypeIndex]
+                            .tshirtImages
+                            .length -
+                        1)) {
+                  return;
+                } else {
+                  setState(() {
+                    _selectedTshirtImagesIndex++;
+                  });
+                }
+              }
+
+              // SWIPED RIGHT - PREVIUOS IMAGE TO BE SEEN
+              else if (swipeDirection == 'right') {
+                if (_selectedTshirtImagesIndex == 0) {
+                  return;
+                } else {
+                  setState(() {
+                    _selectedTshirtImagesIndex--;
+                  });
+                }
+              }
             },
-            fit: BoxFit.cover,
-            alignment: Alignment.topCenter,
+            child: Image.network(
+              _selectedTshirtImages[_selectedTshirtImagesIndex],
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                }
+                return Container(
+                  color: ColorsManager.lightBlack,
+                );
+              },
+              errorBuilder: (context, error, stackTrace) {
+                return Column(
+                  children: [
+                    Container(
+                      color: ColorsManager.lightBlack,
+                      child: const Column(
+                        children: [
+                          Icon(IconsManager.error),
+                          SizedBox(height: AppWidgetHeightManager.sh10),
+                          Text(StringsManager.networkError),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+              fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
+            ),
           ),
         ),
       ),
@@ -425,7 +441,13 @@ class _HomeViewState extends State<HomeView> {
               errorBuilder: (context, error, stackTrace) {
                 return Container(
                   color: ColorsManager.lightBlack,
-                  child: const Icon(IconsManager.error),
+                  child: const Column(
+                    children: [
+                      Icon(IconsManager.error),
+                      SizedBox(height: AppWidgetHeightManager.sh10),
+                      Text(StringsManager.networkError),
+                    ],
+                  ),
                 );
               },
               fit: BoxFit.cover,
@@ -506,7 +528,13 @@ class _HomeViewState extends State<HomeView> {
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
                           color: ColorsManager.lightBlack,
-                          child: const Icon(IconsManager.error),
+                          child: const Column(
+                            children: [
+                              Icon(IconsManager.error),
+                              SizedBox(height: AppWidgetHeightManager.sh10),
+                              Text(StringsManager.networkError),
+                            ],
+                          ),
                         );
                       },
                       fit: BoxFit.cover,
@@ -556,8 +584,10 @@ class _HomeViewState extends State<HomeView> {
 
           // PRINTING AREA
           _optionTitle(StringsManager.printingAreasTitle, true),
+          _heightSpacing(AppPaddingManager.p5),
+          _customAreasSwitch(),
           _heightSpacing(AppPaddingManager.p10),
-          _printingAreas(),
+          (_isCustomPrintingArea) ? _customPrintingAreas() : _printingAreas(),
           _heightSpacing(AppPaddingManager.p20),
 
           // T-SHIRT QUANTITY
@@ -834,6 +864,109 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  _customAreasSwitch() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _optionTitle(StringsManager.customPrintitngArea, false),
+        const SizedBox(width: AppWidgetWidthManager.sw1),
+        Switch(
+          value: _isCustomPrintingArea,
+          onChanged: (value) {
+            setState(() {
+              _isCustomPrintingArea = !_isCustomPrintingArea;
+              _selectedPrintingArea = null;
+              _selectedPrintingAreaIndex = null;
+              _printingAreaHeight = 0;
+              _printingAreaWidth = 0;
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  _customPrintingAreas() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const Text(StringsManager.customPrintingHeight),
+            const SizedBox(width: AppWidgetWidthManager.sw10),
+            Tooltip(
+              triggerMode: TooltipTriggerMode.tap,
+              message: (_selectedPrintingTechniquesIndex == null)
+                    ? StringsManager.selectPrintingTechnique
+                    : StringsManager.emptyString,
+              child: DropdownButton(
+                value: _printingAreaHeight,
+                menuMaxHeight: AppWidgetHeightManager.sh500,
+                elevation: AppValueManager.v10,
+                padding: const EdgeInsets.symmetric(horizontal: AppPaddingManager.p10),
+                borderRadius: const BorderRadius.all(Radius.circular(AppRadiusManager.r10)),
+                icon: const Icon(IconsManager.arrowDown),
+                items: List.generate(
+                  AppValueManager.v23,
+                  (index) => DropdownMenuItem(
+                    value: index,
+                    child: Text(
+                      (index).toString(),
+                    ),
+                  ),
+                ),
+                onChanged: (_selectedPrintingTechniquesIndex == null) ? null : (value) {
+                  setState(() {
+                    _printingAreaHeight = int.parse(value.toString());
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(width: AppWidgetWidthManager.sw10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const Text(StringsManager.customPrintingWidth),
+            const SizedBox(width: AppWidgetWidthManager.sw10),
+            Tooltip(
+              triggerMode: TooltipTriggerMode.tap,
+              message: (_selectedPrintingTechniquesIndex == null)
+                    ? StringsManager.selectPrintingTechnique
+                    : StringsManager.emptyString,
+              child: DropdownButton(
+                value: _printingAreaWidth,
+                menuMaxHeight: AppWidgetHeightManager.sh500,
+                elevation: AppValueManager.v10,
+                padding: const EdgeInsets.symmetric(horizontal: AppPaddingManager.p10),
+                borderRadius: const BorderRadius.all(Radius.circular(AppRadiusManager.r10)),
+                icon: const Icon(IconsManager.arrowDown),
+                items: List.generate(
+                  AppValueManager.v23,
+                  (index) => DropdownMenuItem(
+                    value: index,
+                    child: Text(
+                      (index).toString(),
+                    ),
+                  ),
+                ),
+                onChanged: (_selectedPrintingTechniquesIndex == null) ? null : (value) {
+                  setState(() {
+                    _printingAreaWidth = int.parse(value.toString());
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   _printingAreas() {
     return Wrap(
       direction: Axis.horizontal,
@@ -843,6 +976,7 @@ class _HomeViewState extends State<HomeView> {
         (index) => Padding(
           padding: const EdgeInsets.only(right: AppPaddingManager.p20),
           child: Tooltip(
+            triggerMode: TooltipTriggerMode.tap,
             message: (_selectedPrintingTechniquesIndex == null)
                 ? StringsManager.selectPrintingTechnique
                 : StringsManager.emptyString,
@@ -949,7 +1083,8 @@ class _HomeViewState extends State<HomeView> {
   _finalPricing() {
     int sizePrice = AppValueManager.v0;
     sizePrice = _setSizePrice();
-    _printingPrice = _setPrintingPrice();
+    _setPrintingPrice();
+    _printingPrice = _printingAreaHeight * _printingAreaWidth;
 
     _discountValue = _setDiscountValue();
     _totalCost = (_tshirtPrice + sizePrice + _printingPrice) *
@@ -1019,20 +1154,30 @@ class _HomeViewState extends State<HomeView> {
   _setPrintingPrice() {
     if (_selectedPrintingTechnique == StringsManager.printingTechniqueDTF) {
       if (_selectedPrintingArea == StringsManager.printingAreasA3) {
-        return AppValueManager.v288;
+        _printingAreaHeight = AppValueManager.v16;
+        _printingAreaWidth = AppValueManager.v12;
+        // return AppValueManager.v288;
       } else if (_selectedPrintingArea == StringsManager.printingAreasA4) {
-        return AppValueManager.v144;
+        _printingAreaHeight = AppValueManager.v12;
+        _printingAreaWidth = AppValueManager.v8;
+        // return AppValueManager.v144;
       } else if (_selectedPrintingArea == StringsManager.printingAreasA5) {
-        return AppValueManager.v72;
+        _printingAreaHeight = AppValueManager.v8;
+        _printingAreaWidth = AppValueManager.v6;
+        // return AppValueManager.v72;
       } else if (_selectedPrintingArea == StringsManager.printingAreasA6) {
-        return AppValueManager.v36;
+        _printingAreaHeight = AppValueManager.v6;
+        _printingAreaWidth = AppValueManager.v4;
+        // return AppValueManager.v36;
       } else if (_selectedPrintingArea == StringsManager.printingAreasA7) {
-        return AppValueManager.v12;
+        _printingAreaHeight = AppValueManager.v4;
+        _printingAreaWidth = AppValueManager.v2;
+        // return AppValueManager.v12;
       } else {
-        return AppValueManager.v0;
+        // return AppValueManager.v0;
       }
     } else {
-      return AppValueManager.v0;
+      // return AppValueManager.v0;
     }
   }
 
@@ -1093,7 +1238,7 @@ class _HomeViewState extends State<HomeView> {
     const String whatsappNumber =
         '919319289478'; // INAXIA OFFICIAL WHATSAPP NUMBER
     String message =
-        'Hi, I\'m looking for... \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_selectedPrintingArea \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPrice \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_totalCost \nDiscount: $_discountValue% \nFinal Price: ₹$_finalDiscountedPrice';
+        'Hi, I\'m looking for... \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPrice \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_totalCost \nDiscount: $_discountValue% \nFinal Price: ₹$_finalDiscountedPrice';
     final url = Uri.parse("https://wa.me/$whatsappNumber?text=$message");
     if (!await launchUrl(
       url,

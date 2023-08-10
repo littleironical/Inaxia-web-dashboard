@@ -3,6 +3,7 @@ class StringsManager {
   static const String emptyString = '';
   static const String whatsappButtonText = 'Share on WhatsApp';
   static const String imageInteractiveView = 'Interactive View';
+  static const String networkError = 'Network Error';
 
   // T-SHIRT TYPE
   static const String tshirtTypeTitle = 'Choose T-shirt Type: ';
@@ -50,6 +51,9 @@ class StringsManager {
   static const String printingAreasA6 = 'A6 (6x4)';
   static const String printingAreasA7 = 'A7 (4x2)';
   static const String selectPrintingTechnique = '*Select Printing Technique*';
+  static const String customPrintitngArea = 'Custom Printing Area?';
+  static const String customPrintingHeight = 'Height';
+  static const String customPrintingWidth = 'Width';
 
   // T-SHIRT QUANTITY
   static const String tshirtQuantityTitle = 'T-shirt Quantity: ';

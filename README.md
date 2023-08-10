@@ -25,4 +25,3 @@ A Catalogue created for [INAXIA](https://inaxiafashion.com) Offline Business to 
 ![INAXIA Web Dashboard](assets/screenshots/web-screenshot.png)
 ![INAXIA Web Dashboard](assets/screenshots/web-screenshot1.png)
 ![INAXIA Web Dashboard](assets/screenshots/web-screenshot2.png)
-

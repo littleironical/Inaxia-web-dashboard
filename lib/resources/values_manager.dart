@@ -39,7 +39,7 @@ class AppWidgetHeightManager {
   static const double sh590 = 590;
   static const double sh600 = 600;
   static const double sh700 = 700;
-  static const double sh1700 = 1700;
+  static const double sh1800 = 1800;
 }
 
 class AppWidgetWidthManager {
@@ -62,13 +62,20 @@ class AppWidgetWidthManager {
 class AppValueManager {
   static const int v0 = 0;
   static const int v1 = 1;
+  static const int v2 = 2;
+  static const int v4 = 4;
   static const int v5 = 5;
+  static const int v6 = 6;
   static const int v7 = 7;
+  static const int v8 = 8;
   static const int v9 = 9;
+  static const int v10 = 10;
   static const int v11 = 11;
   static const int v12 = 12;
   static const int v13 = 13;
+  static const int v16 = 16;
   static const int v20 = 20;
+  static const int v23 = 23;
   static const int v25 = 25;
   static const int v36 = 36;
   static const int v40 = 40;

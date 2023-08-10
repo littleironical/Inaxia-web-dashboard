@@ -41,8 +41,10 @@ ThemeData get appThemeData {
       ),
     ),
 
-    // scrollbarTheme: const ScrollbarThemeData(
-    //   thickness: 1,
-    // )
+    switchTheme: const SwitchThemeData(
+      overlayColor: MaterialStatePropertyAll(ColorsManager.transparent),
+      thumbColor: MaterialStatePropertyAll(ColorsManager.primary),
+      trackColor: MaterialStatePropertyAll(ColorsManager.primaryAccent),
+    ),
   );
 }
