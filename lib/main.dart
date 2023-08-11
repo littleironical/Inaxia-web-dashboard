@@ -7,6 +7,7 @@ import 'package:inaxia_catalogue/resources/themes_manager.dart';
 void main() {
   runApp(
     MaterialApp(
+      title: StringsManager.appTitle,
       debugShowCheckedModeBanner: false,
       theme: appThemeData,
       home: const MyApp(),

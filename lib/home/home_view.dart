@@ -7,6 +7,7 @@ import 'package:inaxia_catalogue/resources/icons_manager.dart';
 import 'package:inaxia_catalogue/resources/strings_manager.dart';
 import 'package:inaxia_catalogue/resources/styles_manager.dart';
 import 'package:inaxia_catalogue/resources/values_manager.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeView extends StatefulWidget {
@@ -393,8 +394,12 @@ class _HomeViewState extends State<HomeView> {
                 if (loadingProgress == null) {
                   return child;
                 }
-                return Container(
-                  color: ColorsManager.lightBlack,
+                return Shimmer.fromColors(
+                  baseColor: ColorsManager.lightBlack,
+                  highlightColor: ColorsManager.darkLightBlack,
+                  child: Container(
+                    color: ColorsManager.white,
+                  ),
                 );
               },
               errorBuilder: (context, error, stackTrace) {
@@ -434,8 +439,12 @@ class _HomeViewState extends State<HomeView> {
                 if (loadingProgress == null) {
                   return child;
                 }
-                return Container(
-                  color: ColorsManager.lightBlack,
+                return Shimmer.fromColors(
+                  baseColor: ColorsManager.lightBlack,
+                  highlightColor: ColorsManager.darkLightBlack,
+                  child: Container(
+                    color: ColorsManager.white,
+                  ),
                 );
               },
               errorBuilder: (context, error, stackTrace) {
@@ -523,8 +532,12 @@ class _HomeViewState extends State<HomeView> {
                         if (loadingProgress == null) {
                           return child;
                         }
-                        return Container(
-                          color: ColorsManager.lightBlack,
+                        return Shimmer.fromColors(
+                          baseColor: ColorsManager.lightBlack,
+                          highlightColor: ColorsManager.darkLightBlack,
+                          child: Container(
+                            color: ColorsManager.white,
+                          ),
                         );
                       },
                       errorBuilder: (context, error, stackTrace) {
