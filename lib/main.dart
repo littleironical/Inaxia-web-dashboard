@@ -10,32 +10,13 @@ void main() {
       title: StringsManager.appTitle,
       debugShowCheckedModeBanner: false,
       theme: appThemeData,
-      home: const MyApp(),
+      home: Scaffold(
+        backgroundColor: ColorsManager.white,
+        appBar: AppBar(
+          title: const Text(StringsManager.appTitle),
+        ),
+        body: const HomeView(),
+      ),
     ),
   );
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: RefreshIndicator(
-        edgeOffset: 60,
-        color: ColorsManager.primary,
-        onRefresh: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const MyApp())),
-        child: Scaffold(
-          backgroundColor: ColorsManager.white,
-          appBar: AppBar(
-            title: const Text(StringsManager.appTitle),
-          ),
-          body: const SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: HomeView(),
-          ),
-        ),
-      ),
-    );
-  }
 }

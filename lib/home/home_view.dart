@@ -99,7 +99,6 @@ class _HomeViewState extends State<HomeView> {
           StringsManager.tshirtSizesL,
           StringsManager.tshirtSizesXL,
           StringsManager.tshirtSizes2XL,
-          StringsManager.tshirtSizes3XL,
         ],
         [
           ColorsManager.whiteTshirt,
@@ -131,8 +130,6 @@ class _HomeViewState extends State<HomeView> {
           StringsManager.tshirtSizesL,
           StringsManager.tshirtSizesXL,
           StringsManager.tshirtSizes2XL,
-          StringsManager.tshirtSizes3XL,
-          StringsManager.tshirtSizes4XL,
         ],
         [
           ColorsManager.whiteTshirt,
@@ -206,17 +203,69 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     _screenWidth = MediaQuery.of(context).size.width;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        (_screenWidth >= AppBreakpointManager.b1100)
-            ? _largeScreenBody()
-            : (_screenWidth >= AppBreakpointManager.b550)
-                ? _mediumScreenBody()
-                : _smallScreenBody(),
-        //* MORE SECTIONS TO BE ADDED
-      ],
+    return RefreshIndicator(
+      color: ColorsManager.primary,
+      onRefresh: () {
+        setState(() {
+          // SETTINGS VALUES TO INITIAL VALUES
+          // T-SHIRT TYPE
+          _selectedTshirtTypeIndex = AppValueManager.v0;
+
+          for (var element in _allTshirtTypes) {
+            element.isSelected = false;
+          }
+          _allTshirtTypes[_selectedTshirtTypeIndex].isSelected = true;
+
+          _tshirtPrice = _allTshirtTypes[_selectedTshirtTypeIndex].tshirtPrice;
+
+          // T-SHIRT IMAGES
+          _selectedTshirtImagesIndex = AppValueManager.v0;
+          _selectedTshirtImages =
+              _allTshirtTypes[_selectedTshirtTypeIndex].tshirtImages;
+
+          // T-SHIRT SIZES
+          _selectedTshirtSize = null;
+          _selectedTshirtSizeIndex = null;
+          _tshirtSizesAvaialble =
+              _allTshirtTypes[_selectedTshirtTypeIndex].tshirtSizesAvailable;
+
+          // T-SHIRT COLORS
+          _tshirtColorsAvailable =
+              _allTshirtTypes[_selectedTshirtTypeIndex].tshirtColorsAvailable;
+          _selectedTshirtColorsIndex = 0;
+          _selectedTshirtColor =
+              _tshirtColorsAvailable[_selectedTshirtColorsIndex];
+
+          // PRINTING TECHNIQUES
+          _selectedPrintingTechnique = null;
+          _selectedPrintingTechniquesIndex = null;
+
+          // PRINTING AREAS
+          _selectedPrintingArea = null;
+          _selectedPrintingAreaIndex = null;
+
+          // QUANTITY
+          _tshirtQuantityValue = AppValueManager.v1;
+          _tshirtQuantitySliderValue = AppValueManager.v1;
+        });
+        return Future<void>.delayed(
+            const Duration(seconds: AppValueManager.v1));
+      },
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            (_screenWidth >= AppBreakpointManager.b1100)
+                ? _largeScreenBody()
+                : (_screenWidth >= AppBreakpointManager.b550)
+                    ? _mediumScreenBody()
+                    : _smallScreenBody(),
+            //* MORE SECTIONS TO BE ADDED
+          ],
+        ),
+      ),
     );
   }
 
@@ -650,21 +699,25 @@ class _HomeViewState extends State<HomeView> {
                 setState(() {
                   // T-SHIRT TYPES
                   _selectedTshirtTypeIndex = index;
-                  _tshirtPrice = _allTshirtTypes[index].tshirtPrice;
+                  _tshirtPrice =
+                      _allTshirtTypes[_selectedTshirtTypeIndex].tshirtPrice;
 
                   // T-SHIRT IMAGES
-                  _selectedTshirtImages = _allTshirtTypes[index].tshirtImages;
+                  _selectedTshirtImages =
+                      _allTshirtTypes[_selectedTshirtTypeIndex].tshirtImages;
                   _selectedTshirtImagesIndex = 0;
 
                   // T-SHIRT SIZES
                   _tshirtSizesAvaialble =
-                      _allTshirtTypes[index].tshirtSizesAvailable;
+                      _allTshirtTypes[_selectedTshirtTypeIndex]
+                          .tshirtSizesAvailable;
                   _selectedTshirtSize = null;
                   _selectedTshirtSizeIndex = null;
 
                   // T-SHIRT COLORS
                   _tshirtColorsAvailable =
-                      _allTshirtTypes[index].tshirtColorsAvailable;
+                      _allTshirtTypes[_selectedTshirtTypeIndex]
+                          .tshirtColorsAvailable;
                   _selectedTshirtColorsIndex = 0;
                   _selectedTshirtColor =
                       _tshirtColorsAvailable[_selectedTshirtColorsIndex];
@@ -673,7 +726,7 @@ class _HomeViewState extends State<HomeView> {
                   _selectedPrintingTechnique = null;
                   _selectedPrintingTechniquesIndex = null;
 
-                  // PRINTING TECHNIQUES
+                  // PRINTING AREAS
                   _selectedPrintingArea = null;
                   _selectedPrintingAreaIndex = null;
                 });
