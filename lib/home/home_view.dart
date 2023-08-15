@@ -23,13 +23,18 @@ class _HomeViewState extends State<HomeView> {
   final List<AllTshirtTypesModel> _allTshirtTypes = [];
 
   // FOR T-SHIRT TYPE & PRICE
-  int _selectedTshirtTypeIndex = 0;
+  int _selectedTshirtTypeIndex = AppValueManager.v0;
 
   // FOR T-SHIRT IMAGES
   late List _selectedTshirtImages;
-  int _selectedTshirtImagesIndex = 0;
+  int _selectedTshirtImagesIndex = AppValueManager.v0;
 
-  // FOR T-SHIRT SIZED
+  // FOR T-SHIRT QUALITIES
+  late List _tshirtQualitiesAvailable;
+  late String _selectedTshirtQuality;
+  int _selectedTshirtQualityIndex = AppValueManager.v0;
+
+  // FOR T-SHIRT SIZES
   late List _tshirtSizesAvaialble;
   String? _selectedTshirtSize;
   int? _selectedTshirtSizeIndex;
@@ -37,7 +42,7 @@ class _HomeViewState extends State<HomeView> {
   // FOR T-SHIRT COLORS
   late List _tshirtColorsAvailable;
   late Color _selectedTshirtColor;
-  int _selectedTshirtColorsIndex = 0;
+  int _selectedTshirtColorsIndex = AppValueManager.v0;
 
   // PRINITNG TECHNIQUES
   final List _printingTechniquesAvailable = [
@@ -56,8 +61,8 @@ class _HomeViewState extends State<HomeView> {
   ];
   String? _selectedPrintingArea;
   int? _selectedPrintingAreaIndex;
-  int _printingAreaHeight = 0;
-  int _printingAreaWidth = 0;
+  int _printingAreaHeight = AppValueManager.v0;
+  int _printingAreaWidth = AppValueManager.v0;
   bool _isCustomPrintingArea = false;
 
   // T-SHIRT QUANTITY
@@ -94,39 +99,23 @@ class _HomeViewState extends State<HomeView> {
     _allTshirtTypes.add(
       AllTshirtTypesModel(
         true,
-        StringsManager.tshirtTypePolo,
-        270,
-        [
-          StringsManager.tshirtSizesS,
-          StringsManager.tshirtSizesM,
-          StringsManager.tshirtSizesL,
-          StringsManager.tshirtSizesXL,
-          StringsManager.tshirtSizes2XL,
-        ],
-        [
-          ColorsManager.whiteTshirt,
-          ColorsManager.beigeTshirt,
-          ColorsManager.blackTshirt,
-          ColorsManager.lavenderTshirt,
-          ColorsManager.pinkTshirt,
-          ColorsManager.greyTshirt,
-          ColorsManager.navyTshirt,
-          ColorsManager.greenTshirt,
-        ],
-        [
-          AssetsManager.poloTshirt1,
-          AssetsManager.poloTshirt2,
-          AssetsManager.poloTshirt3,
-          AssetsManager.poloTshirt4,
-          AssetsManager.poloTshirt5,
-        ],
-      ),
-    );
-    _allTshirtTypes.add(
-      AllTshirtTypesModel(
-        false,
-        StringsManager.tshirtTypeRegular,
+        StringsManager.tshirtTypeRoundNeck,
         160,
+        [
+          AssetsManager.regularTshirt1,
+          AssetsManager.regularTshirt2,
+          AssetsManager.regularTshirt3,
+          AssetsManager.regularTshirt4,
+          AssetsManager.regularTshirt5,
+        ],
+        [
+          StringsManager.tshirtQualityPolyester,
+          StringsManager.tshirtQualityDrifit,
+          StringsManager.tshirtQualityDotknit,
+          StringsManager.tshirtQualitySublimationCotton,
+          StringsManager.tshirtQuality100Cotton,
+          StringsManager.tshirtQualityCottonBiowash,
+        ],
         [
           StringsManager.tshirtSizesS,
           StringsManager.tshirtSizesM,
@@ -147,22 +136,25 @@ class _HomeViewState extends State<HomeView> {
           ColorsManager.orangeTshirt,
           ColorsManager.skyBlueTshirt,
         ],
-        [
-          AssetsManager.regularTshirt1,
-          AssetsManager.regularTshirt2,
-          AssetsManager.regularTshirt3,
-          AssetsManager.regularTshirt4,
-          AssetsManager.regularTshirt5,
-        ],
       ),
     );
     _allTshirtTypes.add(
       AllTshirtTypesModel(
         false,
-        StringsManager.tshirtTypeOversized,
-        190,
+        StringsManager.tshirtTypePolo,
+        270,
         [
-          StringsManager.tshirtSizesXS,
+          AssetsManager.poloTshirt1,
+          AssetsManager.poloTshirt2,
+          AssetsManager.poloTshirt3,
+          AssetsManager.poloTshirt4,
+          AssetsManager.poloTshirt5,
+        ],
+        [
+          StringsManager.tshirtQualityCollarMatty,
+          StringsManager.tshirtQualityPCMatty,
+        ],
+        [
           StringsManager.tshirtSizesS,
           StringsManager.tshirtSizesM,
           StringsManager.tshirtSizesL,
@@ -177,13 +169,7 @@ class _HomeViewState extends State<HomeView> {
           ColorsManager.pinkTshirt,
           ColorsManager.greyTshirt,
           ColorsManager.navyTshirt,
-        ],
-        [
-          AssetsManager.oversizedTshirt1,
-          AssetsManager.oversizedTshirt2,
-          AssetsManager.oversizedTshirt3,
-          AssetsManager.oversizedTshirt4,
-          AssetsManager.oversizedTshirt5,
+          ColorsManager.greenTshirt,
         ],
       ),
     );
@@ -192,11 +178,22 @@ class _HomeViewState extends State<HomeView> {
   _initializeTshirt() {
     for (var element in _allTshirtTypes) {
       if (element.isSelected == true) {
+        // T-SHIRT PRICE
         _tshirtPrice = element.tshirtPrice;
+
+        // T-SHIRT QUALITIES
+        _tshirtQualitiesAvailable = element.tshirtQualitiesAvailable;
+        _selectedTshirtQuality = _tshirtQualitiesAvailable[_selectedTshirtQualityIndex];
+
+        // T-SHIRT SIZES
         _tshirtSizesAvaialble = element.tshirtSizesAvailable;
+
+        // T-SHIRT COLORS
         _tshirtColorsAvailable = element.tshirtColorsAvailable;
         _selectedTshirtColor =
             _tshirtColorsAvailable[_selectedTshirtColorsIndex];
+
+        // T-SHIRT IMAGES
         _selectedTshirtImages = element.tshirtImages;
       }
     }
@@ -226,6 +223,11 @@ class _HomeViewState extends State<HomeView> {
           _selectedTshirtImages =
               _allTshirtTypes[_selectedTshirtTypeIndex].tshirtImages;
 
+          // T-SHIRT QUALITIES
+          _tshirtQualitiesAvailable = _allTshirtTypes[_selectedTshirtTypeIndex].tshirtQualitiesAvailable;
+          _selectedTshirtQualityIndex = AppValueManager.v0;
+          _selectedTshirtQuality = _tshirtQualitiesAvailable[_selectedTshirtQualityIndex];
+
           // T-SHIRT SIZES
           _selectedTshirtSize = null;
           _selectedTshirtSizeIndex = null;
@@ -235,7 +237,7 @@ class _HomeViewState extends State<HomeView> {
           // T-SHIRT COLORS
           _tshirtColorsAvailable =
               _allTshirtTypes[_selectedTshirtTypeIndex].tshirtColorsAvailable;
-          _selectedTshirtColorsIndex = 0;
+          _selectedTshirtColorsIndex = AppValueManager.v0;
           _selectedTshirtColor =
               _tshirtColorsAvailable[_selectedTshirtColorsIndex];
 
@@ -357,7 +359,7 @@ class _HomeViewState extends State<HomeView> {
     return Center(
       child: SizedBox(
         width: double.infinity,
-        height: AppWidgetHeightManager.sh2100,
+        height: AppWidgetHeightManager.sh2200,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -625,6 +627,12 @@ class _HomeViewState extends State<HomeView> {
           _tshirtType(),
           _heightSpacing(AppPaddingManager.p20),
 
+          // T-SHIRT QUALITIES AVAILABLE
+          _tshirtQualityTitle(),
+          _heightSpacing(AppPaddingManager.p10),
+          _tshirtQualities(),
+          _heightSpacing(AppPaddingManager.p20),
+
           // T-SHIRT SIZES AVAILABLE
           _optionTitle(StringsManager.tshirtSizesTitle, true),
           _heightSpacing(AppPaddingManager.p10),
@@ -716,6 +724,11 @@ class _HomeViewState extends State<HomeView> {
                       _allTshirtTypes[_selectedTshirtTypeIndex].tshirtImages;
                   _selectedTshirtImagesIndex = 0;
 
+                  // T-SHIRT QUALITIES
+                  _tshirtQualitiesAvailable = _allTshirtTypes[_selectedTshirtTypeIndex].tshirtQualitiesAvailable;
+                  _selectedTshirtQualityIndex = 0;
+                  _selectedTshirtQuality = _tshirtQualitiesAvailable[_selectedTshirtQualityIndex];
+
                   // T-SHIRT SIZES
                   _tshirtSizesAvaialble =
                       _allTshirtTypes[_selectedTshirtTypeIndex]
@@ -756,6 +769,75 @@ class _HomeViewState extends State<HomeView> {
               child: Text(
                 _allTshirtTypes[index].tshirtType,
                 style: (_allTshirtTypes[index].isSelected == true)
+                    ? regularTextStyleManager(color: ColorsManager.white)
+                    : null,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _tshirtQualityTitle() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _optionTitle(StringsManager.tshirtQualityTitle, true),
+        const SizedBox(width: AppWidgetWidthManager.sw1),
+        Text(
+            '($_selectedTshirtQuality: ${_getQualityGSM(_tshirtQualitiesAvailable[_selectedTshirtQualityIndex])} GSM)'),
+      ],
+    );
+  }
+
+  _getQualityGSM(String quality) {
+    if(quality == StringsManager.tshirtQualityPolyester) {
+      return AppValueManager.v100;
+    } else if (quality == StringsManager.tshirtQualityDrifit) {
+      return AppValueManager.v130;
+    } else if (quality == StringsManager.tshirtQualityDotknit) {
+      return AppValueManager.v170;
+    } else if (quality == StringsManager.tshirtQualitySublimationCotton) {
+      return AppValueManager.v190;
+    } else if (quality == StringsManager.tshirtQuality100Cotton) {
+      return AppValueManager.v200;
+    } else if (quality == StringsManager.tshirtQualityCottonBiowash) {
+      return AppValueManager.v200;
+    } else if (quality == StringsManager.tshirtQualityCollarMatty) {
+      return AppValueManager.v220;
+    } else if (quality == StringsManager.tshirtQualityPCMatty) {
+      return AppValueManager.v250;
+    }
+  }
+
+  _tshirtQualities() {
+    return Wrap(
+      direction: Axis.horizontal,
+      runSpacing: AppPaddingManager.p10,
+      children: List.generate(
+        _tshirtQualitiesAvailable.length,
+        (index) => Padding(
+          padding: const EdgeInsets.only(right: AppPaddingManager.p20),
+          child: ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _selectedTshirtQualityIndex = index;
+                _selectedTshirtQuality = _tshirtQualitiesAvailable[index];
+              });
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: (_selectedTshirtQualityIndex == index)
+                  ? ColorsManager.primary
+                  : ColorsManager.white,
+            ),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: AppPaddingManager.p15),
+              child: Text(
+                _tshirtQualitiesAvailable[index],
+                style: (_selectedTshirtQualityIndex == index)
                     ? regularTextStyleManager(color: ColorsManager.white)
                     : null,
               ),
@@ -1228,8 +1310,7 @@ class _HomeViewState extends State<HomeView> {
 
   // TOTAL PRICING CALCULATION
   _finalPricing() {
-    int sizePrice = AppValueManager.v0;
-    sizePrice = _setSizePrice();
+    _setTshirtPrice();
     _setPrintingPrice();
     const int pressingChargeMinimum = AppValueManager.v10;
     const int pressingChargeMaximum = AppValueManager.v40;
@@ -1237,17 +1318,17 @@ class _HomeViewState extends State<HomeView> {
             _printingAreaWidth > AppValueManager.v0)
         ? (_printingAreaHeight * _printingAreaWidth) +
             pressingChargeMinimum +
-            30
+            AppValueManager.v30
         : AppValueManager.v0;
     _printingPriceMaximum = (_printingAreaHeight > AppValueManager.v0 &&
             _printingAreaWidth > AppValueManager.v0)
         ? (_printingAreaHeight * _printingAreaWidth) +
             pressingChargeMaximum +
-            100
+            AppValueManager.v100
         : AppValueManager.v0;
-    _finalPriceMinimum = (_tshirtPrice + sizePrice + _printingPriceMinimum) *
+    _finalPriceMinimum = (_tshirtPrice + _printingPriceMinimum) *
         _tshirtQuantityValue;
-    _finalPriceMaximum = (_tshirtPrice + sizePrice + _printingPriceMaximum) *
+    _finalPriceMaximum = (_tshirtPrice + _printingPriceMaximum) *
         _tshirtQuantityValue;
 
     return Column(
@@ -1283,7 +1364,7 @@ class _HomeViewState extends State<HomeView> {
               ),
         const SizedBox(height: AppWidgetHeightManager.sh10),
         Text(
-            '• T-shirt Price: ${StringsManager.pricingCurrency}${_tshirtPrice + sizePrice}'),
+            '• T-shirt Price: ${StringsManager.pricingCurrency}$_tshirtPrice'),
         const SizedBox(height: AppWidgetHeightManager.sh5),
         (_printingAreaHeight > AppValueManager.v0 &&
                 _printingAreaWidth > AppValueManager.v0)
@@ -1299,7 +1380,7 @@ class _HomeViewState extends State<HomeView> {
         const SizedBox(height: AppWidgetHeightManager.sh10),
         Text(
           StringsManager.warningPricesMayVary,
-          style: mediumTextStyleManager(
+          style: boldTextStyleManager(
             color: ColorsManager.black,
             fontSize: FontSizeManager.f14,
           ),
@@ -1308,21 +1389,23 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  _setSizePrice() {
-    if (_selectedTshirtSize == StringsManager.tshirtSizes2XL) {
-      return AppValueManager.v20;
-    } else if (_selectedTshirtSize == StringsManager.tshirtSizes3XL) {
-      return AppValueManager.v40;
-    } else if (_selectedTshirtSize == StringsManager.tshirtSizes4XL) {
-      return AppValueManager.v60;
-    } else if (_selectedTshirtSize == StringsManager.tshirtSizes5XL) {
-      return AppValueManager.v80;
-    } else if (_selectedTshirtSize == StringsManager.tshirtSizes6XL) {
-      return AppValueManager.v100;
-    } else if (_selectedTshirtSize == StringsManager.tshirtSizes7XL) {
-      return AppValueManager.v120;
-    } else {
-      return AppValueManager.v0;
+  _setTshirtPrice() {
+    if (_selectedTshirtQuality == StringsManager.tshirtQualityPolyester) {
+      _tshirtPrice = AppValueManager.v85.toDouble();
+    } else if (_selectedTshirtQuality == StringsManager.tshirtQualityDrifit) {
+      _tshirtPrice = AppValueManager.v110.toDouble();
+    } else if (_selectedTshirtQuality == StringsManager.tshirtQualityDotknit) {
+      _tshirtPrice = AppValueManager.v120.toDouble();
+    } else if (_selectedTshirtQuality == StringsManager.tshirtQualitySublimationCotton) {
+      _tshirtPrice = AppValueManager.v170.toDouble();
+    } else if (_selectedTshirtQuality == StringsManager.tshirtQuality100Cotton) {
+      _tshirtPrice = AppValueManager.v180.toDouble();
+    } else if (_selectedTshirtQuality == StringsManager.tshirtQualityCottonBiowash) {
+      _tshirtPrice = AppValueManager.v190.toDouble();
+    } else if (_selectedTshirtQuality == StringsManager.tshirtQualityCollarMatty) {
+      _tshirtPrice = AppValueManager.v130.toDouble();
+    } else if (_selectedTshirtQuality == StringsManager.tshirtQualityPCMatty) {
+      _tshirtPrice = AppValueManager.v160.toDouble();
     }
   }
 
@@ -1347,13 +1430,8 @@ class _HomeViewState extends State<HomeView> {
       } else if (_selectedPrintingArea == StringsManager.printingAreasA7) {
         _printingAreaHeight = AppValueManager.v4;
         _printingAreaWidth = AppValueManager.v2;
-        // return AppValueManager.v12;
-      } else {
-        // return AppValueManager.v0;
-      }
-    } else {
-      // return AppValueManager.v0;
-    }
+      } 
+    } 
   }
 
   _orderASample() {
