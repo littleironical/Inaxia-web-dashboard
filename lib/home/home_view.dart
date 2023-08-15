@@ -77,10 +77,10 @@ class _HomeViewState extends State<HomeView> {
 
   // FINAL PRICING
   late double _tshirtPrice;
-  late int _printingPrice;
-  late double _totalCost;
-  int _discountValue = 0;
-  late double _finalDiscountedPrice;
+  late int _printingPriceMinimum;
+  late int _printingPriceMaximum;
+  late double _finalPriceMinimum;
+  late double _finalPriceMaximum;
 
   // INITIALIZING ALL DATA
   @override
@@ -357,7 +357,7 @@ class _HomeViewState extends State<HomeView> {
     return Center(
       child: SizedBox(
         width: double.infinity,
-        height: AppWidgetHeightManager.sh1800,
+        height: AppWidgetHeightManager.sh2100,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -668,7 +668,6 @@ class _HomeViewState extends State<HomeView> {
           // ORDER A SAMPLE BUTTON
           _heightSpacing(AppPaddingManager.p10),
           _orderASample(),
-          // _heightSpacing(AppPaddingManager.p10),
 
           // SHARE ON WHATSAPP BUTTON
           _heightSpacing(AppPaddingManager.p10),
@@ -913,6 +912,8 @@ class _HomeViewState extends State<HomeView> {
                 _selectedPrintingTechniquesIndex = index;
                 _selectedPrintingArea = null;
                 _selectedPrintingAreaIndex = null;
+                _printingAreaHeight = AppValueManager.v0;
+                _printingAreaWidth = AppValueManager.v0;
               });
             },
             style: ElevatedButton.styleFrom(
@@ -1228,13 +1229,24 @@ class _HomeViewState extends State<HomeView> {
     int sizePrice = AppValueManager.v0;
     sizePrice = _setSizePrice();
     _setPrintingPrice();
-    _printingPrice = _printingAreaHeight * _printingAreaWidth;
-
-    _discountValue = _setDiscountValue();
-    _totalCost = (_tshirtPrice + sizePrice + _printingPrice) *
-        (_tshirtQuantityValue.toInt());
-    _finalDiscountedPrice =
-        _totalCost - (_totalCost * _discountValue / AppValueManager.v100);
+    const int pressingChargeMinimum = AppValueManager.v10;
+    const int pressingChargeMaximum = AppValueManager.v40;
+    _printingPriceMinimum = (_printingAreaHeight > AppValueManager.v0 &&
+            _printingAreaWidth > AppValueManager.v0)
+        ? (_printingAreaHeight * _printingAreaWidth) +
+            pressingChargeMinimum +
+            30
+        : AppValueManager.v0;
+    _printingPriceMaximum = (_printingAreaHeight > AppValueManager.v0 &&
+            _printingAreaWidth > AppValueManager.v0)
+        ? (_printingAreaHeight * _printingAreaWidth) +
+            pressingChargeMaximum +
+            100
+        : AppValueManager.v0;
+    _finalPriceMinimum = (_tshirtPrice + sizePrice + _printingPriceMinimum) *
+        _tshirtQuantityValue;
+    _finalPriceMaximum = (_tshirtPrice + sizePrice + _printingPriceMaximum) *
+        _tshirtQuantityValue;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1244,35 +1256,44 @@ class _HomeViewState extends State<HomeView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              '${StringsManager.pricingCurrency} $_finalDiscountedPrice',
+              '${StringsManager.pricingCurrency}$_finalPriceMinimum',
               style: boldTextStyleManager(
                 color: ColorsManager.black,
                 fontSize: FontSizeManager.f24,
               ),
             ),
-            const SizedBox(width: AppWidgetWidthManager.sw10),
-            (_discountValue == AppValueManager.v0)
-                ? const SizedBox()
-                : Text(
-                    '$_totalCost ',
-                    style: const TextStyle(
-                      decoration: TextDecoration.lineThrough,
-                      color: ColorsManager.black,
-                      fontSize: FontSizeManager.f20,
-                    ),
-                  ),
             Text(
-              '(-$_discountValue%)',
-              style: mediumTextStyleManager(
+              ' - ${StringsManager.pricingCurrency}$_finalPriceMaximum',
+              style: boldTextStyleManager(
                 color: ColorsManager.black,
-                fontSize: FontSizeManager.f20,
+                fontSize: FontSizeManager.f24,
               ),
             ),
           ],
         ),
         const SizedBox(height: AppWidgetHeightManager.sh10),
         Text(
-            'T-shirt (${StringsManager.pricingCurrency}${_tshirtPrice + sizePrice}) + Printing (${StringsManager.pricingCurrency}$_printingPrice)  ->  Quantitiy (${_tshirtQuantityValue.toInt()})'),
+            '• T-shirt Price: ${StringsManager.pricingCurrency}${_tshirtPrice + sizePrice}'),
+        const SizedBox(height: AppWidgetHeightManager.sh5),
+        (_printingAreaHeight > AppValueManager.v0 &&
+                _printingAreaWidth > AppValueManager.v0)
+            ? Text(
+                '• Printing & Handling: ${StringsManager.pricingCurrency}$_printingPriceMinimum - ${StringsManager.pricingCurrency}$_printingPriceMaximum')
+            : const Text('• Printing & Handling: ₹${AppValueManager.v0}'),
+        const SizedBox(height: AppWidgetHeightManager.sh5),
+        Text('• Product Quantity: ${_tshirtQuantityValue.toInt()}'),
+        const SizedBox(height: AppWidgetHeightManager.sh5),
+        const Text(StringsManager.warningPricesNotIncluded),
+        const SizedBox(height: AppWidgetHeightManager.sh5),
+        const Text(StringsManager.warningBulkDiscounts),
+        const SizedBox(height: AppWidgetHeightManager.sh10),
+        Text(
+          StringsManager.warningPricesMayVary,
+          style: mediumTextStyleManager(
+            color: ColorsManager.black,
+            fontSize: FontSizeManager.f14,
+          ),
+        ),
       ],
     );
   }
@@ -1325,30 +1346,30 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
-  _setDiscountValue() {
-    if (_tshirtQuantityValue == 1) {
-      return AppValueManager.v0;
-    } else if (_tshirtQuantityValue == 25) {
-      return AppValueManager.v0;
-    } else if (_tshirtQuantityValue == 50) {
-      return AppValueManager.v5;
-    } else if (_tshirtQuantityValue == 100) {
-      return AppValueManager.v7;
-    } else if (_tshirtQuantityValue == 200) {
-      return AppValueManager.v9;
-    } else if (_tshirtQuantityValue == 300) {
-      return AppValueManager.v11;
-    } else if (_tshirtQuantityValue == 500) {
-      return AppValueManager.v13;
-    } else {
-      return AppValueManager.v0;
-    }
-  }
+  // _setDiscountValue() {
+  //   if (_tshirtQuantityValue == 1) {
+  //     return AppValueManager.v0;
+  //   } else if (_tshirtQuantityValue == 25) {
+  //     return AppValueManager.v0;
+  //   } else if (_tshirtQuantityValue == 50) {
+  //     return AppValueManager.v5;
+  //   } else if (_tshirtQuantityValue == 100) {
+  //     return AppValueManager.v7;
+  //   } else if (_tshirtQuantityValue == 200) {
+  //     return AppValueManager.v9;
+  //   } else if (_tshirtQuantityValue == 300) {
+  //     return AppValueManager.v11;
+  //   } else if (_tshirtQuantityValue == 500) {
+  //     return AppValueManager.v13;
+  //   } else {
+  //     return AppValueManager.v0;
+  //   }
+  // }
 
   _orderASample() {
     return InkWell(
       onTap: () => _sendWhatsappMessage(
-          'Hi, I wanted to order a sample of \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPrice \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_totalCost \nDiscount: $_discountValue% \nFinal Price: ₹$_finalDiscountedPrice'),
+          'Hi, I wanted to order a sample of \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPriceMinimum \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_finalPriceMinimum \nFinal Price: ₹$_finalPriceMinimum'),
       child: Container(
         height: AppWidgetHeightManager.sh50,
         width: double.maxFinite,
@@ -1385,7 +1406,7 @@ class _HomeViewState extends State<HomeView> {
   _shareOnWhatsApp() {
     return InkWell(
       onTap: () => _sendWhatsappMessage(
-          'Hi, I\'m looking for... \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPrice \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_totalCost \nDiscount: $_discountValue% \nFinal Price: ₹$_finalDiscountedPrice'),
+          'Hi, I\'m looking for... \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPriceMinimum \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_finalPriceMinimum \nFinal Price: ₹$_finalPriceMinimum'),
       child: Container(
         height: AppWidgetHeightManager.sh50,
         width: double.maxFinite,

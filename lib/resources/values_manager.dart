@@ -25,6 +25,7 @@ class AppPaddingManager {
 class AppWidgetHeightManager {
   static const double sh0 = 0;
   static const double sh4 = 4;
+  static const double sh5 = 5;
   static const double sh8 = 8;
   static const double sh10 = 10;
   static const double sh30 = 30;
@@ -41,7 +42,7 @@ class AppWidgetHeightManager {
   static const double sh590 = 590;
   static const double sh600 = 600;
   static const double sh700 = 700;
-  static const double sh1800 = 1800;
+  static const double sh2100 = 2100;
 }
 
 class AppWidgetWidthManager {

@@ -5,6 +5,9 @@ class StringsManager {
   static const String whatsappButtonText = 'Share on WhatsApp';
   static const String imageInteractiveView = 'Interactive View';
   static const String networkError = 'Network Error';
+  static const String warningPricesMayVary = 'PRICES MAY VARY BASED ON QUALITY, PRINTING AREA & QUANTITY OF PRODUCT';
+  static const String warningPricesNotIncluded = '• GST(5%) & Delivery excluded';
+  static const String warningBulkDiscounts = '• Bulk Discounts Available (Ask on WhatsApp)';
 
   // T-SHIRT TYPE
   static const String tshirtTypeTitle = 'Choose T-shirt Type: ';
