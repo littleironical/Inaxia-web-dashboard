@@ -9,6 +9,7 @@ class ColorsManager {
   static const Color darkLightBlack = Color(0x54000000);
   static const Color transparent = Color(0x00000000);
   static const Color whatsappGreen = Color(0xFF25D366);
+  static const Color errorRed = Color(0xFFD32525);
 
   // T-SHIRT COLORS
   static const Color beigeTshirt = Color(0xFFEBCD8B);

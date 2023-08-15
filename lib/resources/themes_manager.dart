@@ -46,5 +46,33 @@ ThemeData get appThemeData {
       thumbColor: MaterialStatePropertyAll(ColorsManager.primary),
       trackColor: MaterialStatePropertyAll(ColorsManager.primaryAccent),
     ),
+
+    inputDecorationTheme: const InputDecorationTheme(
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: ColorsManager.errorRed,
+        ),
+      ),
+      errorStyle: TextStyle(
+        color: ColorsManager.errorRed,
+      ),
+      border: OutlineInputBorder(),
+      focusColor: ColorsManager.primary,
+      fillColor: ColorsManager.primary,
+      hoverColor: ColorsManager.primary,
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: ColorsManager.primary,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: ColorsManager.primary,
+        ),
+      ),
+      labelStyle: TextStyle(
+        color: ColorsManager.primary,
+      ),
+    ),
   );
 }

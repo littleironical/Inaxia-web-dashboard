@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:inaxia_catalogue/model/models.dart';
 import 'package:inaxia_catalogue/resources/assets_manager.dart';
 import 'package:inaxia_catalogue/resources/colors_manager.dart';
@@ -71,6 +72,8 @@ class _HomeViewState extends State<HomeView> {
   ];
   int _tshirtQuantityValue = AppValueManager.v1;
   int _tshirtQuantitySliderValue = AppValueManager.v1;
+  bool _isCustomTshirtQuantity = false;
+  String _customTshirtErrorMessage = StringsManager.emptyString;
 
   // FINAL PRICING
   late double _tshirtPrice;
@@ -642,16 +645,18 @@ class _HomeViewState extends State<HomeView> {
 
           // PRINTING AREA
           _optionTitle(StringsManager.printingAreasTitle, true),
-          _heightSpacing(AppPaddingManager.p5),
-          _customAreasSwitch(),
+          _customPrintingAreasSwitch(),
           _heightSpacing(AppPaddingManager.p10),
           (_isCustomPrintingArea) ? _customPrintingAreas() : _printingAreas(),
           _heightSpacing(AppPaddingManager.p20),
 
           // T-SHIRT QUANTITY
           _optionTitle(StringsManager.tshirtQuantityTitle, true),
+          _customTshirtQuantitySwitch(),
           _heightSpacing(AppPaddingManager.p10),
-          _tshirtQuantity(),
+          (_isCustomTshirtQuantity)
+              ? _customTshirtQuantity()
+              : _tshirtQuantity(),
           _heightSpacing(AppPaddingManager.p20),
 
           // FINAL PRICE
@@ -660,9 +665,14 @@ class _HomeViewState extends State<HomeView> {
           _finalPricing(),
           _heightSpacing(AppPaddingManager.p20),
 
-          // SEND DETAILS ON WHATSAPP
+          // ORDER A SAMPLE BUTTON
           _heightSpacing(AppPaddingManager.p10),
-          _sendDetailsOnWhatsApp(),
+          _orderASample(),
+          // _heightSpacing(AppPaddingManager.p10),
+
+          // SHARE ON WHATSAPP BUTTON
+          _heightSpacing(AppPaddingManager.p10),
+          _shareOnWhatsApp(),
           _heightSpacing(AppPaddingManager.p20),
         ],
       ),
@@ -926,7 +936,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  _customAreasSwitch() {
+  _customPrintingAreasSwitch() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -1077,6 +1087,70 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  _customTshirtQuantitySwitch() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _optionTitle(StringsManager.customTshirtQuality, false),
+        const SizedBox(width: AppWidgetWidthManager.sw1),
+        Switch(
+          value: _isCustomTshirtQuantity,
+          onChanged: (value) {
+            setState(() {
+              _isCustomTshirtQuantity = !_isCustomTshirtQuantity;
+              _customTshirtErrorMessage = StringsManager.emptyString;
+              _tshirtQuantityValue = AppValueManager.v1;
+              _tshirtQuantitySliderValue = AppValueManager.v1;
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  _customTshirtQuantity() {
+    return SizedBox(
+      width: double.maxFinite,
+      child: TextFormField(
+        initialValue: _tshirtQuantityValue.toString(),
+        cursorColor: ColorsManager.primary,
+        keyboardType: TextInputType.number,
+        textAlign: TextAlign.center,
+        textInputAction: TextInputAction.done,
+        maxLines: AppValueManager.v1,
+        maxLength: AppValueManager.v3,
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly,
+        ],
+        decoration: InputDecoration(
+          labelText: StringsManager.customTshirtsNumber,
+          errorText: (_customTshirtErrorMessage == StringsManager.emptyString)
+              ? null
+              : _customTshirtErrorMessage,
+        ),
+        onChanged: (value) {
+          if (value == StringsManager.emptyString || value.isEmpty) {
+            setState(() {
+              _customTshirtErrorMessage =
+                  StringsManager.customTshirtsErrorNumberEmpty;
+            });
+          } else if (int.parse(value) < 1) {
+            setState(() {
+              _customTshirtErrorMessage =
+                  StringsManager.customTshirtsErrorNumberBetween1To999;
+            });
+          } else {
+            setState(() {
+              _customTshirtErrorMessage = StringsManager.emptyString;
+              _tshirtQuantityValue = int.parse(value);
+            });
+          }
+        },
       ),
     );
   }
@@ -1271,9 +1345,47 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
-  _sendDetailsOnWhatsApp() {
+  _orderASample() {
     return InkWell(
-      onTap: _sendWhatsappMessage,
+      onTap: () => _sendWhatsappMessage(
+          'Hi, I wanted to order a sample of \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPrice \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_totalCost \nDiscount: $_discountValue% \nFinal Price: ₹$_finalDiscountedPrice'),
+      child: Container(
+        height: AppWidgetHeightManager.sh50,
+        width: double.maxFinite,
+        decoration: const BoxDecoration(
+            color: ColorsManager.primary,
+            borderRadius:
+                BorderRadius.all(Radius.circular(AppRadiusManager.r10))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: AppWidgetHeightManager.sh30,
+              child: Icon(
+                IconsManager.orderASampleIcon,
+                size: AppWidgetHeightManager.sh30,
+                color: ColorsManager.white,
+              ),
+            ),
+            const SizedBox(width: AppWidgetWidthManager.sw10),
+            Text(
+              StringsManager.orderASampleButtonText,
+              style: mediumTextStyleManager(
+                color: ColorsManager.white,
+                fontSize: FontSizeManager.f18,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _shareOnWhatsApp() {
+    return InkWell(
+      onTap: () => _sendWhatsappMessage(
+          'Hi, I\'m looking for... \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPrice \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_totalCost \nDiscount: $_discountValue% \nFinal Price: ₹$_finalDiscountedPrice'),
       child: Container(
         height: AppWidgetHeightManager.sh50,
         width: double.maxFinite,
@@ -1303,12 +1415,12 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Future _sendWhatsappMessage() async {
+  Future _sendWhatsappMessage(String whatsAppMessage) async {
     // const String whatsappNumber = '919540460273'; // NISHANT'S NUMBER
     const String whatsappNumber =
         '919319289478'; // INAXIA OFFICIAL WHATSAPP NUMBER
-    String message =
-        'Hi, I\'m looking for... \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPrice \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_totalCost \nDiscount: $_discountValue% \nFinal Price: ₹$_finalDiscountedPrice';
+    String message = whatsAppMessage;
+    // 'Hi, I\'m looking for... \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPrice \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_totalCost \nDiscount: $_discountValue% \nFinal Price: ₹$_finalDiscountedPrice';
     final url = Uri.parse("https://wa.me/$whatsappNumber?text=$message");
     if (!await launchUrl(
       url,

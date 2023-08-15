@@ -1,6 +1,7 @@
 class StringsManager {
   static const String appTitle = 'INAXIA Catalogue';
   static const String emptyString = '';
+  static const String orderASampleButtonText = 'Order a Sample';
   static const String whatsappButtonText = 'Share on WhatsApp';
   static const String imageInteractiveView = 'Interactive View';
   static const String networkError = 'Network Error';
@@ -9,7 +10,7 @@ class StringsManager {
   static const String tshirtTypeTitle = 'Choose T-shirt Type: ';
   static const String tshirtTypePolo = 'Polo';
   static const String tshirtTypeRegular = 'Regular';
-  static const String tshirtTypeOversized = 'Oversized';
+  static const String tshirtTypeOversized = 'Oversized';  
 
   // T-SHIRT SIZES AVAILABLE
   static const String tshirtSizesTitle = 'T-shirt Sizes Available: ';
@@ -64,6 +65,10 @@ class StringsManager {
   static const String tshirtQuantity200 = '200';
   static const String tshirtQuantity300 = '300';
   static const String tshirtQuantity500 = '500';
+  static const String customTshirtQuality = 'Custom T-shirt Quantity?';
+  static const String customTshirtsNumber = 'Number of T-shirts';
+  static const String customTshirtsErrorNumberBetween1To999 = 'Enter a Number between 1-999';
+  static const String customTshirtsErrorNumberEmpty = 'Enter a Number';
 
   // PRICING
   static const String pricingTitle = 'Final Price: ';
