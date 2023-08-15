@@ -738,6 +738,8 @@ class _HomeViewState extends State<HomeView> {
                   // PRINTING AREAS
                   _selectedPrintingArea = null;
                   _selectedPrintingAreaIndex = null;
+                  _printingAreaHeight = AppValueManager.v0;
+                  _printingAreaWidth = AppValueManager.v0;
                 });
 
                 // print(MediaQuery.of(context).size.width);
@@ -1251,26 +1253,34 @@ class _HomeViewState extends State<HomeView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              '${StringsManager.pricingCurrency}$_finalPriceMinimum',
-              style: boldTextStyleManager(
-                color: ColorsManager.black,
-                fontSize: FontSizeManager.f24,
+        (_finalPriceMinimum != _finalPriceMaximum)
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '${StringsManager.pricingCurrency}$_finalPriceMinimum',
+                    style: boldTextStyleManager(
+                      color: ColorsManager.black,
+                      fontSize: FontSizeManager.f24,
+                    ),
+                  ),
+                  Text(
+                    ' - ${StringsManager.pricingCurrency}$_finalPriceMaximum',
+                    style: boldTextStyleManager(
+                      color: ColorsManager.black,
+                      fontSize: FontSizeManager.f24,
+                    ),
+                  ),
+                ],
+              )
+            : Text(
+                '${StringsManager.pricingCurrency}$_finalPriceMinimum',
+                style: boldTextStyleManager(
+                  color: ColorsManager.black,
+                  fontSize: FontSizeManager.f24,
+                ),
               ),
-            ),
-            Text(
-              ' - ${StringsManager.pricingCurrency}$_finalPriceMaximum',
-              style: boldTextStyleManager(
-                color: ColorsManager.black,
-                fontSize: FontSizeManager.f24,
-              ),
-            ),
-          ],
-        ),
         const SizedBox(height: AppWidgetHeightManager.sh10),
         Text(
             '• T-shirt Price: ${StringsManager.pricingCurrency}${_tshirtPrice + sizePrice}'),
@@ -1346,26 +1356,6 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
-  // _setDiscountValue() {
-  //   if (_tshirtQuantityValue == 1) {
-  //     return AppValueManager.v0;
-  //   } else if (_tshirtQuantityValue == 25) {
-  //     return AppValueManager.v0;
-  //   } else if (_tshirtQuantityValue == 50) {
-  //     return AppValueManager.v5;
-  //   } else if (_tshirtQuantityValue == 100) {
-  //     return AppValueManager.v7;
-  //   } else if (_tshirtQuantityValue == 200) {
-  //     return AppValueManager.v9;
-  //   } else if (_tshirtQuantityValue == 300) {
-  //     return AppValueManager.v11;
-  //   } else if (_tshirtQuantityValue == 500) {
-  //     return AppValueManager.v13;
-  //   } else {
-  //     return AppValueManager.v0;
-  //   }
-  // }
-
   _orderASample() {
     return InkWell(
       onTap: () => _sendWhatsappMessage(
@@ -1383,10 +1373,12 @@ class _HomeViewState extends State<HomeView> {
           children: [
             const SizedBox(
               height: AppWidgetHeightManager.sh30,
-              child: Icon(
-                IconsManager.orderASampleIcon,
-                size: AppWidgetHeightManager.sh30,
-                color: ColorsManager.white,
+              child: Center(
+                child: Icon(
+                  IconsManager.orderASampleIcon,
+                  size: AppWidgetHeightManager.sh30,
+                  color: ColorsManager.white,
+                ),
               ),
             ),
             const SizedBox(width: AppWidgetWidthManager.sw10),
@@ -1437,7 +1429,6 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Future _sendWhatsappMessage(String whatsAppMessage) async {
-    // const String whatsappNumber = '919540460273'; // NISHANT'S NUMBER
     const String whatsappNumber =
         '919319289478'; // INAXIA OFFICIAL WHATSAPP NUMBER
     String message = whatsAppMessage;
