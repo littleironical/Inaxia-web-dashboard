@@ -4,7 +4,6 @@ class AllTshirtTypesModel {
   final List tshirtImages;
   final List tshirtQualitiesAvailable;
   final List tshirtSizesAvailable;
-  final List tshirtColorsAvailable;
   
   AllTshirtTypesModel(
     this.isSelected,
@@ -12,6 +11,5 @@ class AllTshirtTypesModel {
     this.tshirtImages,
     this.tshirtQualitiesAvailable,
     this.tshirtSizesAvailable,
-    this.tshirtColorsAvailable,
   );
 }
