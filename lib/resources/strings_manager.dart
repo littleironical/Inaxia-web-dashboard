@@ -1,13 +1,13 @@
 class StringsManager {
   static const String appTitle = 'INAXIA Catalogue';
   static const String emptyString = '';
-  static const String orderASampleButtonText = 'Order a Sample';
-  static const String whatsappButtonText = 'Share on WhatsApp';
+  static const String orderASampleButtonText = 'Request a Sample';
+  static const String whatsappButtonText = 'Enquire on WhatsApp';
   static const String imageInteractiveView = 'Interactive View';
   static const String networkError = 'Network Error';
   static const String warningPricesMayVary = 'PRICES MAY VARY BASED ON QUALITY, PRINTING AREA & QUANTITY OF PRODUCT';
   static const String warningPricesNotIncluded = '• GST(5%) & Delivery excluded';
-  static const String warningBulkDiscounts = '• Bulk Discounts Available (Ask on WhatsApp)';
+  static const String warningBulkDiscounts = '• Bulk Discount Available (Enquire on WhatsApp)';
 
   // T-SHIRT TYPE
   static const String tshirtTypeTitle = 'T-shirt Type: ';
@@ -62,7 +62,7 @@ class StringsManager {
   static const String printingAreasA5 = 'A5 (8x6)';
   static const String printingAreasA6 = 'A6 (6x4)';
   static const String printingAreasA7 = 'A7 (4x2)';
-  static const String selectPrintingTechnique = '*Select Printing Technique*';
+  static const String selectPrintingTechnique = 'Select Printing Technique!';
   static const String customPrintitngArea = 'Custom Printing Area?';
   static const String customPrintingHeight = 'Height';
   static const String customPrintingWidth = 'Width';

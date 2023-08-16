@@ -31,6 +31,7 @@ class AppWidgetHeightManager {
   static const double sh30 = 30;
   static const double sh35 = 35;
   static const double sh40 = 40;
+  static const double sh45 = 45;
   static const double sh50 = 50;
   static const double sh60 = 60;
   static const double sh80 = 80;
@@ -54,6 +55,7 @@ class AppWidgetWidthManager {
   static const double sw27 = 27;
   static const double sw30 = 30;
   static const double sw40 = 40;
+  static const double sw45 = 45;
   static const double sw60 = 60;
   static const double sw80 = 80;
   static const double sw100 = 100;

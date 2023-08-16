@@ -36,8 +36,8 @@ class _HomeViewState extends State<HomeView> {
 
   // FOR T-SHIRT SIZES
   late List _tshirtSizesAvaialble;
-  String? _selectedTshirtSize;
-  int? _selectedTshirtSizeIndex;
+  late String _selectedTshirtSize;
+  int _selectedTshirtSizeIndex = AppValueManager.v0;
 
   // FOR T-SHIRT COLORS
   late List _tshirtColorsAvailable;
@@ -100,7 +100,6 @@ class _HomeViewState extends State<HomeView> {
       AllTshirtTypesModel(
         true,
         StringsManager.tshirtTypeRoundNeck,
-        160,
         [
           AssetsManager.regularTshirt1,
           AssetsManager.regularTshirt2,
@@ -142,7 +141,6 @@ class _HomeViewState extends State<HomeView> {
       AllTshirtTypesModel(
         false,
         StringsManager.tshirtTypePolo,
-        270,
         [
           AssetsManager.poloTshirt1,
           AssetsManager.poloTshirt2,
@@ -178,8 +176,6 @@ class _HomeViewState extends State<HomeView> {
   _initializeTshirt() {
     for (var element in _allTshirtTypes) {
       if (element.isSelected == true) {
-        // T-SHIRT PRICE
-        _tshirtPrice = element.tshirtPrice;
 
         // T-SHIRT QUALITIES
         _tshirtQualitiesAvailable = element.tshirtQualitiesAvailable;
@@ -216,8 +212,6 @@ class _HomeViewState extends State<HomeView> {
           }
           _allTshirtTypes[_selectedTshirtTypeIndex].isSelected = true;
 
-          _tshirtPrice = _allTshirtTypes[_selectedTshirtTypeIndex].tshirtPrice;
-
           // T-SHIRT IMAGES
           _selectedTshirtImagesIndex = AppValueManager.v0;
           _selectedTshirtImages =
@@ -229,10 +223,10 @@ class _HomeViewState extends State<HomeView> {
           _selectedTshirtQuality = _tshirtQualitiesAvailable[_selectedTshirtQualityIndex];
 
           // T-SHIRT SIZES
-          _selectedTshirtSize = null;
-          _selectedTshirtSizeIndex = null;
           _tshirtSizesAvaialble =
               _allTshirtTypes[_selectedTshirtTypeIndex].tshirtSizesAvailable;
+          _selectedTshirtSizeIndex = AppValueManager.v0;
+          _selectedTshirtSize = _tshirtSizesAvaialble[_selectedTshirtSizeIndex];
 
           // T-SHIRT COLORS
           _tshirtColorsAvailable =
@@ -716,25 +710,24 @@ class _HomeViewState extends State<HomeView> {
                 setState(() {
                   // T-SHIRT TYPES
                   _selectedTshirtTypeIndex = index;
-                  _tshirtPrice =
-                      _allTshirtTypes[_selectedTshirtTypeIndex].tshirtPrice;
 
                   // T-SHIRT IMAGES
                   _selectedTshirtImages =
                       _allTshirtTypes[_selectedTshirtTypeIndex].tshirtImages;
-                  _selectedTshirtImagesIndex = 0;
+                  _selectedTshirtImagesIndex = AppValueManager.v0;
 
                   // T-SHIRT QUALITIES
                   _tshirtQualitiesAvailable = _allTshirtTypes[_selectedTshirtTypeIndex].tshirtQualitiesAvailable;
-                  _selectedTshirtQualityIndex = 0;
+                  _selectedTshirtQualityIndex = AppValueManager.v0;
                   _selectedTshirtQuality = _tshirtQualitiesAvailable[_selectedTshirtQualityIndex];
 
                   // T-SHIRT SIZES
                   _tshirtSizesAvaialble =
                       _allTshirtTypes[_selectedTshirtTypeIndex]
                           .tshirtSizesAvailable;
-                  _selectedTshirtSize = null;
-                  _selectedTshirtSizeIndex = null;
+                  _selectedTshirtSizeIndex = AppValueManager.v0;
+                  _selectedTshirtSize = _tshirtSizesAvaialble[_selectedTshirtSizeIndex];
+                  
 
                   // T-SHIRT COLORS
                   _tshirtColorsAvailable =
@@ -917,8 +910,8 @@ class _HomeViewState extends State<HomeView> {
               child: Tooltip(
                 message: _getColorName(_tshirtColorsAvailable[index]),
                 child: Container(
-                  width: AppWidgetWidthManager.sw40,
-                  height: AppWidgetHeightManager.sh40,
+                  width: AppWidgetWidthManager.sw45,
+                  height: AppWidgetHeightManager.sh45,
                   decoration: BoxDecoration(
                     color: (_selectedTshirtColorsIndex == index)
                         ? ColorsManager.primary
@@ -1364,7 +1357,7 @@ class _HomeViewState extends State<HomeView> {
               ),
         const SizedBox(height: AppWidgetHeightManager.sh10),
         Text(
-            '• T-shirt Price: ${StringsManager.pricingCurrency}$_tshirtPrice'),
+            '• Product Price: ${StringsManager.pricingCurrency}$_tshirtPrice'),
         const SizedBox(height: AppWidgetHeightManager.sh5),
         (_printingAreaHeight > AppValueManager.v0 &&
                 _printingAreaWidth > AppValueManager.v0)
@@ -1437,7 +1430,7 @@ class _HomeViewState extends State<HomeView> {
   _orderASample() {
     return InkWell(
       onTap: () => _sendWhatsappMessage(
-          'Hi, I wanted to order a sample of \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPriceMinimum \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_finalPriceMinimum \nFinal Price: ₹$_finalPriceMinimum'),
+          'Hi, I wanted to order a sample of \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• Product Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPriceMinimum \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_finalPriceMinimum \nFinal Price: ₹$_finalPriceMinimum'),
       child: Container(
         height: AppWidgetHeightManager.sh50,
         width: double.maxFinite,
@@ -1476,7 +1469,7 @@ class _HomeViewState extends State<HomeView> {
   _shareOnWhatsApp() {
     return InkWell(
       onTap: () => _sendWhatsappMessage(
-          'Hi, I\'m looking for... \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPriceMinimum \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_finalPriceMinimum \nFinal Price: ₹$_finalPriceMinimum'),
+          'Hi, I\'m looking for... \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• Product Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPriceMinimum \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_finalPriceMinimum \nFinal Price: ₹$_finalPriceMinimum'),
       child: Container(
         height: AppWidgetHeightManager.sh50,
         width: double.maxFinite,
@@ -1510,7 +1503,7 @@ class _HomeViewState extends State<HomeView> {
     const String whatsappNumber =
         '919319289478'; // INAXIA OFFICIAL WHATSAPP NUMBER
     String message = whatsAppMessage;
-    // 'Hi, I\'m looking for... \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• T-shirt Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPrice \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_totalCost \nDiscount: $_discountValue% \nFinal Price: ₹$_finalDiscountedPrice';
+    // 'Hi, I\'m looking for... \n• T-shirt Type: ${_allTshirtTypes[_selectedTshirtTypeIndex].tshirtType} \n• T-shirt Size: $_selectedTshirtSize \n• T-shirt Color: ${_getColorName(_selectedTshirtColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• Product Price: ₹$_tshirtPrice \n• Printing Price: ₹$_printingPrice \n• T-shirt Quantity: $_tshirtQuantityValue \nTotal Cost: ₹$_totalCost \nDiscount: $_discountValue% \nFinal Price: ₹$_finalDiscountedPrice';
     final url = Uri.parse("https://wa.me/$whatsappNumber?text=$message");
     if (!await launchUrl(
       url,

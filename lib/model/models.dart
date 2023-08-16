@@ -1,7 +1,6 @@
 class AllTshirtTypesModel {
   bool isSelected;
   final String tshirtType;
-  final double tshirtPrice;
   final List tshirtImages;
   final List tshirtQualitiesAvailable;
   final List tshirtSizesAvailable;
@@ -10,7 +9,6 @@ class AllTshirtTypesModel {
   AllTshirtTypesModel(
     this.isSelected,
     this.tshirtType,
-    this.tshirtPrice,
     this.tshirtImages,
     this.tshirtQualitiesAvailable,
     this.tshirtSizesAvailable,
