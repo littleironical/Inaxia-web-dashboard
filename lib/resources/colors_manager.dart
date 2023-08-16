@@ -24,5 +24,5 @@ class ColorsManager {
   static const Color redTshirt = Color(0xFFD82328);
   static const Color orangeTshirt = Color(0xFFEF9A31);
   static const Color skyBlueTshirt = Color(0xFF4ABADD);
-  static const Color yellowTshirt = Color(0xFFE9FA51);
+  static const Color yellowTshirt = Color(0xFFFFE7AF);
 }

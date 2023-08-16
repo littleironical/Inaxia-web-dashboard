@@ -1,15 +1,15 @@
-class AllTshirtTypesModel {
+class AllProductTypesModel {
   bool isSelected;
-  final String tshirtType;
-  final List tshirtImages;
-  final List tshirtQualitiesAvailable;
-  final List tshirtSizesAvailable;
+  final String productType;
+  final List productImages;
+  final List productQualitiesAvailable;
+  final List productSizesAvailable;
   
-  AllTshirtTypesModel(
+  AllProductTypesModel(
     this.isSelected,
-    this.tshirtType,
-    this.tshirtImages,
-    this.tshirtQualitiesAvailable,
-    this.tshirtSizesAvailable,
+    this.productType,
+    this.productImages,
+    this.productQualitiesAvailable,
+    this.productSizesAvailable,
   );
 }
