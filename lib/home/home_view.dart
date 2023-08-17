@@ -175,6 +175,7 @@ class _HomeViewState extends State<HomeView> {
   // T-SHIRT COLOR BASED ON QUALITY
   _getProductColorsAvailable() {
     if (_selectedProductQuality == StringsManager.productQualityPolyester) {
+      _productPrice = AppValueManager.v85.toDouble();
       return [
         ColorsManager.whiteTshirt,
         ColorsManager.blackTshirt,
@@ -186,6 +187,7 @@ class _HomeViewState extends State<HomeView> {
         ColorsManager.greyTshirt,
       ];
     } else if (_selectedProductQuality == StringsManager.productQualityDrifit) {
+      _productPrice = AppValueManager.v110.toDouble();
       return [
         ColorsManager.whiteTshirt,
         ColorsManager.pinkTshirt,
@@ -199,6 +201,7 @@ class _HomeViewState extends State<HomeView> {
         ColorsManager.beigeTshirt,
       ];
     } else if (_selectedProductQuality == StringsManager.productQualityDotknit) {
+      _productPrice = AppValueManager.v120.toDouble();
       return [
         ColorsManager.whiteTshirt,
         ColorsManager.orangeTshirt,
@@ -211,6 +214,7 @@ class _HomeViewState extends State<HomeView> {
       ];
     } else if (_selectedProductQuality ==
         StringsManager.productQualitySublimationCotton) {
+      _productPrice = AppValueManager.v170.toDouble();
       return [
         ColorsManager.whiteTshirt,
         ColorsManager.greenTshirt,
@@ -223,6 +227,7 @@ class _HomeViewState extends State<HomeView> {
       ];
     } else if (_selectedProductQuality ==
         StringsManager.productQuality100Cotton) {
+      _productPrice = AppValueManager.v180.toDouble();
       return [
         ColorsManager.whiteTshirt,
         ColorsManager.skyBlueTshirt,
@@ -233,6 +238,7 @@ class _HomeViewState extends State<HomeView> {
       ];
     } else if (_selectedProductQuality ==
         StringsManager.productQualityCottonBiowash) {
+      _productPrice = AppValueManager.v190.toDouble();
       return [
         ColorsManager.whiteTshirt,
         ColorsManager.yellowTshirt,
@@ -244,6 +250,7 @@ class _HomeViewState extends State<HomeView> {
         ColorsManager.pinkTshirt,
       ];
     } else if (_selectedProductQuality == StringsManager.productQualityMatty) {
+      _productPrice = AppValueManager.v130.toDouble();
       return [
         ColorsManager.whiteTshirt,
         ColorsManager.beigeTshirt,
@@ -258,6 +265,7 @@ class _HomeViewState extends State<HomeView> {
       ];
     } else if (_selectedProductQuality ==
         StringsManager.productQualityPolyCottonMatty) {
+      _productPrice = AppValueManager.v160.toDouble();
       return [
         ColorsManager.whiteTshirt,
         ColorsManager.redTshirt,
@@ -267,6 +275,7 @@ class _HomeViewState extends State<HomeView> {
         ColorsManager.orangeTshirt,
       ];
     } else {
+      _productPrice = AppValueManager.v0.toDouble();
       return [];
     }
   }
@@ -1547,33 +1556,6 @@ class _HomeViewState extends State<HomeView> {
         ),
       ],
     );
-  }
-
-  // CALCULATING T-SHIRT PRICE
-  _setProductPrice() {
-    if (_selectedProductQuality == StringsManager.productQualityPolyester) {
-      _productPrice = AppValueManager.v85.toDouble();
-    } else if (_selectedProductQuality == StringsManager.productQualityDrifit) {
-      _productPrice = AppValueManager.v110.toDouble();
-    } else if (_selectedProductQuality == StringsManager.productQualityDotknit) {
-      _productPrice = AppValueManager.v120.toDouble();
-    } else if (_selectedProductQuality ==
-        StringsManager.productQualitySublimationCotton) {
-      _productPrice = AppValueManager.v170.toDouble();
-    } else if (_selectedProductQuality ==
-        StringsManager.productQuality100Cotton) {
-      _productPrice = AppValueManager.v180.toDouble();
-    } else if (_selectedProductQuality ==
-        StringsManager.productQualityCottonBiowash) {
-      _productPrice = AppValueManager.v190.toDouble();
-    } else if (_selectedProductQuality == StringsManager.productQualityMatty) {
-      _productPrice = AppValueManager.v130.toDouble();
-    } else if (_selectedProductQuality ==
-        StringsManager.productQualityPolyCottonMatty) {
-      _productPrice = AppValueManager.v160.toDouble();
-    } else {
-      _productPrice = AppValueManager.v0.toDouble();
-    }
   }
 
   // CALCULATING PRINTING PRICE
