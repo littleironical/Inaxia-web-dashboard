@@ -91,7 +91,7 @@ class StringsManager {
   static const String productQuantity500 = '500';
   static const String customProductQuality = 'Custom Product Quantity?';
   static const String customProductsNumber = 'Number of Products';
-  static const String customProductsErrorNumberBetween1To999 = 'Enter a Number between 1-999';
+  static const String customProductsErrorNumberBetween1To9999 = 'Enter a Number between 1-9999';
   static const String customProductsErrorNumberEmpty = 'Enter a Number';
 
   // PRICING

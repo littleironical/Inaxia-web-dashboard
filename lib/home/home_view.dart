@@ -162,7 +162,7 @@ class _HomeViewState extends State<HomeView> {
         _productSizesAvaialble = element.productSizesAvailable;
 
         // T-SHIRT COLORS
-        _productColorsAvailable = _getProductColorsAvailable();
+        _productColorsAvailable = _getProductColorsAvailableAndPricing();
         _selectedProductColor =
             _productColorsAvailable[_selectedProductColorsIndex];
 
@@ -173,7 +173,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   // T-SHIRT COLOR BASED ON QUALITY
-  _getProductColorsAvailable() {
+  _getProductColorsAvailableAndPricing() {
     if (_selectedProductQuality == StringsManager.productQualityPolyester) {
       _productPrice = AppValueManager.v85.toDouble();
       return [
@@ -316,7 +316,7 @@ class _HomeViewState extends State<HomeView> {
           _selectedProductSize = _productSizesAvaialble[_selectedProductSizeIndex];
 
           // T-SHIRT COLORS
-          _productColorsAvailable = _getProductColorsAvailable();
+          _productColorsAvailable = _getProductColorsAvailableAndPricing();
           _selectedProductColorsIndex = AppValueManager.v0;
           _selectedProductColor =
               _productColorsAvailable[_selectedProductColorsIndex];
@@ -829,7 +829,7 @@ class _HomeViewState extends State<HomeView> {
                       _productSizesAvaialble[_selectedProductSizeIndex];
 
                   // T-SHIRT COLORS
-                  _productColorsAvailable = _getProductColorsAvailable();
+                  _productColorsAvailable = _getProductColorsAvailableAndPricing();
                   _selectedProductColorsIndex = 0;
                   _selectedProductColor =
                       _productColorsAvailable[_selectedProductColorsIndex];
@@ -971,7 +971,10 @@ class _HomeViewState extends State<HomeView> {
               setState(() {
                 _selectedProductQualityIndex = index;
                 _selectedProductQuality = _productQualitiesAvailable[index];
-                _productColorsAvailable = _getProductColorsAvailable();
+                _productColorsAvailable = _getProductColorsAvailableAndPricing();
+                _selectedProductColorsIndex = AppValueManager.v0;
+                _selectedProductColor =
+                      _productColorsAvailable[_selectedProductColorsIndex];
               });
             },
             style: ElevatedButton.styleFrom(
@@ -1374,7 +1377,7 @@ class _HomeViewState extends State<HomeView> {
         textAlign: TextAlign.center,
         textInputAction: TextInputAction.done,
         maxLines: AppValueManager.v1,
-        maxLength: AppValueManager.v3,
+        maxLength: AppValueManager.v4,
         inputFormatters: [
           FilteringTextInputFormatter.digitsOnly,
         ],
@@ -1390,10 +1393,10 @@ class _HomeViewState extends State<HomeView> {
               _customProductErrorMessage =
                   StringsManager.customProductsErrorNumberEmpty;
             });
-          } else if (int.parse(value) < 1) {
+          } else if (int.parse(value) < AppValueManager.v1) {
             setState(() {
               _customProductErrorMessage =
-                  StringsManager.customProductsErrorNumberBetween1To999;
+                  StringsManager.customProductsErrorNumberBetween1To9999;
             });
           } else {
             setState(() {
@@ -1480,7 +1483,6 @@ class _HomeViewState extends State<HomeView> {
 
   // TOTAL PRICING CALCULATION
   _finalPricing() {
-    _setProductPrice();
     _setPrintingPrice();
     const int pressingChargeMinimum = AppValueManager.v10;
     const int pressingChargeMaximum = AppValueManager.v40;
