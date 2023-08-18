@@ -87,6 +87,10 @@ class _HomeViewState extends State<HomeView> {
   late double _finalPriceMinimum;
   late double _finalPriceMaximum;
 
+  // WHATSAPP MESSAGE SENDING
+  final String _whatsAppNumber = '919319289478';
+  late String _whatsAppMessage;
+
   // INITIALIZING ALL DATA
   @override
   void initState() {
@@ -146,6 +150,7 @@ class _HomeViewState extends State<HomeView> {
 
         // T-SHIRT SIZES
         _productSizesAvaialble = element.productSizesAvailable;
+        _selectedProductSize = _productSizesAvaialble[_selectedProductSizeIndex];
 
         // T-SHIRT COLORS
         _setProductImagesColorsAndPricing();
@@ -531,7 +536,8 @@ class _HomeViewState extends State<HomeView> {
 
             // SWIPED LEFT - NEXT IMAGE TO BE SEEN
             if (swipeDirection == 'left') {
-              if (_selectedProductImagesIndex == (_productImagesAvailable.length - 1)) {
+              if (_selectedProductImagesIndex ==
+                  (_productImagesAvailable.length - 1)) {
                 return;
               } else {
                 setState(() {
@@ -790,7 +796,7 @@ class _HomeViewState extends State<HomeView> {
 
           // ORDER A SAMPLE BUTTON
           _heightSpacing(AppPaddingManager.p10),
-          _orderASample(),
+          _requestASample(),
 
           // SHARE ON WHATSAPP BUTTON
           _heightSpacing(AppPaddingManager.p10),
@@ -1637,10 +1643,12 @@ class _HomeViewState extends State<HomeView> {
   }
 
   // BUTTON
-  _orderASample() {
+  _requestASample() {
     return InkWell(
-      onTap: () => _sendWhatsappMessage(
-          'Hi, I wanted to order a sample of \n• T-shirt Type: ${_allProductTypes[_selectedProductTypeIndex].productType} \n• T-shirt Size: $_selectedProductSize \n• T-shirt Color: ${_getColorName(_selectedProductColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• Product Price: ₹$_productPrice \n• Printing Price: ₹$_printingPriceMinimum \n• T-shirt Quantity: $_productQuantityValue \nTotal Cost: ₹$_finalPriceMinimum \nFinal Price: ₹$_finalPriceMinimum'),
+      onTap: () {
+        _whatsAppMessage = "HI, I WANTED TO ORDER A SAMPLE OF PRODUCT \n• Type: ${_allProductTypes[_selectedProductTypeIndex].productType} \n• Quality: $_selectedProductQuality (₹$_productPrice) \n• Size: $_selectedProductSize \n• Color: ${_getColorName(_selectedProductColor)} \n• Printing: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• Quantity: $_productQuantityValue";
+        _sendMessageOnWhatsapp();
+      }, 
       child: Container(
         height: AppWidgetHeightManager.sh50,
         width: double.maxFinite,
@@ -1679,8 +1687,10 @@ class _HomeViewState extends State<HomeView> {
   // BUTTON
   _shareOnWhatsApp() {
     return InkWell(
-      onTap: () => _sendWhatsappMessage(
-          'Hi, I\'m looking for... \n• T-shirt Type: ${_allProductTypes[_selectedProductTypeIndex].productType} \n• T-shirt Size: $_selectedProductSize \n• T-shirt Color: ${_getColorName(_selectedProductColor)} \n• Printing Technique: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• Product Price: ₹$_productPrice \n• Printing Price: ₹$_printingPriceMinimum \n• T-shirt Quantity: $_productQuantityValue \nTotal Cost: ₹$_finalPriceMinimum \nFinal Price: ₹$_finalPriceMinimum'),
+      onTap: () {
+        _whatsAppMessage = "Hi, I'M LOOKING FOR A PRODUCT OF \n• Type: ${_allProductTypes[_selectedProductTypeIndex].productType} \n• Quality: $_selectedProductQuality (₹$_productPrice) \n• Size: $_selectedProductSize \n• Color: ${_getColorName(_selectedProductColor)} \n• Printing: $_selectedPrintingTechnique \n• Printing Area (inch): $_printingAreaHeight x $_printingAreaWidth \n• Printing and Handling: ₹$_printingPriceMinimum - ₹$_printingPriceMaximum \n• Quantity: $_productQuantityValue \nFINAL COST RANGE: ₹$_finalPriceMinimum - ₹$_finalPriceMaximum";
+        _sendMessageOnWhatsapp();
+      }, 
       child: Container(
         height: AppWidgetHeightManager.sh50,
         width: double.maxFinite,
@@ -1711,15 +1721,13 @@ class _HomeViewState extends State<HomeView> {
   }
 
   // SENDING MESSAGE ON WHATSAPP
-  Future _sendWhatsappMessage(String whatsAppMessage) async {
-    const String whatsappNumber =
-        '919319289478'; // INAXIA OFFICIAL WHATSAPP NUMBER
-    String message = whatsAppMessage;
-    final url = Uri.parse("https://wa.me/$whatsappNumber?text=$message");
+  Future<void> _sendMessageOnWhatsapp() async {
+    final Uri url = Uri.parse("https://wa.me/$_whatsAppNumber?text=$_whatsAppMessage");
+
     if (!await launchUrl(
       url,
       mode: LaunchMode.externalApplication,
-    )) {
+      )) {
       throw Exception('Could not launch $url');
     }
   }

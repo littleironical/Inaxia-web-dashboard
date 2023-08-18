@@ -2,7 +2,7 @@ name: inaxia_catalogue
 description: Inaxia Dynamic Catalogue.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.2.0+13 # VERSION - IMAGES CHANGE + STATIC COLORS + INITIALIZED PRINTING TECHNIQUE + TEXTS CORRECTION + CUSTOM PRINTING AREA AND DIALOG SIZES BUG FIXE
+version: 1.2.1+14 # VERSION - WhatsApp Buttons bug fix
 
 environment:
   sdk: '>=3.0.5 <4.0.0'

@@ -74,5 +74,11 @@ ThemeData get appThemeData {
         color: ColorsManager.primary,
       ),
     ),
+
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: ColorsManager.primary,
+      selectionColor: ColorsManager.primary,
+      selectionHandleColor: ColorsManager.primary,
+    ),
   );
 }
