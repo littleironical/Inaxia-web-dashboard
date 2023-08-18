@@ -1,5 +1,5 @@
 class AppBreakpointManager {
-  static const double b550 = 550;
+  static const double b700 = 700;
   static const double b1100 = 1100;
   static const double b1265 = 1265;
 }
@@ -60,6 +60,7 @@ class AppWidgetWidthManager {
   static const double sw60 = 60;
   static const double sw80 = 80;
   static const double sw100 = 100;
+  static const double sw200 = 200;
   static const double sw400 = 400;
   static const double sw500 = 500;
   static const double sw700 = 700;

@@ -37,7 +37,7 @@ class StringsManager {
   static const String productQualityCottonBiowashDesciption = "Bio-wash is a fabric finishing procedure that improves textile consistency by reducing fraying and unevenness in (cellulose) stitched garments. This finishing technique is used on cellulose clothes to create long-lasting results through the application of enzymes.";
   static const String productQualityMattyDesciption = "Matty fabric is a medium weight fabric which is traditionally used for household articles like cushion covers, sofa covers, table covers and bed covers etc. Matty fabric is manufactured using 100% cotton, 100% polyester or blend of polyester and viscose.";
   static const String productQualityPolyCottonMattyDescription = "Poly cotton matty fabric is a type of textile material that is made by blending polyester and cotton fibers. It is known for its durability, softness, and ability to resist wrinkles and shrinking. Matty fabric is a type of knit fabric that has a textured surface and is thicker than regular jersey fabric.";
-  static const String productQualityDescriptionNotFound = 'Description Not Found!';
+  static const String productDescriptionNotFound = 'Description Not Found!';
 
 
   // T-SHIRT SIZES
@@ -64,9 +64,11 @@ class StringsManager {
   static const String skyBlueColor = 'Sky Blue';
   static const String yellowColor = 'Yellow';
 
-  // PRINTING TYPES
+  // PRINTING TECHNIQUES
   static const String printingTechniquesTitle = 'Printing Techniques: ';
   static const String printingTechniqueDTF = 'DTF (Direct-to-Figment)';
+  // DESCRIPTIONS
+  static const String printingTechniquesDTFDescription = "DTF stands for Direct To Film. This technique involves printing your design directly onto a film and then transferring it to a T-shirt made of cotton, polyester, or their blends, regardless of their colour, as it can work with white ink.";
 
   // PRINTING AREAS
   static const String printingAreasTitle = 'Printing Areas: (in INCHES)';

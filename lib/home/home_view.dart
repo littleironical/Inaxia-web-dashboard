@@ -26,7 +26,7 @@ class _HomeViewState extends State<HomeView> {
   int _selectedProductTypeIndex = AppValueManager.v0;
 
   // FOR T-SHIRT IMAGES
-  late List _selectedProductImages;
+  late List _productImagesAvailable;
   int _selectedProductImagesIndex = AppValueManager.v0;
 
   // FOR T-SHIRT QUALITIES
@@ -48,8 +48,8 @@ class _HomeViewState extends State<HomeView> {
   final List _printingTechniquesAvailable = [
     StringsManager.printingTechniqueDTF,
   ];
-  String? _selectedPrintingTechnique;
-  int? _selectedPrintingTechniquesIndex;
+  late String _selectedPrintingTechnique;
+  int _selectedPrintingTechniquesIndex = AppValueManager.v0;
 
   // PRINTING AREA
   final List _printingAreaAvailable = [
@@ -101,13 +101,6 @@ class _HomeViewState extends State<HomeView> {
         true,
         StringsManager.productTypeRoundNeck,
         [
-          AssetsManager.regularTshirt1,
-          AssetsManager.regularTshirt2,
-          AssetsManager.regularTshirt3,
-          AssetsManager.regularTshirt4,
-          AssetsManager.regularTshirt5,
-        ],
-        [
           StringsManager.productQualityPolyester,
           StringsManager.productQualityDrifit,
           StringsManager.productQualityDotknit,
@@ -128,13 +121,6 @@ class _HomeViewState extends State<HomeView> {
       AllProductTypesModel(
         false,
         StringsManager.productTypePolo,
-        [
-          AssetsManager.poloTshirt1,
-          AssetsManager.poloTshirt2,
-          AssetsManager.poloTshirt3,
-          AssetsManager.poloTshirt4,
-          AssetsManager.poloTshirt5,
-        ],
         [
           StringsManager.productQualityMatty,
           StringsManager.productQualityPolyCottonMatty,
@@ -162,21 +148,30 @@ class _HomeViewState extends State<HomeView> {
         _productSizesAvaialble = element.productSizesAvailable;
 
         // T-SHIRT COLORS
-        _productColorsAvailable = _getProductColorsAvailableAndPricing();
+        _setProductImagesColorsAndPricing();
         _selectedProductColor =
             _productColorsAvailable[_selectedProductColorsIndex];
 
         // T-SHIRT IMAGES
-        _selectedProductImages = element.productImages;
+        _setProductImagesColorsAndPricing();
+
+        // PRINTING TECHNIQUES
+        _selectedPrintingTechnique =
+            _printingTechniquesAvailable[_selectedPrintingTechniquesIndex];
       }
     }
   }
 
   // T-SHIRT COLOR BASED ON QUALITY
-  _getProductColorsAvailableAndPricing() {
+  _setProductImagesColorsAndPricing() {
     if (_selectedProductQuality == StringsManager.productQualityPolyester) {
       _productPrice = AppValueManager.v85.toDouble();
-      return [
+      _productImagesAvailable = [
+        AssetsManager.polyester,
+        AssetsManager.polyester1,
+        AssetsManager.polyester2,
+      ];
+      _productColorsAvailable = [
         ColorsManager.whiteTshirt,
         ColorsManager.blackTshirt,
         ColorsManager.yellowTshirt,
@@ -188,7 +183,12 @@ class _HomeViewState extends State<HomeView> {
       ];
     } else if (_selectedProductQuality == StringsManager.productQualityDrifit) {
       _productPrice = AppValueManager.v110.toDouble();
-      return [
+      _productImagesAvailable = [
+        AssetsManager.driFit,
+        AssetsManager.driFit1,
+        AssetsManager.driFit2,
+      ];
+      _productColorsAvailable = [
         ColorsManager.whiteTshirt,
         ColorsManager.pinkTshirt,
         ColorsManager.greenTshirt,
@@ -200,9 +200,15 @@ class _HomeViewState extends State<HomeView> {
         ColorsManager.greyTshirt,
         ColorsManager.beigeTshirt,
       ];
-    } else if (_selectedProductQuality == StringsManager.productQualityDotknit) {
+    } else if (_selectedProductQuality ==
+        StringsManager.productQualityDotknit) {
       _productPrice = AppValueManager.v120.toDouble();
-      return [
+      _productImagesAvailable = [
+        AssetsManager.dotKnit,
+        AssetsManager.dotKnit1,
+        AssetsManager.dotKnit2,
+      ];
+      _productColorsAvailable = [
         ColorsManager.whiteTshirt,
         ColorsManager.orangeTshirt,
         ColorsManager.yellowTshirt,
@@ -215,7 +221,12 @@ class _HomeViewState extends State<HomeView> {
     } else if (_selectedProductQuality ==
         StringsManager.productQualitySublimationCotton) {
       _productPrice = AppValueManager.v170.toDouble();
-      return [
+      _productImagesAvailable = [
+        AssetsManager.sublimationCotton,
+        AssetsManager.sublimationCotton1,
+        AssetsManager.sublimationCotton2,
+      ];
+      _productColorsAvailable = [
         ColorsManager.whiteTshirt,
         ColorsManager.greenTshirt,
         ColorsManager.skyBlueTshirt,
@@ -228,7 +239,12 @@ class _HomeViewState extends State<HomeView> {
     } else if (_selectedProductQuality ==
         StringsManager.productQuality100Cotton) {
       _productPrice = AppValueManager.v180.toDouble();
-      return [
+      _productImagesAvailable = [
+        AssetsManager.cotton100,
+        AssetsManager.cotton1001,
+        AssetsManager.cotton1002,
+      ];
+      _productColorsAvailable = [
         ColorsManager.whiteTshirt,
         ColorsManager.skyBlueTshirt,
         ColorsManager.greyTshirt,
@@ -239,7 +255,12 @@ class _HomeViewState extends State<HomeView> {
     } else if (_selectedProductQuality ==
         StringsManager.productQualityCottonBiowash) {
       _productPrice = AppValueManager.v190.toDouble();
-      return [
+      _productImagesAvailable = [
+        AssetsManager.cottonBiowash,
+        AssetsManager.cottonBiowash1,
+        AssetsManager.cottonBiowash2,
+      ];
+      _productColorsAvailable = [
         ColorsManager.whiteTshirt,
         ColorsManager.yellowTshirt,
         ColorsManager.skyBlueTshirt,
@@ -251,7 +272,10 @@ class _HomeViewState extends State<HomeView> {
       ];
     } else if (_selectedProductQuality == StringsManager.productQualityMatty) {
       _productPrice = AppValueManager.v130.toDouble();
-      return [
+      _productImagesAvailable = [
+        AssetsManager.matty,
+      ];
+      _productColorsAvailable = [
         ColorsManager.whiteTshirt,
         ColorsManager.beigeTshirt,
         ColorsManager.blackTshirt,
@@ -266,7 +290,12 @@ class _HomeViewState extends State<HomeView> {
     } else if (_selectedProductQuality ==
         StringsManager.productQualityPolyCottonMatty) {
       _productPrice = AppValueManager.v160.toDouble();
-      return [
+      _productImagesAvailable = [
+        AssetsManager.polyCottonMatty,
+        AssetsManager.polyCottonMatty1,
+        AssetsManager.polyCottonMatty2,
+      ];
+      _productColorsAvailable = [
         ColorsManager.whiteTshirt,
         ColorsManager.redTshirt,
         ColorsManager.skyBlueTshirt,
@@ -276,7 +305,8 @@ class _HomeViewState extends State<HomeView> {
       ];
     } else {
       _productPrice = AppValueManager.v0.toDouble();
-      return [];
+      _productImagesAvailable = [];
+      _productColorsAvailable = [];
     }
   }
 
@@ -298,13 +328,13 @@ class _HomeViewState extends State<HomeView> {
           _allProductTypes[_selectedProductTypeIndex].isSelected = true;
 
           // T-SHIRT IMAGES
+          _setProductImagesColorsAndPricing();
           _selectedProductImagesIndex = AppValueManager.v0;
-          _selectedProductImages =
-              _allProductTypes[_selectedProductTypeIndex].productImages;
 
           // T-SHIRT QUALITIES
-          _productQualitiesAvailable = _allProductTypes[_selectedProductTypeIndex]
-              .productQualitiesAvailable;
+          _productQualitiesAvailable =
+              _allProductTypes[_selectedProductTypeIndex]
+                  .productQualitiesAvailable;
           _selectedProductQualityIndex = AppValueManager.v0;
           _selectedProductQuality =
               _productQualitiesAvailable[_selectedProductQualityIndex];
@@ -313,17 +343,19 @@ class _HomeViewState extends State<HomeView> {
           _productSizesAvaialble =
               _allProductTypes[_selectedProductTypeIndex].productSizesAvailable;
           _selectedProductSizeIndex = AppValueManager.v0;
-          _selectedProductSize = _productSizesAvaialble[_selectedProductSizeIndex];
+          _selectedProductSize =
+              _productSizesAvaialble[_selectedProductSizeIndex];
 
           // T-SHIRT COLORS
-          _productColorsAvailable = _getProductColorsAvailableAndPricing();
+          _setProductImagesColorsAndPricing();
           _selectedProductColorsIndex = AppValueManager.v0;
           _selectedProductColor =
               _productColorsAvailable[_selectedProductColorsIndex];
 
           // PRINTING TECHNIQUES
-          _selectedPrintingTechnique = null;
-          _selectedPrintingTechniquesIndex = null;
+          _selectedPrintingTechniquesIndex = AppValueManager.v0;
+          _selectedPrintingTechnique =
+              _printingTechniquesAvailable[_selectedPrintingTechniquesIndex];
 
           // PRINTING AREAS
           _selectedPrintingArea = null;
@@ -346,7 +378,7 @@ class _HomeViewState extends State<HomeView> {
           children: [
             (_screenWidth >= AppBreakpointManager.b1100)
                 ? _largeScreenBody()
-                : (_screenWidth >= AppBreakpointManager.b550)
+                : (_screenWidth >= AppBreakpointManager.b700)
                     ? _mediumScreenBody()
                     : _smallScreenBody(),
             //* MORE SECTIONS TO BE ADDED
@@ -477,85 +509,78 @@ class _HomeViewState extends State<HomeView> {
     return SizedBox(
       height: (_screenWidth >= AppBreakpointManager.b1100)
           ? AppWidgetHeightManager.sh600
-          : (_screenWidth >= AppBreakpointManager.b550)
+          : (_screenWidth >= AppBreakpointManager.b700)
               ? AppWidgetHeightManager.sh500
               : AppWidgetHeightManager.sh590,
       width: (_screenWidth >= AppBreakpointManager.b1100)
           ? AppWidgetWidthManager.sw400
-          : (_screenWidth >= AppBreakpointManager.b550)
+          : (_screenWidth >= AppBreakpointManager.b700)
               ? AppWidgetWidthManager.sw400
               : double.maxFinite,
-      child: Container(
-        color: _selectedProductColor,
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () => _interactiveImageView(),
-            onPanUpdate: (details) {
-              swipeDirection = details.delta.dx < 0 ? 'left' : 'right';
-            },
-            onPanEnd: (details) {
-              if (swipeDirection == null) {
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () => _interactiveImageView(),
+          onPanUpdate: (details) {
+            swipeDirection = details.delta.dx < 0 ? 'left' : 'right';
+          },
+          onPanEnd: (details) {
+            if (swipeDirection == null) {
+              return;
+            }
+
+            // SWIPED LEFT - NEXT IMAGE TO BE SEEN
+            if (swipeDirection == 'left') {
+              if (_selectedProductImagesIndex == (_productImagesAvailable.length - 1)) {
                 return;
+              } else {
+                setState(() {
+                  _selectedProductImagesIndex++;
+                });
               }
+            }
 
-              // SWIPED LEFT - NEXT IMAGE TO BE SEEN
-              if (swipeDirection == 'left') {
-                if (_selectedProductImagesIndex ==
-                    (_allProductTypes[_selectedProductTypeIndex]
-                            .productImages
-                            .length -
-                        1)) {
-                  return;
-                } else {
-                  setState(() {
-                    _selectedProductImagesIndex++;
-                  });
-                }
+            // SWIPED RIGHT - PREVIUOS IMAGE TO BE SEEN
+            else if (swipeDirection == 'right') {
+              if (_selectedProductImagesIndex == 0) {
+                return;
+              } else {
+                setState(() {
+                  _selectedProductImagesIndex--;
+                });
               }
-
-              // SWIPED RIGHT - PREVIUOS IMAGE TO BE SEEN
-              else if (swipeDirection == 'right') {
-                if (_selectedProductImagesIndex == 0) {
-                  return;
-                } else {
-                  setState(() {
-                    _selectedProductImagesIndex--;
-                  });
-                }
+            }
+          },
+          child: Image.network(
+            _productImagesAvailable[_selectedProductImagesIndex],
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) {
+                return child;
               }
+              return Shimmer.fromColors(
+                baseColor: ColorsManager.lightBlack,
+                highlightColor: ColorsManager.darkLightBlack,
+                child: Container(
+                  color: ColorsManager.white,
+                ),
+              );
             },
-            child: Image.network(
-              _selectedProductImages[_selectedProductImagesIndex],
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) {
-                  return child;
-                }
-                return Shimmer.fromColors(
-                  baseColor: ColorsManager.lightBlack,
-                  highlightColor: ColorsManager.darkLightBlack,
-                  child: Container(
-                    color: ColorsManager.white,
-                  ),
-                );
-              },
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  color: ColorsManager.lightBlack,
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(IconsManager.error),
-                      SizedBox(height: AppWidgetHeightManager.sh10),
-                      Text(StringsManager.networkError),
-                    ],
-                  ),
-                );
-              },
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter,
-            ),
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                color: ColorsManager.lightBlack,
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(IconsManager.error),
+                    SizedBox(height: AppWidgetHeightManager.sh10),
+                    Text(StringsManager.networkError),
+                  ],
+                ),
+              );
+            },
+            fit: BoxFit.cover,
+            alignment: Alignment.topCenter,
           ),
         ),
       ),
@@ -568,11 +593,13 @@ class _HomeViewState extends State<HomeView> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text(StringsManager.imageInteractiveView),
-        content: Container(
-          color: _selectedProductColor,
+        content: SizedBox(
+          height: (_screenWidth >= AppBreakpointManager.b700)
+              ? AppWidgetHeightManager.sh700
+              : null,
           child: InteractiveViewer(
             child: Image.network(
-              _selectedProductImages[_selectedProductImagesIndex],
+              _productImagesAvailable[_selectedProductImagesIndex],
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) {
                   return child;
@@ -625,7 +652,7 @@ class _HomeViewState extends State<HomeView> {
               ? Axis.vertical
               : Axis.horizontal,
           shrinkWrap: true,
-          itemCount: _selectedProductImages.length,
+          itemCount: _productImagesAvailable.length,
           separatorBuilder: (context, index) => SizedBox(
             height: (_screenWidth >= AppBreakpointManager.b1100)
                 ? AppWidgetHeightManager.sh10
@@ -640,14 +667,13 @@ class _HomeViewState extends State<HomeView> {
                   ? AppPaddingManager.p10
                   : AppPaddingManager.p0,
             ),
-            child: Container(
-              height: (_screenWidth >= AppBreakpointManager.b550)
+            child: SizedBox(
+              height: (_screenWidth >= AppBreakpointManager.b700)
                   ? AppWidgetHeightManager.sh120
                   : AppWidgetHeightManager.sh80,
-              width: (_screenWidth >= AppBreakpointManager.b550)
+              width: (_screenWidth >= AppBreakpointManager.b700)
                   ? AppWidgetWidthManager.sw60
                   : AppWidgetWidthManager.sw80,
-              color: _selectedProductColor,
               child: GestureDetector(
                 onTap: () {
                   setState(() {
@@ -666,7 +692,7 @@ class _HomeViewState extends State<HomeView> {
                           : null,
                     ),
                     child: Image.network(
-                      _selectedProductImages[index],
+                      _productImagesAvailable[index],
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) {
                           return child;
@@ -734,6 +760,8 @@ class _HomeViewState extends State<HomeView> {
 
           // PRINTING TECHNIQUES
           _optionTitle(StringsManager.printingTechniquesTitle, true),
+          _heightSpacing(AppPaddingManager.p5),
+          _printingTechniquesGuideTextButton(),
           _heightSpacing(AppPaddingManager.p10),
           _printingTechniques(),
           _heightSpacing(AppPaddingManager.p20),
@@ -808,8 +836,7 @@ class _HomeViewState extends State<HomeView> {
                   _selectedProductTypeIndex = index;
 
                   // T-SHIRT IMAGES
-                  _selectedProductImages =
-                      _allProductTypes[_selectedProductTypeIndex].productImages;
+                  _setProductImagesColorsAndPricing();
                   _selectedProductImagesIndex = AppValueManager.v0;
 
                   // T-SHIRT QUALITIES
@@ -829,14 +856,15 @@ class _HomeViewState extends State<HomeView> {
                       _productSizesAvaialble[_selectedProductSizeIndex];
 
                   // T-SHIRT COLORS
-                  _productColorsAvailable = _getProductColorsAvailableAndPricing();
+                  _setProductImagesColorsAndPricing();
                   _selectedProductColorsIndex = 0;
                   _selectedProductColor =
                       _productColorsAvailable[_selectedProductColorsIndex];
 
                   // PRINTING TECHNIQUES
-                  _selectedPrintingTechnique = null;
-                  _selectedPrintingTechniquesIndex = null;
+                  _selectedPrintingTechniquesIndex = AppValueManager.v0;
+                  _selectedPrintingTechnique = _printingTechniquesAvailable[
+                      _selectedPrintingTechniquesIndex];
 
                   // PRINTING AREAS
                   _selectedPrintingArea = null;
@@ -922,14 +950,17 @@ class _HomeViewState extends State<HomeView> {
       qualityDescription =
           StringsManager.productQualityPolyCottonMattyDescription;
     } else {
-      qualityDescription = StringsManager.productQualityDescriptionNotFound;
+      qualityDescription = StringsManager.productDescriptionNotFound;
     }
 
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(title),
-        content: Text(qualityDescription),
+        content: SizedBox(
+          width: AppWidgetWidthManager.sw500,
+          child: Text(qualityDescription),
+        ),
       ),
     );
   }
@@ -971,10 +1002,16 @@ class _HomeViewState extends State<HomeView> {
               setState(() {
                 _selectedProductQualityIndex = index;
                 _selectedProductQuality = _productQualitiesAvailable[index];
-                _productColorsAvailable = _getProductColorsAvailableAndPricing();
+
+                // FOR IMAGES
+                _setProductImagesColorsAndPricing();
+                _selectedProductImagesIndex = AppValueManager.v0;
+
+                // FOR COLORS
+                _setProductImagesColorsAndPricing();
                 _selectedProductColorsIndex = AppValueManager.v0;
                 _selectedProductColor =
-                      _productColorsAvailable[_selectedProductColorsIndex];
+                    _productColorsAvailable[_selectedProductColorsIndex];
               });
             },
             style: ElevatedButton.styleFrom(
@@ -1064,7 +1101,8 @@ class _HomeViewState extends State<HomeView> {
               onTap: () {
                 setState(() {
                   _selectedProductColorsIndex = index;
-                  _selectedProductColor = _productColorsAvailable[index];
+                  _selectedProductColor =
+                      _productColorsAvailable[_selectedProductColorsIndex];
                 });
               },
               child: Tooltip(
@@ -1143,6 +1181,45 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
+  // DESCRIPTION TEXT BUTTON
+  _printingTechniquesGuideTextButton() {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => _showPrintingTechniquesDetails(_selectedPrintingTechnique),
+        child: Text(
+          'What is $_selectedPrintingTechnique?',
+          style: mediumTextStyleManager(
+            color: ColorsManager.blue,
+          ),
+        ),
+      ),
+    );
+  }
+
+  // QUALITY DETAILS DIALOG
+  _showPrintingTechniquesDetails(String title) {
+    String printingTechniqueDescription;
+
+    if (title == StringsManager.printingTechniqueDTF) {
+      printingTechniqueDescription =
+          StringsManager.printingTechniquesDTFDescription;
+    } else {
+      printingTechniqueDescription = StringsManager.productDescriptionNotFound;
+    }
+
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: SizedBox(
+          width: AppWidgetWidthManager.sw500,
+          child: Text(printingTechniqueDescription),
+        ),
+      ),
+    );
+  }
+
   // ALL PRINTING TECHNIQUES
   _printingTechniques() {
     return Wrap(
@@ -1155,9 +1232,9 @@ class _HomeViewState extends State<HomeView> {
           child: ElevatedButton(
             onPressed: () {
               setState(() {
-                _selectedPrintingTechnique =
-                    _printingTechniquesAvailable[index];
                 _selectedPrintingTechniquesIndex = index;
+                _selectedPrintingTechnique = _printingTechniquesAvailable[
+                    _selectedPrintingTechniquesIndex];
                 _selectedPrintingArea = null;
                 _selectedPrintingAreaIndex = null;
                 _printingAreaHeight = AppValueManager.v0;
@@ -1200,8 +1277,8 @@ class _HomeViewState extends State<HomeView> {
               _isCustomPrintingArea = !_isCustomPrintingArea;
               _selectedPrintingArea = null;
               _selectedPrintingAreaIndex = null;
-              _printingAreaHeight = 0;
-              _printingAreaWidth = 0;
+              _printingAreaHeight = AppValueManager.v0;
+              _printingAreaWidth = AppValueManager.v0;
             });
           },
         ),
@@ -1220,37 +1297,29 @@ class _HomeViewState extends State<HomeView> {
           children: [
             const Text(StringsManager.customPrintingHeight),
             const SizedBox(width: AppWidgetWidthManager.sw10),
-            Tooltip(
-              triggerMode: TooltipTriggerMode.tap,
-              message: (_selectedPrintingTechniquesIndex == null)
-                  ? StringsManager.selectPrintingTechnique
-                  : StringsManager.emptyString,
-              child: DropdownButton(
-                value: _printingAreaHeight,
-                menuMaxHeight: AppWidgetHeightManager.sh400,
-                elevation: AppValueManager.v10,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: AppPaddingManager.p10),
-                borderRadius: const BorderRadius.all(
-                    Radius.circular(AppRadiusManager.r10)),
-                icon: const Icon(IconsManager.arrowDown),
-                items: List.generate(
-                  AppValueManager.v23,
-                  (index) => DropdownMenuItem(
-                    value: index,
-                    child: Text(
-                      (index).toString(),
-                    ),
+            DropdownButton(
+              value: _printingAreaHeight,
+              menuMaxHeight: AppWidgetHeightManager.sh500,
+              elevation: AppValueManager.v10,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: AppPaddingManager.p10),
+              borderRadius:
+                  const BorderRadius.all(Radius.circular(AppRadiusManager.r10)),
+              icon: const Icon(IconsManager.arrowDown),
+              items: List.generate(
+                AppValueManager.v23,
+                (index) => DropdownMenuItem(
+                  value: index,
+                  child: Text(
+                    (index).toString(),
                   ),
                 ),
-                onChanged: (_selectedPrintingTechniquesIndex == null)
-                    ? null
-                    : (value) {
-                        setState(() {
-                          _printingAreaHeight = int.parse(value.toString());
-                        });
-                      },
               ),
+              onChanged: (value) {
+                setState(() {
+                  _printingAreaHeight = value!;
+                });
+              },
             ),
           ],
         ),
@@ -1260,37 +1329,29 @@ class _HomeViewState extends State<HomeView> {
           children: [
             const Text(StringsManager.customPrintingWidth),
             const SizedBox(width: AppWidgetWidthManager.sw10),
-            Tooltip(
-              triggerMode: TooltipTriggerMode.tap,
-              message: (_selectedPrintingTechniquesIndex == null)
-                  ? StringsManager.selectPrintingTechnique
-                  : StringsManager.emptyString,
-              child: DropdownButton(
-                value: _printingAreaWidth,
-                menuMaxHeight: AppWidgetHeightManager.sh400,
-                elevation: AppValueManager.v10,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: AppPaddingManager.p10),
-                borderRadius: const BorderRadius.all(
-                    Radius.circular(AppRadiusManager.r10)),
-                icon: const Icon(IconsManager.arrowDown),
-                items: List.generate(
-                  AppValueManager.v23,
-                  (index) => DropdownMenuItem(
-                    value: index,
-                    child: Text(
-                      (index).toString(),
-                    ),
+            DropdownButton(
+              value: _printingAreaWidth,
+              menuMaxHeight: AppWidgetHeightManager.sh500,
+              elevation: AppValueManager.v10,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: AppPaddingManager.p10),
+              borderRadius:
+                  const BorderRadius.all(Radius.circular(AppRadiusManager.r10)),
+              icon: const Icon(IconsManager.arrowDown),
+              items: List.generate(
+                AppValueManager.v23,
+                (index) => DropdownMenuItem(
+                  value: index,
+                  child: Text(
+                    (index).toString(),
                   ),
                 ),
-                onChanged: (_selectedPrintingTechniquesIndex == null)
-                    ? null
-                    : (value) {
-                        setState(() {
-                          _printingAreaWidth = int.parse(value.toString());
-                        });
-                      },
               ),
+              onChanged: (value) {
+                setState(() {
+                  _printingAreaWidth = value!;
+                });
+              },
             ),
           ],
         ),
@@ -1307,34 +1368,26 @@ class _HomeViewState extends State<HomeView> {
         _printingAreaAvailable.length,
         (index) => Padding(
           padding: const EdgeInsets.only(right: AppPaddingManager.p20),
-          child: Tooltip(
-            triggerMode: TooltipTriggerMode.tap,
-            message: (_selectedPrintingTechniquesIndex == null)
-                ? StringsManager.selectPrintingTechnique
-                : StringsManager.emptyString,
-            child: ElevatedButton(
-              onPressed: (_selectedPrintingTechniquesIndex == null)
-                  ? null
-                  : () {
-                      setState(() {
-                        _selectedPrintingArea = _printingAreaAvailable[index];
-                        _selectedPrintingAreaIndex = index;
-                      });
-                    },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: (_selectedPrintingAreaIndex == index)
-                    ? ColorsManager.primary
-                    : ColorsManager.white,
-              ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: AppPaddingManager.p15),
-                child: Text(
-                  _printingAreaAvailable[index],
-                  style: (_selectedPrintingAreaIndex == index)
-                      ? regularTextStyleManager(color: ColorsManager.white)
-                      : null,
-                ),
+          child: ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _selectedPrintingArea = _printingAreaAvailable[index];
+                _selectedPrintingAreaIndex = index;
+              });
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: (_selectedPrintingAreaIndex == index)
+                  ? ColorsManager.primary
+                  : ColorsManager.white,
+            ),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: AppPaddingManager.p15),
+              child: Text(
+                _printingAreaAvailable[index],
+                style: (_selectedPrintingAreaIndex == index)
+                    ? regularTextStyleManager(color: ColorsManager.white)
+                    : null,
               ),
             ),
           ),
@@ -1535,7 +1588,8 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
         const SizedBox(height: AppWidgetHeightManager.sh10),
-        Text('• Product Price: ${StringsManager.pricingCurrency}$_productPrice'),
+        Text(
+            '• Product Price: ${StringsManager.pricingCurrency}$_productPrice'),
         const SizedBox(height: AppWidgetHeightManager.sh5),
         (_printingAreaHeight > AppValueManager.v0 &&
                 _printingAreaWidth > AppValueManager.v0)
@@ -1578,9 +1632,6 @@ class _HomeViewState extends State<HomeView> {
       } else if (_selectedPrintingArea == StringsManager.printingAreasA7) {
         _printingAreaHeight = AppValueManager.v4;
         _printingAreaWidth = AppValueManager.v2;
-      } else {
-        _printingAreaHeight = AppValueManager.v0;
-        _printingAreaWidth = AppValueManager.v0;
       }
     }
   }

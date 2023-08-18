@@ -1,11 +1,18 @@
+// FOR FIREBASE
 // const String _imagePath = 'https://firebasestorage.googleapis.com/v0/b/inaxia-web-dashboard.appspot.com/o';
-const String _imagePath = 'https://ik.imagekit.io/cr6fyqxcl';
+
+// FOR IMAGEKIT
+// const String _imagePath = 'https://ik.imagekit.io/cr6fyqxcl';
+
+// FOR IMAGEKIT - APPAREL TECH IMAGES
+const String _imagePath = 'https://ik.imagekit.io/cr6fyqxcl/product-images';
 
 class AssetsManager {
   // ASSET IMAGES
   static const String whatsappLogo = 'assets/logo/whatsapp-logo.jpg';
 
   // NETWORK IMAGES
+  // FROM FIREBASE
   // static const String regularTshirt1 = '$_imagePath/product_images%2Fregular-tshirts%2Fregular-tshirt-1.jpg?alt=media&token=cfabf714-2a92-487c-bbda-a5132e2889df';
   // static const String regularTshirt2 = '$_imagePath/product_images%2Fregular-tshirts%2Fregular-tshirt-2.jpg?alt=media&token=54108284-721e-47f6-a707-590f7f7820b8';
   // static const String regularTshirt3 = '$_imagePath/product_images%2Fregular-tshirts%2Fregular-tshirt-3.jpg?alt=media&token=7cd34108-8bb0-4f0e-afef-8164647e7d78';
@@ -22,14 +29,39 @@ class AssetsManager {
   // static const String oversizedTshirt4 = '$_imagePath/product_images%2Foversized-tshirts%2Foversized-tshirt-4.jpg?alt=media&token=01f86f1f-eaa1-4cf0-bdc2-7c55d6f88360';
   // static const String oversizedTshirt5 = '$_imagePath/product_images%2Foversized-tshirts%2Foversized-tshirt-5.jpg?alt=media&token=e5c7c55f-1389-44b7-b067-c447f794e262';
 
-  static const String regularTshirt1 = '$_imagePath/Round-neck/regular-tshirt-1.jpg';
-  static const String regularTshirt2 = '$_imagePath/Round-neck/regular-tshirt-2.jpg';
-  static const String regularTshirt3 = '$_imagePath/Round-neck/regular-tshirt-3.jpg';
-  static const String regularTshirt4 = '$_imagePath/Round-neck/regular-tshirt-4.jpg';
-  static const String regularTshirt5 = '$_imagePath/Round-neck/regular-tshirt-5.jpg';
-  static const String poloTshirt1 = '$_imagePath/Polo/polo-tshirt-1.jpg';
-  static const String poloTshirt2 = '$_imagePath/Polo/polo-tshirt-2.jpg';
-  static const String poloTshirt3 = '$_imagePath/Polo/polo-tshirt-3.jpg';
-  static const String poloTshirt4 = '$_imagePath/Polo/polo-tshirt-4.jpg';
-  static const String poloTshirt5 = '$_imagePath/Polo/polo-tshirt-5.jpg';
+  // FROM IMAGEKIT
+  // static const String regularTshirt1 = '$_imagePath/polyester.jpg';
+  // static const String regularTshirt2 = '$_imagePath/Round-neck/regular-tshirt-2.jpg';
+  // static const String regularTshirt3 = '$_imagePath/Round-neck/regular-tshirt-3.jpg';
+  // static const String regularTshirt4 = '$_imagePath/Round-neck/regular-tshirt-4.jpg';
+  // static const String regularTshirt5 = '$_imagePath/Round-neck/regular-tshirt-5.jpg';
+  // static const String poloTshirt1 = '$_imagePath/Polo/polo-tshirt-1.jpg';
+  // static const String poloTshirt2 = '$_imagePath/Polo/polo-tshirt-2.jpg';
+  // static const String poloTshirt3 = '$_imagePath/Polo/polo-tshirt-3.jpg';
+  // static const String poloTshirt4 = '$_imagePath/Polo/polo-tshirt-4.jpg';
+  // static const String poloTshirt5 = '$_imagePath/Polo/polo-tshirt-5.jpg';
+
+  // FROM IMAGEKIT (APPAREL TECH PICS)
+  static const String polyester = '$_imagePath/polyester.jpg';
+  static const String polyester1 = '$_imagePath/polyester-1.jpg';
+  static const String polyester2 = '$_imagePath/polyester-2.jpg';
+  static const String driFit = '$_imagePath/dri-fit.jpg';
+  static const String driFit1 = '$_imagePath/dri-fit-1.jpg';
+  static const String driFit2 = '$_imagePath/dri-fit-2.jpg';
+  static const String dotKnit = '$_imagePath/dot-knit.jpg';
+  static const String dotKnit1 = '$_imagePath/dot-knit-1.jpg';
+  static const String dotKnit2 = '$_imagePath/dot-knit-2.jpg';
+  static const String sublimationCotton = '$_imagePath/sublimation-cotton.jpg';
+  static const String sublimationCotton1 = '$_imagePath/sublimation-cotton-1.jpg';
+  static const String sublimationCotton2 = '$_imagePath/sublimation-cotton-2.jpg';
+  static const String cotton100 = '$_imagePath/cotton-100.jpg';
+  static const String cotton1001 = '$_imagePath/cotton-100-1.jpg';
+  static const String cotton1002 = '$_imagePath/cotton-100-2.jpg';
+  static const String cottonBiowash = '$_imagePath/cotton-biowash.jpg';
+  static const String cottonBiowash1 = '$_imagePath/cotton-biowash-1.jpg';
+  static const String cottonBiowash2 = '$_imagePath/cotton-biowash-2.jpg';
+  static const String matty = '$_imagePath/matty.jpg';
+  static const String polyCottonMatty = '$_imagePath/poly-cotton-matty.jpg';
+  static const String polyCottonMatty1 = '$_imagePath/poly-cotton-matty-1.jpg';
+  static const String polyCottonMatty2 = '$_imagePath/poly-cotton-matty-2.jpg';
 }
