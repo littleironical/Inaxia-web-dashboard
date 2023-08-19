@@ -108,6 +108,8 @@ class _HomeViewState extends State<HomeView> {
           StringsManager.productQualityPolyester,
           StringsManager.productQualityDrifit,
           StringsManager.productQualityDotknit,
+          StringsManager.productQualityDotknitSports,
+          StringsManager.productQualityRiseknit,
           StringsManager.productQualitySublimationCotton,
           StringsManager.productQuality100Cotton,
           StringsManager.productQualityCottonBiowash,
@@ -128,6 +130,39 @@ class _HomeViewState extends State<HomeView> {
         [
           StringsManager.productQualityMatty,
           StringsManager.productQualityPolyCottonMatty,
+        ],
+        [
+          StringsManager.productSizesS,
+          StringsManager.productSizesM,
+          StringsManager.productSizesL,
+          StringsManager.productSizesXL,
+          StringsManager.productSizes2XL,
+        ],
+      ),
+    );
+    _allProductTypes.add(
+      AllProductTypesModel(
+        false,
+        StringsManager.productTypeSweatshirt,
+        [
+          StringsManager.productQualityCottonFleece,
+        ],
+        [
+          StringsManager.productSizesS,
+          StringsManager.productSizesM,
+          StringsManager.productSizesL,
+          StringsManager.productSizesXL,
+          StringsManager.productSizes2XL,
+        ],
+      ),
+    );
+    _allProductTypes.add(
+      AllProductTypesModel(
+        false,
+        StringsManager.productTypeHoodie,
+        [
+          StringsManager.productQualityHoodieCottonFleece,
+          StringsManager.productQualityZipperCottonFleece,
         ],
         [
           StringsManager.productSizesS,
@@ -164,7 +199,7 @@ class _HomeViewState extends State<HomeView> {
         _selectedPrintingTechnique =
             _printingTechniquesAvailable[_selectedPrintingTechniquesIndex];
       }
-    }
+    }  
   }
 
   // T-SHIRT COLOR BASED ON QUALITY
@@ -174,7 +209,11 @@ class _HomeViewState extends State<HomeView> {
       _productImagesAvailable = [
         AssetsManager.polyester,
         AssetsManager.polyester1,
+        AssetsManager.polyester3,
+        AssetsManager.polyester4,
+        AssetsManager.polyester5,
         AssetsManager.polyester2,
+        AssetsManager.polyester6,
       ];
       _productColorsAvailable = [
         ColorsManager.whiteTshirt,
@@ -190,8 +229,10 @@ class _HomeViewState extends State<HomeView> {
       _productPrice = AppValueManager.v110.toDouble();
       _productImagesAvailable = [
         AssetsManager.driFit,
+        AssetsManager.driFit3,
         AssetsManager.driFit1,
         AssetsManager.driFit2,
+        AssetsManager.driFit4,
       ];
       _productColorsAvailable = [
         ColorsManager.whiteTshirt,
@@ -210,8 +251,10 @@ class _HomeViewState extends State<HomeView> {
       _productPrice = AppValueManager.v120.toDouble();
       _productImagesAvailable = [
         AssetsManager.dotKnit,
+        AssetsManager.dotKnit3,
         AssetsManager.dotKnit1,
         AssetsManager.dotKnit2,
+        AssetsManager.dotKnit4,
       ];
       _productColorsAvailable = [
         ColorsManager.whiteTshirt,
@@ -224,12 +267,57 @@ class _HomeViewState extends State<HomeView> {
         ColorsManager.redTshirt,
       ];
     } else if (_selectedProductQuality ==
+        StringsManager.productQualityDotknitSports) {
+      _productPrice = AppValueManager.v130.toDouble();
+      _productImagesAvailable = [
+        AssetsManager.dotKnitSports,
+        AssetsManager.dotKnitSports1,
+        AssetsManager.dotKnitSports2,
+        AssetsManager.dotKnitSports3,
+        AssetsManager.dotKnitSports4,
+      ];
+      _productColorsAvailable = [
+        ColorsManager.whiteTshirt,
+        ColorsManager.pinkTshirt,
+        ColorsManager.yellowTshirt,
+        ColorsManager.redTshirt,
+        ColorsManager.greenTshirt,
+        ColorsManager.blackTshirt,
+        ColorsManager.skyBlueTshirt,
+        ColorsManager.orangeTshirt,        
+      ];
+    } else if (_selectedProductQuality ==
+        StringsManager.productQualityRiseknit) {
+      _productPrice = AppValueManager.v160.toDouble();
+      _productImagesAvailable = [
+        AssetsManager.riseKnit,
+        AssetsManager.riseKnit5,
+        AssetsManager.riseKnit4,
+        AssetsManager.riseKnit2,
+        AssetsManager.riseKnit1,
+        AssetsManager.riseKnit3,
+      ];
+      _productColorsAvailable = [
+        ColorsManager.whiteTshirt,
+        ColorsManager.greyTshirt,
+        ColorsManager.greenTshirt,
+        ColorsManager.pinkTshirt,
+        ColorsManager.redTshirt,
+        ColorsManager.yellowTshirt,
+        ColorsManager.blackTshirt,
+        ColorsManager.orangeTshirt,
+      ];
+    } else if (_selectedProductQuality ==
         StringsManager.productQualitySublimationCotton) {
       _productPrice = AppValueManager.v170.toDouble();
       _productImagesAvailable = [
         AssetsManager.sublimationCotton,
+        AssetsManager.sublimationCotton3,
         AssetsManager.sublimationCotton1,
+        AssetsManager.sublimationCotton4,
         AssetsManager.sublimationCotton2,
+        AssetsManager.sublimationCotton5,
+        AssetsManager.sublimationCotton6,
       ];
       _productColorsAvailable = [
         ColorsManager.whiteTshirt,
@@ -246,8 +334,10 @@ class _HomeViewState extends State<HomeView> {
       _productPrice = AppValueManager.v180.toDouble();
       _productImagesAvailable = [
         AssetsManager.cotton100,
-        AssetsManager.cotton1001,
         AssetsManager.cotton1002,
+        AssetsManager.cotton1001,
+        AssetsManager.cotton1003,
+        AssetsManager.cotton1004,
       ];
       _productColorsAvailable = [
         ColorsManager.whiteTshirt,
@@ -264,6 +354,8 @@ class _HomeViewState extends State<HomeView> {
         AssetsManager.cottonBiowash,
         AssetsManager.cottonBiowash1,
         AssetsManager.cottonBiowash2,
+        AssetsManager.cottonBiowash3,
+        AssetsManager.cottonBiowash4,
       ];
       _productColorsAvailable = [
         ColorsManager.whiteTshirt,
@@ -279,6 +371,7 @@ class _HomeViewState extends State<HomeView> {
       _productPrice = AppValueManager.v130.toDouble();
       _productImagesAvailable = [
         AssetsManager.matty,
+        AssetsManager.matty1,
       ];
       _productColorsAvailable = [
         ColorsManager.whiteTshirt,
@@ -297,8 +390,10 @@ class _HomeViewState extends State<HomeView> {
       _productPrice = AppValueManager.v160.toDouble();
       _productImagesAvailable = [
         AssetsManager.polyCottonMatty,
-        AssetsManager.polyCottonMatty1,
         AssetsManager.polyCottonMatty2,
+        AssetsManager.polyCottonMatty1,
+        AssetsManager.polyCottonMatty3,
+        AssetsManager.polyCottonMatty4,
       ];
       _productColorsAvailable = [
         ColorsManager.whiteTshirt,
@@ -306,6 +401,63 @@ class _HomeViewState extends State<HomeView> {
         ColorsManager.skyBlueTshirt,
         ColorsManager.blackTshirt,
         ColorsManager.greyTshirt,
+        ColorsManager.orangeTshirt,
+      ];
+    } else if (_selectedProductQuality ==
+        StringsManager.productQualityCottonFleece) {
+      _productPrice = AppValueManager.v330.toDouble();
+      _productImagesAvailable = [
+        AssetsManager.cottonFleece,
+        AssetsManager.cottonFleece1,
+        AssetsManager.cottonFleece2,
+        AssetsManager.cottonFleece3,
+        AssetsManager.cottonFleece4,
+      ];
+      _productColorsAvailable = [
+        ColorsManager.whiteTshirt,
+        ColorsManager.blackTshirt,
+        ColorsManager.skyBlueTshirt,
+        ColorsManager.redTshirt,
+        ColorsManager.greyTshirt,
+        ColorsManager.yellowTshirt,
+        ColorsManager.greenTshirt,
+        ColorsManager.pinkTshirt,
+      ];
+    } else if (_selectedProductQuality ==
+        StringsManager.productQualityHoodieCottonFleece) { 
+      _productPrice = AppValueManager.v320.toDouble();
+      _productImagesAvailable = [
+        AssetsManager.hoodieCottonFleece,
+        AssetsManager.hoodieCottonFleece1,
+        AssetsManager.hoodieCottonFleece2,
+        AssetsManager.hoodieCottonFleece3,
+      ];
+      _productColorsAvailable = [
+        ColorsManager.whiteTshirt,
+        ColorsManager.greenTshirt,
+        ColorsManager.skyBlueTshirt,
+        ColorsManager.redTshirt,
+        ColorsManager.greenTshirt,
+        ColorsManager.blackTshirt,
+        ColorsManager.orangeTshirt,
+        ColorsManager.yellowTshirt,
+      ];
+    } else if (_selectedProductQuality ==
+        StringsManager.productQualityZipperCottonFleece) {
+      _productPrice = AppValueManager.v370.toDouble();
+      _productImagesAvailable = [
+        AssetsManager.zipperCottonFleece,
+        AssetsManager.zipperCottonFleece1,
+        AssetsManager.zipperCottonFleece2,
+        AssetsManager.zipperCottonFleece3,
+        AssetsManager.zipperCottonFleece4,
+      ];
+      _productColorsAvailable = [
+        ColorsManager.whiteTshirt,
+        ColorsManager.pinkTshirt,
+        ColorsManager.greenTshirt,
+        ColorsManager.greyTshirt,
+        ColorsManager.blackTshirt,
         ColorsManager.orangeTshirt,
       ];
     } else {
@@ -381,9 +533,9 @@ class _HomeViewState extends State<HomeView> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            (_screenWidth >= AppBreakpointManager.b1100)
+            (_screenWidth >= AppBreakpointManager.medium)
                 ? _largeScreenBody()
-                : (_screenWidth >= AppBreakpointManager.b700)
+                : (_screenWidth >= AppBreakpointManager.small)
                     ? _mediumScreenBody()
                     : _smallScreenBody(),
             //* MORE SECTIONS TO BE ADDED
@@ -397,7 +549,7 @@ class _HomeViewState extends State<HomeView> {
   _largeScreenBody() {
     return Center(
       child: SizedBox(
-        width: AppBreakpointManager.b1265,
+        width: AppBreakpointManager.large,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -478,7 +630,7 @@ class _HomeViewState extends State<HomeView> {
     return Center(
       child: SizedBox(
         width: double.infinity,
-        height: AppWidgetHeightManager.sh2250,
+        height: AppWidgetHeightManager.heightOfSmallScreen,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -512,14 +664,14 @@ class _HomeViewState extends State<HomeView> {
     String? swipeDirection;
 
     return SizedBox(
-      height: (_screenWidth >= AppBreakpointManager.b1100)
+      height: (_screenWidth >= AppBreakpointManager.medium)
           ? AppWidgetHeightManager.sh600
-          : (_screenWidth >= AppBreakpointManager.b700)
+          : (_screenWidth >= AppBreakpointManager.small)
               ? AppWidgetHeightManager.sh500
               : AppWidgetHeightManager.sh590,
-      width: (_screenWidth >= AppBreakpointManager.b1100)
+      width: (_screenWidth >= AppBreakpointManager.medium)
           ? AppWidgetWidthManager.sw400
-          : (_screenWidth >= AppBreakpointManager.b700)
+          : (_screenWidth >= AppBreakpointManager.small)
               ? AppWidgetWidthManager.sw400
               : double.maxFinite,
       child: MouseRegion(
@@ -586,7 +738,7 @@ class _HomeViewState extends State<HomeView> {
               );
             },
             fit: BoxFit.cover,
-            alignment: Alignment.topCenter,
+            alignment: Alignment.center,
           ),
         ),
       ),
@@ -600,7 +752,7 @@ class _HomeViewState extends State<HomeView> {
       builder: (context) => AlertDialog(
         title: const Text(StringsManager.imageInteractiveView),
         content: SizedBox(
-          height: (_screenWidth >= AppBreakpointManager.b700)
+          height: (_screenWidth >= AppBreakpointManager.small)
               ? AppWidgetHeightManager.sh700
               : null,
           child: InteractiveViewer(
@@ -633,7 +785,7 @@ class _HomeViewState extends State<HomeView> {
                 );
               },
               fit: BoxFit.cover,
-              alignment: Alignment.topCenter,
+              alignment: Alignment.center,
             ),
           ),
         ),
@@ -644,40 +796,40 @@ class _HomeViewState extends State<HomeView> {
   // MULTIPLE IMAGES LIST
   _productImageScrolls() {
     return SizedBox(
-      height: (_screenWidth >= AppBreakpointManager.b1100)
+      height: (_screenWidth >= AppBreakpointManager.medium)
           ? AppWidgetHeightManager.sh600
           : AppWidgetHeightManager.sh100,
-      width: (_screenWidth >= AppBreakpointManager.b1100)
+      width: (_screenWidth >= AppBreakpointManager.medium)
           ? AppWidgetWidthManager.sw100
           : double.maxFinite,
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
         child: ListView.separated(
           physics: const BouncingScrollPhysics(),
-          scrollDirection: (_screenWidth >= AppBreakpointManager.b1100)
+          scrollDirection: (_screenWidth >= AppBreakpointManager.medium)
               ? Axis.vertical
               : Axis.horizontal,
           shrinkWrap: true,
           itemCount: _productImagesAvailable.length,
           separatorBuilder: (context, index) => SizedBox(
-            height: (_screenWidth >= AppBreakpointManager.b1100)
+            height: (_screenWidth >= AppBreakpointManager.medium)
                 ? AppWidgetHeightManager.sh10
                 : AppWidgetHeightManager.sh0,
-            width: (_screenWidth >= AppBreakpointManager.b1100)
+            width: (_screenWidth >= AppBreakpointManager.medium)
                 ? AppWidgetWidthManager.sw0
                 : AppWidgetWidthManager.sw10,
           ),
           itemBuilder: (context, index) => Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: (_screenWidth >= AppBreakpointManager.b1100)
+              horizontal: (_screenWidth >= AppBreakpointManager.medium)
                   ? AppPaddingManager.p10
                   : AppPaddingManager.p0,
             ),
             child: SizedBox(
-              height: (_screenWidth >= AppBreakpointManager.b700)
+              height: (_screenWidth >= AppBreakpointManager.small)
                   ? AppWidgetHeightManager.sh120
                   : AppWidgetHeightManager.sh80,
-              width: (_screenWidth >= AppBreakpointManager.b700)
+              width: (_screenWidth >= AppBreakpointManager.small)
                   ? AppWidgetWidthManager.sw60
                   : AppWidgetWidthManager.sw80,
               child: GestureDetector(
@@ -718,7 +870,7 @@ class _HomeViewState extends State<HomeView> {
                         );
                       },
                       fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
+                      alignment: Alignment.center,
                     ),
                   ),
                 ),
@@ -938,23 +1090,36 @@ class _HomeViewState extends State<HomeView> {
     String qualityDescription;
 
     if (title == StringsManager.productQualityPolyester) {
-      qualityDescription = StringsManager.productQualityPolyesterDesciption;
+      qualityDescription = StringsManager.productQualityPolyesterDescription;
     } else if (title == StringsManager.productQualityDrifit) {
-      qualityDescription = StringsManager.productQualityDrifitDesciption;
+      qualityDescription = StringsManager.productQualityDrifitDescription;
     } else if (title == StringsManager.productQualityDotknit) {
-      qualityDescription = StringsManager.productQualityDotknitDesciption;
+      qualityDescription = StringsManager.productQualityDotknitDescription;
+    } else if (title == StringsManager.productQualityDotknitSports) {
+      qualityDescription = StringsManager.productQualityDotknitSportsDescription;
+    } else if (title == StringsManager.productQualityRiseknit) {
+      qualityDescription = StringsManager.productQualityRiseknitDescription;
     } else if (title == StringsManager.productQualitySublimationCotton) {
       qualityDescription =
-          StringsManager.productQualitySublimationCottonDesciption;
+          StringsManager.productQualitySublimationCottonDescription;
     } else if (title == StringsManager.productQuality100Cotton) {
-      qualityDescription = StringsManager.productQuality100CottonDesciption;
+      qualityDescription = StringsManager.productQuality100CottonDescription;
     } else if (title == StringsManager.productQualityCottonBiowash) {
-      qualityDescription = StringsManager.productQualityCottonBiowashDesciption;
+      qualityDescription = StringsManager.productQualityCottonBiowashDescription;
     } else if (title == StringsManager.productQualityMatty) {
-      qualityDescription = StringsManager.productQualityMattyDesciption;
+      qualityDescription = StringsManager.productQualityMattyDescription;
     } else if (title == StringsManager.productQualityPolyCottonMatty) {
       qualityDescription =
           StringsManager.productQualityPolyCottonMattyDescription;
+    } else if (title == StringsManager.productQualityCottonFleece) {
+      qualityDescription =
+          StringsManager.productQualityCottonFleeceDescription;
+    } else if (title == StringsManager.productQualityHoodieCottonFleece) {
+      qualityDescription =
+          StringsManager.productQualityHoodieCottonFleeceDescription;
+    } else if (title == StringsManager.productQualityZipperCottonFleece) {
+      qualityDescription =
+          StringsManager.productQualityZipperCottonFleeceDescription;
     } else {
       qualityDescription = StringsManager.productDescriptionNotFound;
     }
@@ -978,6 +1143,10 @@ class _HomeViewState extends State<HomeView> {
     } else if (quality == StringsManager.productQualityDrifit) {
       return AppValueManager.v130;
     } else if (quality == StringsManager.productQualityDotknit) {
+      return AppValueManager.v160;
+    } else if (quality == StringsManager.productQualityDotknitSports) {
+      return AppValueManager.v160;
+    } else if (quality == StringsManager.productQualityRiseknit) {
       return AppValueManager.v170;
     } else if (quality == StringsManager.productQualitySublimationCotton) {
       return AppValueManager.v190;
@@ -989,6 +1158,12 @@ class _HomeViewState extends State<HomeView> {
       return AppValueManager.v220;
     } else if (quality == StringsManager.productQualityPolyCottonMatty) {
       return AppValueManager.v250;
+    } else if (quality == StringsManager.productQualityCottonFleece) {
+      return AppValueManager.v370;
+    } else if (quality == StringsManager.productQualityHoodieCottonFleece) {
+      return AppValueManager.v370;
+    } else if (quality == StringsManager.productQualityZipperCottonFleece) {
+      return AppValueManager.v360;
     } else {
       return AppValueManager.v0;
     }
@@ -1471,7 +1646,7 @@ class _HomeViewState extends State<HomeView> {
   // ALL T-SHIRT QUANTITY
   _productQuantity() {
     return SizedBox(
-      width: (_screenWidth >= AppBreakpointManager.b1100)
+      width: (_screenWidth >= AppBreakpointManager.medium)
           ? double.maxFinite
           : AppWidgetWidthManager.sw400,
       child: Column(

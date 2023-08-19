@@ -1,7 +1,7 @@
 class AppBreakpointManager {
-  static const double b700 = 700;
-  static const double b1100 = 1100;
-  static const double b1265 = 1265;
+  static const double small = 700;
+  static const double medium = 1100;
+  static const double large = 1265;
 }
 
 class AppRadiusManager {
@@ -43,7 +43,7 @@ class AppWidgetHeightManager {
   static const double sh590 = 590;
   static const double sh600 = 600;
   static const double sh700 = 700;
-  static const double sh2250 = 2250;
+  static const double heightOfSmallScreen = 2350;
 }
 
 class AppWidgetWidthManager {
@@ -109,7 +109,11 @@ class AppValueManager {
   static const int v250 = 250;
   static const int v288 = 288;
   static const int v300 = 300;
+  static const int v320 = 320;
+  static const int v330 = 330;
   static const int v333 = 333;
+  static const int v360 = 360;
+  static const int v370 = 370;
   static const int v416 = 416;
   static const int v500 = 500;
 }
